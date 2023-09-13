@@ -1,0 +1,23 @@
+create table gs_crud(
+gs_type number ?? --pk
+a_bno number(10,0) not null,
+a_title varchar2(200) not null,
+a_content varchar2(2000) not null,
+a_username varchar2(50) not null,
+a_regdate date default sysdate,
+b_bno number(10,0) not null,
+b_title varchar2(200) not null,
+b_content varchar2(2000) not null,
+b_username varchar2(50) not null,
+b_regdate date default sysdate,
+c_bno number(10,0) not null,
+c_title varchar2(200) not null,
+c_content varchar2(2000) not null,
+c_username varchar2(50) not null,
+c_regdate date default sysdate,
+d_bno number(10,0) not null,
+d_title varchar2(200) not null,
+d_content varchar2(2000) not null,
+d_username varchar2(50) not null,
+d_regdate date default sysdate,
+)
