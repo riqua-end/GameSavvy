@@ -13,6 +13,7 @@
 		<org.aspectj-version>1.9.7</org.aspectj-version>
 		<org.slf4j-version>2.0.0</org.slf4j-version>
 		<!-- 스프링 시큐리티 버젼 -->
+		<spring.security.version>5.3.13.RELEASE</spring.security.version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -264,7 +265,7 @@
 		    <version>2.3.2</version>
 		</dependency>
 		
-		<!-- spring security 추가 
+		<!-- spring security 추가 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
@@ -285,7 +286,7 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>   
-		-->
+		
 		    
 	</dependencies>
     <build>
