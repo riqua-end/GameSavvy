@@ -34,35 +34,35 @@
 <div class="wrapper">
 	<div class="wrap">
 		<form action="../member/join" method="post" id="frm1" name="frm1">
-					
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<div class="form-group">
-						<label for="uId">아이디</label>
-						<input type="email" class="form-control" name="userid" placeholder="E-Mail주소 입력" 	id="uId" required/>
-					</div>
-					<div class="form-group">						
-						 <button type="button" id="id_chk" class="btn btn-outline-primary">아이디중복체크</button>
-						 <input	type="hidden" name="reid" size="20">						 
-					</div>
-					<div class="form-group">
-						<label for="uPw">비밀번호</label>
-						<input type="password" class="form-control" name="userpw" id="uPw"	placeholder="비밀번호 입력" required/>
-						<span class="final_pw_ck"></span>
-					</div>
-					<div class="form-group">
-						<label for="uPwchk">비밀번호확인</label>
-						<input type="password" class="form-control" name="userpwChk" id="uPwChk"	placeholder="비밀번호확인입력" required/>
-						<span class="final_pwck_ck"></span>
-						<span class="pwck_input_re_1">비밀번호가 일치합니다.</span>
-						<span class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
-					</div>
-					<div class="form-group">
-						<label for="uName">사용자명</label>
-						<input type="text" class="form-control" name="userName" id="uName" placeholder="사용자명" required/>			
-					</div>
-					<button type="submit" class="btn btn-success">회원가입</button>&nbsp;&nbsp;
-					<button type="button" class="btn btn-danger" id="homeBtn">홈으로</button>&nbsp;&nbsp;
-				</form>
+			<!-- 회원 가입시 csrf 토큰 값 히든으로 보내주기 -->
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<div class="form-group">
+				<label for="uId">아이디</label>
+				<input type="email" class="form-control" name="userid" placeholder="E-Mail주소 입력" 	id="uId" required/>
+			</div>
+			<div class="form-group">						
+				 <button type="button" id="id_chk" class="btn btn-outline-primary">아이디중복체크</button>
+				 <input	type="hidden" name="reid" size="20">						 
+			</div>
+			<div class="form-group">
+				<label for="uPw">비밀번호</label>
+				<input type="password" class="form-control" name="userpw" id="uPw"	placeholder="비밀번호 입력" required/>
+				<span class="final_pw_ck"></span>
+			</div>
+			<div class="form-group">
+				<label for="uPwchk">비밀번호확인</label>
+				<input type="password" class="form-control" name="userpwChk" id="uPwChk"	placeholder="비밀번호확인입력" required/>
+				<span class="final_pwck_ck"></span>
+				<span class="pwck_input_re_1">비밀번호가 일치합니다.</span>
+				<span class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
+			</div>
+			<div class="form-group">
+				<label for="uName">사용자명</label>
+				<input type="text" class="form-control" name="userName" id="uName" placeholder="사용자명" required/>			
+			</div>
+			<button type="submit" class="btn btn-success">회원가입</button>&nbsp;&nbsp;
+			<button type="button" class="btn btn-danger" id="homeBtn">홈으로</button>&nbsp;&nbsp;
+		</form>
 	</div>
 </div>
 
