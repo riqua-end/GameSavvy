@@ -17,7 +17,7 @@
 		</collection>
 	</resultMap>
 	
-	<resultMap type="org.ezen.ex02.domain.AuthVO" id="authMap">
+	<resultMap type="org.ezen.gamesavvy.domain.AuthVO" id="authMap">
 		<result property="userid" column="userid"/>
 		<result property="auth" column="auth"/>	
 	</resultMap>
