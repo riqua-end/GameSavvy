@@ -1,6 +1,5 @@
 package org.ezen.gamesavvy.service;
 
-import java.util.List;
 
 import org.ezen.gamesavvy.domain.AuthVO;
 import org.ezen.gamesavvy.domain.MemberVO;

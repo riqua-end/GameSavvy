@@ -11,53 +11,7 @@
 <head>
 <title>Insert title here</title>
 <meta charset="UTF-8">
-<style>
-body {font-family: Arial;}
 
-/* Style the tab */
-.top-container {
-  background-color: #f1f1f1;
-  padding: 30px;
-  text-align: center;
-}
-
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #FFC0CB;
-  text-align: center;
-}
-
-/* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  float: center;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-</style>
 <!-- RWD -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- MS -->
@@ -78,47 +32,72 @@ body {font-family: Arial;}
 </head>
 <body>
 
-<div class="top-container">
-	<h1>GameSavvy</h1>
-	<p>Welcome Game Site</p>
-</div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container d-flex justify-content-between">
+        <div>
+            <a class="navbar-brand" href="../home/home">
+                <img src="../resources/images/logo.png" alt="logo" class="Logo-img" style="width: 120px;">
+            </a>
+        </div>
 
-<div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'London')">자유게시판</button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')">공략게시판</button>
-  <button class="tablinks" onclick="openCity(event, 'Tokyo')">정보게시판</button>
-</div>
+        <div class="search" style="margin-right:160px;">
+			<form id="headmenu" name="headmenu" method="GET" onsubmit="return false;">
+				<input type="search" class="text" name="sw" id="search_input" autocomplete="off" placeholder="검색어를 입력해 주세요">
+				<button id="headmenu-search-btn" type="submit" class="header-btn search-btn-submit" value="검색">
+					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-search"
+	                     viewBox="0 0 16 16">
+	                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+	                </svg>
+				</button>
+			</form>
+		</div>
+    </div>
+</nav>
 
-<div id="London" class="tabcontent">
-  <h3>자유게시판</h3>
-  <p>London is the capital city of England.</p>
-</div>
+<div class="container-fluid sticky-top bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <nav class="navbar navbar-light">
 
-<div id="Paris" class="tabcontent">
-  <h3>공략게시판</h3>
-  <p>Paris is the capital of France.</p> 
-</div>
+                    <div class="nav-item dropdown">
+                        <a class="navbar-toggler d-inline-flex align-items-center" id="dropdownMenuButton" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <span class="navbar-toggler-icon"></span>
+                            &nbsp;&nbsp;<span style="color: black;">카테고리</span>
+                        </a>
 
-<div id="Tokyo" class="tabcontent">
-  <h3>정보게시판</h3>
-  <p>Tokyo is the capital of Japan.</p>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">공지사항</a>
+                            <a class="dropdown-item" href="#">자유게시판</a>
+                            <a class="dropdown-item" href="#">공략게시판</a>
+                            <a class="dropdown-item" href="#">정보게시판</a>
+                            <a class="dropdown-item" href="#">리뷰게시판</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="col d-flex justify-content-center flex-wrap align-items-center">
+                <div class="px-5 text-black"><a class="mainMenu" href="#">자유게시판</a></div>
+                <div class="px-5 text-black"><a class="mainMenu" href="#">공략게시판</a></div>
+                <div class="px-5 text-black"><a class="mainMenu" href="#">정보게시판</a></div>
+                <div class="px-5 text-black"><a class="mainMenu" href="#">리뷰게시판</a></div>
+            </div>
+            <div class="col-2 text-black d-flex align-items-center justify-content-center">
+                <h4>
+			        <button type="button" class="btn" style="cursor: pointer;">
+		                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 448 512"><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"/></svg>
+		            </button>
+		
+		            <button type="button" class="btn" style="cursor: pointer;">
+		                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 448 512"><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
+		            </button>
+                </h4>
+            </div>
+        </div>
+        <hr> <!-- header 와 main의 경계선 -->
+    </div>
 </div>
-
-<script>
-function openCity(evt, cityName) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-</script>
 
 </body>
 </html>
