@@ -12,7 +12,6 @@
 <meta charset="UTF-8">
 <style>
 .footer {
-   position: fixed;
    right: 0;
    left: 0;
    bottom: 0;
@@ -32,22 +31,23 @@ small {
 </head>
 <body>
 
-<div class="footer container">
-	<hr></hr>
-	<div class="row">
-		<div class="col-md-5">
-			<small>(주)플레이엑스피  대표:윤석재  사업자등록번호: 406-86-00726</small>
-			<p><small>© PlayXP Inc. All Rights Reserved.</small></p>
-		</div>
-		<div class="col-md-7">
-			<a href="#"><small>이용약관</small></a>
-  			<a href="#"><small>개인정보취급방침</small></a>
-  			<a href="#"><small>책임의한계와법적고지</small></a>
-  			<a href="#"><small>블럭자명단</small></a>
-  			<a href="#"><small>신고</small></a>
+<footer class="py-5 mt-auto">
+	<div class="footer container">
+		<hr></hr>
+		<div class="row">
+			<div class="col-md-5">
+				<small>(주)플레이엑스피  대표:윤석재  사업자등록번호: 406-86-00726</small>
+				<p><small>© PlayXP Inc. All Rights Reserved.</small></p>
+			</div>
+			<div class="col-md-7">
+				<a href="#"><small>이용약관</small></a>
+	  			<a href="#"><small>개인정보취급방침</small></a>
+	  			<a href="#"><small>책임의한계와법적고지</small></a>
+	  			<a href="#"><small>블럭자명단</small></a>
+	  			<a href="#"><small>신고</small></a>
+			</div>
 		</div>
 	</div>
-</div>
-
+</footer>
 </body>
 </html>
