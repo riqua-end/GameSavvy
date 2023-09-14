@@ -9,10 +9,10 @@
 		<id property="userid" column="userid" /> <!-- 테이블에서 pk일시 -->
 		<result property="userid" column="userid" />
 		<result property="userpw" column="userpw" />
-		<result property="userName" column="username" />
+		<result property="username" column="username" />
 		<result property="address" column="address" />
-		<result property="regDate" column="regdate" />
-		<result property="updateDate" column="updatedate" />
+		<result property="regdate" column="regdate" />
+		<result property="updatedate" column="updatedate" />
 		<collection property="authList" resultMap="authMap">
 		</collection>
 	</resultMap>
@@ -31,8 +31,8 @@
 	</select>
 	
 	<insert id="join" parameterType="org.ezen.gamesavvy.domain.MemberVO">
-		insert into gs_member(userid,userpw,username)
-		values(#{userid},#{userpw},#{username})
+		insert into gs_member(userid,userpw,username,address,regdate)
+		values(#{userid},#{userpw},#{username},#{address},sysdate)
 	</insert>
 	
 	<insert id="memberAuth" parameterType="org.ezen.gamesavvy.domain.AuthVO">
