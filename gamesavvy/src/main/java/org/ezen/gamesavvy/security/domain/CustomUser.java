@@ -30,4 +30,8 @@ public class CustomUser extends User{
 		this.member = vo;
 	}
 	
+	// 사용자 아이디 가져오기 메서드 추가
+    public String getPrincipalUsername() {
+        return getUsername(); // 또는 CustomUser에서 사용자 아이디를 가져오는 메서드 호출
+    }
 }
