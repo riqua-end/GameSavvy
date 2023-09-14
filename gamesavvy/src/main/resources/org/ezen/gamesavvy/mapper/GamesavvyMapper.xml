@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.ezen.gamesavvy.mapper.GamesavvyMapper">
+	
+	<select id="getList" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
+		<![CDATA[select * from gs_board where bno > 0 ORDER BY BNO DESC]]>
+	</select>
+	
+	<select id="getListWithPaging" resultType="org.ezen.gamesavvy.domain.GamesavvyVO"> 
+		<![CDATA[
+			select bno, title, content, userid, regdate, updatedate 
+			from
+			(
+				select /*+INDEX_DESC(gs_board pk_board)*/ 
+				rownum rn, bno, title, content,	userid, regdate, updatedate 
+				from gs_board 
+				where rownum <= #{pageNum} * #{amount} 
+			)
+			where rn > (#{pageNum} -1) * #{amount} 
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="org.ezen.gamesavvy.domain.GamesavvyVO">
+		insert into gs_board (bno,title,content,userid)
+		values (seq_gs_board.nextval, #{title}, #{content}, #{userid})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE"	resultType="Long">
+			select seq_gs_board.nextval from dual
+		</selectKey>
+		insert into gs_board (bno,title,content, userid)
+		values (#{bno},#{title}, #{content}, #{userid})
+	</insert>
+	
+	<select id="read" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
+		select * from gs_board where bno =#{bno}
+	</select>
+	
+	<delete id="delete">
+		delete gs_board where bno = #{bno}
+	</delete>
+	
+	<update id="update">
+		update gs_board
+		set title= #{title},
+		content=#{content},
+		userid = #{userid},
+		updatedate = sysdate
+		where bno = #{bno}
+	</update>
+	
+	<select id="getTotalCount" resultType="int">
+	
+		select count(*) from gs_board where bno > 0
+		
+	</select>
+	
+	<!-- 아직 미적용 댓글 수 카운터...
+	<update id="updateReplyCnt">
+	
+	    update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
+	    
+	</update>
+	-->
+</mapper>

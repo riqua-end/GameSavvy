@@ -10,8 +10,8 @@ title varchar2(200) not null,
 content varchar2(2000) not null,
 userid varchar2(50) not null,
 regdate date default sysdate,
-replycnt number default 0,
-)
+updatedate date default sysdate,
+replycnt number default 0);
 
 -- 아직 추가 안함.
 gs_type number(10,0),
@@ -20,8 +20,9 @@ gs_img varchar2(1000)
 -- pk설정
 alter table gs_board add constraint pk_gs_board primary key(bno);
 
-commit;
-
+-- 테스트용
+insert into gs_board (bno, title, content, userid) 
+values(seq_gs_board.nextval, '테스트 제목','테스트 내용','user1000');
 
 ====================================================================================  댓글 테이블
 
