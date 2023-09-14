@@ -62,7 +62,7 @@ body {
 		 	<sec:authorize access="isAuthenticated()">
 		 			<a href="#"><sec:authentication property="principal.username"/></a>
 		 			<a href="../member/modify">회원정보</a>
-		 			<a href="#">로그아웃</a>
+		 			<a href="../member/logout">로그아웃</a>
 		 	</sec:authorize>
   		<hr></hr>
   		<a href="#">e스포츠정보</a>
