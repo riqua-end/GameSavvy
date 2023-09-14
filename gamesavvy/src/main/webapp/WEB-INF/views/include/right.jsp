@@ -98,6 +98,7 @@ body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td, form, fi
 	<div class="log-out">
 		<p>더 안전하고 편리하게 사용하세요.</p>
   		<!-- 로그인 안한 경우 -->
+<<<<<<< HEAD
 	 	<sec:authorize access="isAnonymous()">
 	 		<a id="customlogin" href="../member/login" class="login-btn">로그인</a>
 	 			<div>
@@ -123,6 +124,24 @@ body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td, form, fi
 </div>
 </div> <!-- col-md-3 -->
 
+=======
+		 	<sec:authorize access="isAnonymous()">
+		 		<a id="customlogin" href="../member/login">로그인</a>
+		 		<a id="memberJoin" href="../member/join">회원가입</a>
+		 	</sec:authorize>
+		 		
+		 	<!-- 로그인 한 경우 -->
+		 	<sec:authorize access="isAuthenticated()">
+		 			<a href="#"><sec:authentication property="principal.username"/></a>
+		 			<a href="../member/modify">회원정보</a>
+		 			<a href="../member/logout">로그아웃</a>
+		 	</sec:authorize>
+  		<hr></hr>
+  		<a href="#">e스포츠정보</a>
+  		<a href="#">e스포츠일정</a>
+	</div>
+</div> <!-- col-md-2 -->
+>>>>>>> branch 'member' of https://github.com/riqua-end/GameSavvy.git
 
 </body>
 </html>
