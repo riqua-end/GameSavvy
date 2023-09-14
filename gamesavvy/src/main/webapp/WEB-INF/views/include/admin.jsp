@@ -48,15 +48,12 @@ body {
 </head>
 <body>
 
-<div class="col-md-2">
-	<h4 class="text-center">메뉴</h4>
+<div class="col-md-2 mt-4">
+	<h4 class="text-center">관리자 메뉴</h4>
 	<div class="sidenav">
-		<a href="../home/home">홈</a>
-  		<a href="#">정보</a>
-  		<a href="#">게임뉴스</a>
-  		<hr></hr>
-  		<a href="../board/list">자유게시판</a>
-  		<a href="#">e스포츠일정</a>
+		<a href="#">회원관리</a>
+		<a href="#">게시판관리</a>
+		<a href="#">공지게시판</a>
 	</div>
 </div> <!-- col-md-2 -->
 
