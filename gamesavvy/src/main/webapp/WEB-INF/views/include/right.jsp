@@ -4,8 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %> 
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %> 
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -54,14 +53,15 @@ body {
 	<div class="sidenav">
   		<!-- 로그인 안한 경우 -->
 		 	<sec:authorize access="isAnonymous()">
-		 		<a id="customlogin" class="nav-link" href="../member/login">로그인</a>
-		 		<a id="memberJoin" class="nav-link" href="../member/join">회원가입</a>
+		 		<a id="customlogin" href="../member/login">로그인</a>
+		 		<a id="memberJoin" href="../member/join">회원가입</a>
 		 	</sec:authorize>
 		 		
 		 	<!-- 로그인 한 경우 -->
 		 	<sec:authorize access="isAuthenticated()">
-		 			<a class="nav-link" href="#"><sec:authentication property="principal.username"/></a>
-		 			<a class="nav-link" href="#">로그아웃</a>
+		 			<a href="#"><sec:authentication property="principal.username"/></a>
+		 			<a href="../member/modify">회원정보</a>
+		 			<a href="#">로그아웃</a>
 		 	</sec:authorize>
   		<hr></hr>
   		<a href="#">e스포츠정보</a>
