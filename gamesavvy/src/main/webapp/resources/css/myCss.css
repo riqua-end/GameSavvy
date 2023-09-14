@@ -85,3 +85,80 @@ a{
 }
 
 /* ========================================================================================================= */
+/* =====================================      right       =================================================== */
+/* 사이드 메뉴 */
+.webzine-login .log-out div a {
+    display: flex;
+    align-items: center;
+    color: #969696;
+    font-size: 12px;
+    font-family: "Noto Sans",sans-serif;
+    font-weight: 300;
+}
+/* 사이드 메뉴 */
+.webzine-login .log-out div {
+    display: flex;
+    justify-content: flex-end;
+}
+/* 사이드 메뉴 로그인 버튼 */
+.webzine-login .log-out .login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 15px;
+    height: 52px;
+    background-color: #bf0404;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 15px;
+    font-family: "Noto Sans",sans-serif;
+}
+/* 사이드 메뉴 */
+.webzine-login .log-out p {
+    margin: 0 0 10px 0;
+    color: #969696;
+    font-size: 12px;
+    font-family: "Noto Sans",sans-serif;
+    font-weight: 300;
+}
+/* 사이드 메뉴 */
+.webzine-login .log-out, .webzine-menu, .webzine-admin {
+    padding: 15px;
+}
+/* 사이드 메뉴 */
+.webzine-login, .webzine-menu, .webzine-admin {
+    margin: 0 0 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #d0d0d0;
+    box-sizing: border-box;
+}
+/* right 메뉴 세로로 변형 */
+.webzine-menu .sidenav a, .webzine-admin .sidenav a {
+	display: block;
+}
+
+/* 세로로 변형 */
+html, body, div, span, h2, h4, p, a, address, img, small {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-family: "Malgun Gothic","맑은 고딕",helvetica,"Apple SD Gothic Neo",sans-serif;
+}
+/* 확인후 괜찮으면 추가 불필요하면 삭제해도됨 */
+div, h2, h4 {
+    display: block;
+    float: none;
+}
+/* 확인후 괜찮으면 추가 불필요하면 삭제해도됨 */
+div {
+    display: block;
+}
+/* 확인후 괜찮으면 추가 불필요하면 삭제해도됨 */
+body {
+    line-height: normal;
+}
+/* 확인후 괜찮으면 추가 불필요하면 삭제해도됨 */
+body, p, h2, h4, table, th, td, form {
+    font-size: 13px;
+}

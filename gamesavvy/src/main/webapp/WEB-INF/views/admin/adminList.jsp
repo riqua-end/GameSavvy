@@ -23,17 +23,12 @@
 <div class="container mt-4 mb-4" id="maincontent">
 	<div class="row">
 		
-		<%@include file="../include/left.jsp" %>
-		
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<h2 class="text-center">Admin List</h2>
 			
-		</div> <!-- col-md-8 -->
+		</div> <!-- col-md-9 -->
 		
 		<%@include file="../include/right.jsp" %>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<%@include file="../include/adminMenu.jsp" %>
-		</sec:authorize>
 		
 	</div> <!-- row -->
 </div> <!-- maincontent -->
