@@ -89,29 +89,7 @@ public class MemberController {
 		}
 	}
 	
-	//관리자 페이지 ,회원 목록 조회
-	@Secured({ "ROLE_ADMIN" })
-	@GetMapping("/admin")
-	public String doAdmin(Model model) {
-
-		log.info("admin annotaion only");
-		
-		List<MemberVO> members = memberservice.getAllMember();
-		
-		model.addAttribute("members", members);
-		
-		return "member/admin";
-	}
 	
-	//관리자 페이지, 회원 강제 탈퇴
-	@Secured({"ROLE_ADMIN"})
-	@GetMapping("/delete/{userid}")
-	public String deleteMember(@PathVariable String userid) {
-		
-		log.info("회원 강제 탈퇴 : " + userid);
-		memberservice.removeMember(userid);
-		return "redirect:/member/admin"; //강제 탈퇴 후 관리제 페이지로 이동
-	}
 	
 	//회원 정보 수정 --- 시큐리티 암호화 패스워드 변경
 	@PostMapping("/modify")

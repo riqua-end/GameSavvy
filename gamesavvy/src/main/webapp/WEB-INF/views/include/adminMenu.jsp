@@ -51,8 +51,8 @@ body {
 <div class="col-md-2 mt-4">
 	<h4 class="text-center">관리자 메뉴</h4>
 	<div class="sidenav">
-		<a href="#">회원관리</a>
-		<a href="#">게시판관리</a>
+		<a href="../admin/adminMember">회원관리</a>
+		<a href="../admin/adminList">게시판관리</a>
 		<a href="#">공지게시판</a>
 	</div>
 </div> <!-- col-md-2 -->

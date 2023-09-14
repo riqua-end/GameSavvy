@@ -20,8 +20,7 @@ public interface MemberMapper {
 	// 사용자 이름으로 회원 정보 조회
     MemberVO getMemberByUsername(@Param("userid") String userid);
     
-    //관리자 페이지 회원 목록
-  	public List<MemberVO> getAllMembers();
+
   	
   	//관리자 페이지 회원 강제 탈퇴
   	public void deleteMember(String userid);
