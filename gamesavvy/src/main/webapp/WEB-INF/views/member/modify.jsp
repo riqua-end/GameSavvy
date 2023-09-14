@@ -76,6 +76,7 @@
 							        </div>
 							    </div>
 							</div>
+							
 							<!-- 업로드 입력 창 -->
 							<div class="form-group">
 							    <label for="profileImage">프로필 이미지</label>
@@ -113,11 +114,11 @@
 							</div>
 							<div class="form-group">
 								<label for="uName">사용자명</label>
-								<input type="text" class="form-control" name="userName" id="uName" value='<sec:authentication property="principal.member.username"/>' required/>			
+								<input type="text" class="form-control" name="username" id="uName" value='<sec:authentication property="principal.member.username"/>' required/>			
 							</div>
 								
 							<button type="button" class="btn btn-success" id="modifyBtn">회원정보 수정</button>
-							<a role="button" class="btn btn-info" href="../main/main">홈으로</a>
+							<a role="button" class="btn btn-info" href="/home/home">홈으로</a>
 					</form>
 					
 				</div>
@@ -126,6 +127,7 @@
 </div>
 
 <%@ include file="../include/footer.jsp" %>
+
 
 <script>
 
@@ -338,6 +340,7 @@ $(document).ready(function(){
 	
 });
 </script>
+
 
 <script>
 $(function() {
