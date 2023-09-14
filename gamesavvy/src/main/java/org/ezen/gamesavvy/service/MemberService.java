@@ -16,8 +16,6 @@ public interface MemberService {
 	// 현재 로그인한 사용자의 정보를 가져옴
 	public MemberVO getMemberByUsername(String userid);
 
-	public List<MemberVO> getAllMember();
-
 	public void removeMember(String userid);
 
 	void modifyMember(MemberVO member, String newPassword);

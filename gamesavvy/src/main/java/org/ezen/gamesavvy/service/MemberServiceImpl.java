@@ -76,11 +76,7 @@ public class MemberServiceImpl implements MemberService {
         return membermapper.getMemberByUsername(userid);
     }
 
-	//관리자 페이지 회원 목록
-	@Override
-	public List<MemberVO> getAllMember(){
-		return membermapper.getAllMembers();
-	}
+
 
 	//관리자 페이지 회원 강제 탈퇴
 	@Transactional

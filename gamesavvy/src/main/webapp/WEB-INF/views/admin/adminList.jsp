@@ -4,8 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %> 
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %> 
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,6 +16,7 @@
 <!-- MS -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,IE=EmulateIE9"/> 
+</head>
 <body>
 
 <%@include file="../include/header.jsp" %>
@@ -26,15 +26,8 @@
 		<%@include file="../include/left.jsp" %>
 		
 		<div class="col-md-8">
-			<h2 class="text-center">Steam Savvy</h2>
-			<div class="row">
-				<div class="col-md-6">
-					<p class="text-center">table1</p>
-				</div> <!-- col-md-6 -->
-				<div class="col-md-6">
-					<p class="text-center">table2</p>
-				</div> <!-- col-md-6 -->
-			</div> <!-- row2 -->
+			<h2 class="text-center">Admin List</h2>
+			
 		</div> <!-- col-md-8 -->
 		
 		<%@include file="../include/right.jsp" %>
