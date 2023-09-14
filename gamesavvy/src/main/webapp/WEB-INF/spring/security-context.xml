@@ -23,14 +23,14 @@
 		<!-- 오류 페이지 핸들러 수정 필요
 		<security:access-denied-handler ref="customAccessDenied"/>
 		-->
-		<security:form-login login-page="/member/customLogin"/>
+		<security:form-login login-page="/member/login"/>
 		
-		<security:form-login login-page="/member/customLogin" authentication-success-handler-ref="customLoginSuccess" />
+		<security:form-login login-page="/member/login" authentication-success-handler-ref="customLoginSuccess" />
 		
 		<!-- 3600초 동안 로그인 유지 -->
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="3600" />
 		
-		<security:logout logout-url="/member/customLogout" invalidate-session="true" delete-cookies="remeber-me,JSESSIONID"/>
+		<security:logout logout-url="/member/logout" invalidate-session="true" delete-cookies="remeber-me,JSESSIONID"/>
 		
 	</security:http>
 	

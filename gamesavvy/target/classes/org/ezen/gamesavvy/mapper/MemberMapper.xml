@@ -72,7 +72,7 @@
 	<!-- 회원 정보 수정 -->
     <update id="updateMember" parameterType="org.ezen.gamesavvy.domain.MemberVO">
         UPDATE gs_member
-        SET userpw = #{userpw}, username = #{username}
+        SET userpw = #{userpw}, username = #{username,jdbcType=VARCHAR}
         WHERE userid = #{userid}
     </update>
     
