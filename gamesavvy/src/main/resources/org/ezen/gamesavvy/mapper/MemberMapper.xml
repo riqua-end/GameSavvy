@@ -30,4 +30,55 @@
 		WHERE mem.userid = #{userid}
 	</select>
 	
+	<insert id="join" parameterType="org.ezen.gamesavvy.domain.MemberVO">
+		insert into gs_member(userid,userpw,username)
+		values(#{userid},#{userpw},#{username})
+	</insert>
+	
+	<insert id="memberAuth" parameterType="org.ezen.gamesavvy.domain.AuthVO">
+		insert into gs_member_auth(userid,auth)
+		values(#{userid},#{auth})
+	</insert>
+	
+	<!-- 관리자 페이지용 회원 목록 조회, 관리자 페이지 만들고 적용
+    <select id="getAllMembers" resultType="org.ezen.ezenProject.domain.MemberVO">
+        SELECT *
+        FROM gs_member
+    </select>
+    -->
+    <!-- 관리자 페이지용 회원 강제 탈퇴 , 관리자 페이지 만들고 적용
+	<delete id="deleteLikes" parameterType="string">
+	    DELETE FROM LIKE_TEST WHERE USER_ID = #{userid}
+	</delete>
+	
+	
+	<delete id="deleteMemberAuth" parameterType="string">
+	    DELETE FROM gs_member_auth WHERE USERID = #{userid}
+	</delete>
+	
+	<delete id="deleteMember" parameterType="string">
+	    DELETE FROM gs_member WHERE USERID = #{userid}
+	</delete>
+	
+	<delete id="deleteBoardByWriter">
+	    DELETE FROM gs_board WHERE WRITER = #{writer}
+	</delete>
+	
+	<delete id="deleteReplyByWriter">
+	    DELETE FROM TEST_REPLY WHERE REPLYER = #{replyer}
+	</delete>
+	-->
+	
+	<!-- 회원 정보 수정 -->
+    <update id="updateMember" parameterType="org.ezen.gamesavvy.domain.MemberVO">
+        UPDATE gs_member
+        SET userpw = #{userpw}, username = #{username}
+        WHERE userid = #{userid}
+    </update>
+    
+    <!-- 사용자명으로 회원 정보 조회 -->
+    <select id="getMemberByUsername" resultType="org.ezen.gamesavvy.domain.MemberVO">
+        SELECT * FROM gs_member WHERE userid = #{userid}
+    </select>
+	
 </mapper>

@@ -1,38 +1,193 @@
-*{
+* {
 	margin: 0;
-	padding:0;
+	padding: 0;
 }
 
-/* 화면 전체 렙 */
-.wrapper{
-	width: 1900px;	
+#main { /*main과 footer의 경계선을 주기 위해 main 아래 부분에다가 선 만들어놈 */
+	border-bottom: 1px solid #f7f7f7;
 }
 
-/* content 랩 */
-.wrap{
-	width: 600px;
-    margin: auto;
-    top: 40%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
+#content { /*main 부분에서 내용이 들어갈 세로 크기 지정*/
+	min-width: 1050px;
+	padding-bottom: 170px;
+}
+
+.main_page { /* main 부분에서 내용이 들어갈 부분 가로크기지정후 가운데 정렬 */
+	width: 1050px;
+	margin: 0 auto; /*가운데 정렬 */
+}
+
+#content .form { /*회원 가입 폼 가운데 정렬 */
+	width: 640px;
+	margin: 0 auto;
+}
+
+#content .form .main_title { /*회원가입 적혀있는 부분 */
+	font-weight: 900px;
+	font-size: 30px;
+	color: #333;
+	line-height: 40px;
+	text-align: center;
+	letter-spacing: -.5px;
+}
+
+#content .form .sub { /*필수 입력 사항 적혀있는 부분*/
+	padding: 23px 0 10px;
+	font-size: 12px;
+	color: #666;
+	line-height: 17px;
+	text-align: right;
+	border-bottom: 2px solid black;
+	margin-bottom: 0;
+}
+
+#main .col-sm-6 input::placeholder { /* input칸에 있는 글씨 옅은색으로 */
+	color: rgba(110, 107, 107, 0.4)
+}
+
+#font_size { /*font 크기를 14로 할때 이거 사용*/
+	font-size: 14px;
+	position: relative;
+}
+
+#fst { /*회원 가입 폼에서 왼쪽 부분 ex)아이디, 비밀번호 , 비밀번호확인 등등.. */
+	width: 159px;
+	padding: 20px 0 0 20px;
+	font-weight: 700;
+	font-size: 14px;
+	color: #333;
+	line-height: 20px;
+	vertical-align: top;
+	text-align: left;
+}
+
+#sst { /*회원 가입 폼에서 오른쪽 부분 ex)input 기능, 중복확인 기능 등등.. */
+	display: flex;
+	padding: 10px 0px;
+	border-top: 0;
+	font-size: 14px;
+	vertical-align: top;
+	text-align: left;
+	left: 60px;
+}
+
+#id_chk { /* 아이디 중복 확인 */
+	background-color: transparent;
+	border: 1px solid #5f0080; /* 보라색 테두리 */
+	border-radius: 5px;
+	position: absolute;
+	color: #5f0080;
+	left: 350px;
+	width: 120px;
+	height: 44px;
+	font-size: 12px;
 }
 
 /* join 유효성 문구 */
-
 .final_pw_ck {
-	display:none;
+	display: none;
 }
+
 .final_pwck_ck {
-	display:none;
+	display: none;
 }
 
 /* 비밀번호 확인 일치 유효성검사 */
 .pwck_input_re_1 {
-	color : green;
-	display:none;
+	margin-left: 157px;
+	color: green;
+	display: none;
 }
+
 .pwck_input_re_2 {
-	color : red;
-	display:none;
+	margin-left: 157px;
+	color: red;
+	display: none;
+}
+
+/* 주소 Daum api */
+#address { /*주소 검색 */
+	background-color: transparent;
+	border: 1px solid #5f0080; /* 보라색 테두리 */
+	border-radius: 5px;
+	position: absolute;
+	color: #5f0080;
+	left: 175px;
+	width: 332px;
+	height: 44px;
+	font-size: 14px;
+	top: 8px;
+	right: 150px;
+}
+
+#addressNo { /*주소검색 */
+	display: inline-block;
+	height: 100%;
+	margin-left: -14px;
+	padding-left: 24px;
+	color: #5f0080;
+	line-height: 30px;
+	background:
+		url(https://res.kurly.com/pc/service/common/2006/ico_search.svg)
+		no-repeat 0 50%;
+	background-size: 25px 24px;
+	vertical-align: top;
+}
+
+.address_search .address-inputs {
+	display: none;
+}
+
+.memAdd {
+	height: 35px;
+	width: 312px;
+	margin-left: 170px;
+	font-size: 12px;
+	display: inline;
+	padding: 10px 0px;
+	border-top: 0;
+	font-size: 14px;
+	vertical-align: top;
+	text-align: left;
+}
+
+/* Styles for the DaumPostcode button */
+.daumButton {
+	background-color: transparent;
+	border: 1px solid #5f0080; /* 보라색 테두리 */
+	border-radius: 5px;
+	color: #5f0080;
+	position: absolute;
+	left: 525px;
+	width: 120px;
+	height: 44px;
+	font-size: 14px;
+	margin-right: 30px;
+}
+
+.boder_btom { /*가입하기 위에 줄 */
+	border-bottom: 2px solid black;
+}
+
+.btom_line { /*가입 하기 위에 줄 */
+	height: 64px;
+	margin-bottom: 19px;
+}
+
+.form_footer { /*footer로 부터 가입하기 사이 간격 */
+	padding-top: 40px;
+	text-align: center;
+}
+
+.btn_join { /*가입하기 버튼 */
+	width: 240px;
+	height: 56px;
+	font-size: 16px;
+	line-height: 41px;
+}
+
+#formSubmit .active { /*가입하기 버튼 */
+	border: 1px solid #5f0081;
+	background-color: #5f0080;
+	color: #fff;
 }
