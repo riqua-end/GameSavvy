@@ -54,7 +54,7 @@ body {
   		<a href="#">정보</a>
   		<a href="#">게임뉴스</a>
   		<hr></hr>
-  		<a href="#">e스포츠정보</a>
+  		<a href="../board/list">자유게시판</a>
   		<a href="#">e스포츠일정</a>
 	</div>
 </div> <!-- col-md-2 -->
