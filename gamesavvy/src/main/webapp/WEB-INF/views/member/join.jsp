@@ -28,6 +28,8 @@
 <!--google icon -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="../css/join.css?after"/> <!--수정시 바로 적용을 위해 after추가 -->
+<!-- 다음api -->
+<script src='https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js'></script>
 </head>
 <body>
 
