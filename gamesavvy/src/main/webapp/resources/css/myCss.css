@@ -1,0 +1,87 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+/* =====================================      Header       =================================================== */
+/* Header menu , 검색창 */
+#headmenu {
+    display: flex;
+    margin: 0 0 12px;
+    width: 445px;
+    height: 50px;
+    border: 3px solid #bf0404;
+    border-radius: 14px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#search_input {
+    padding: 0 20px;
+    width: calc(100% - 60px);
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    border: 0;
+    border-radius: 12px 0 0 12px;
+    outline: 0;
+}
+
+#headmenu-search-btn {
+    width: 60px;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    background-repeat: no-repeat;
+    background-size: 27px;
+    background-position: center;
+    border: 0;
+    border-radius: 0 12px 12px 0;
+}
+
+
+/*
+드롭다운 메뉴 가 뒤에 안밀려나게*/
+.dropdown-menu {
+    position: absolute;
+}
+/*햄버거바 아웃라인 없애기*/
+
+.navbar-toggler {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap; /*확대했을떄 밑에 메뉴 안넘어가게 하는부분*/
+    font-size: 16px;
+}
+
+.mainMenu {
+    font-size: 16px;
+}
+
+/*햄버거 버튼색 변경*/
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0,0,0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/*드롭다운 메뉴를 제일 상단으로 끌어올리기 값이 클수록 우선순위가 크다.*/
+.dropdown-menu {
+    z-index: 9999;
+}
+
+
+@media (max-width: 768px) {
+    /* 화면이 768px 이하로 작아질 때 헤더 항목들이 겹치지 않게 */
+    .mainMenu {
+        display: block;
+        width: 100%;
+    }
+}
+
+.navbar-nav{
+    color: black;
+    font-size: 15px;
+}
+
+a{
+    color: black;
+}
+
+/* ========================================================================================================= */
