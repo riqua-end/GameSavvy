@@ -186,7 +186,6 @@ $(document).ready(function(){
 	});
 	
 	//게시글 제목 클릭시 이동
-	
 	$('.move').on("click",function(e){
 		e.preventDefault(); //a의 원래 기능을 취소
 		console.log('게시글 번호 클릭');
