@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		AuthVO auth = new AuthVO();
 		
-		auth.setAuth("ROLE_ADMIN"); // 권한은 일반 회원으로 초기화
+		auth.setAuth("ROLE_MEMBER"); // 권한은 일반 회원으로 초기화
 		
 		auth.setUserid(userid);
 		
