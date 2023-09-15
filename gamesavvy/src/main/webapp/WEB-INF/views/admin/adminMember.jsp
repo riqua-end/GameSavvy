@@ -24,7 +24,7 @@
 	<div class="row">
 		
 		<div class="col-md-9">
-			<h2 class="text-center">회원관리</h2>
+			<h2 class="text-center mt-4 mb-4">회원관리</h2>
 			<table class="table table-bordered">
         		<thead style="background-color: black; color: white;">
           			<tr>
