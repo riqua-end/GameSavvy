@@ -40,7 +40,7 @@
 				</div>
 				<div class="table-responsive-md mt-4">
 					<table id="boardTable" class="table table-hover text-center">
-						<thead>
+						<thead class="table-dark">
 							<tr>
 								<th style="width: 10%" class="font-weight-normal">번호</th>
 								<th style="width: 45%" class="font-weight-normal">제목</th>
@@ -87,12 +87,50 @@
 				</c:if>		
 			</ul>
 			
+			<!-- 검색 처리 -->
+			<div class="row">
+				<div class="col-lg-12">
+					<form id='searchForm' action="list" method='get'>
+						<select name='type'>
+							<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+							<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자 </option>
+						</select>
+						
+						<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+						<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+						<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
+						
+						<button id="search" class='btn btn-outline-primary btn-sm'>Search</button>
+						<button id="clear" class="btn btn-outline-info btn-clear btn-sm" type="button">Clear</button>
+					</form>
+				</div>
+			</div>
+			
+			
 			<!-- 페이지 번호 클릭시 콘트롤라로 (public void list(Criteria cri, Model model)) 로 요청하는 form, 나중에 검색 데이터도 여기서 같이 처리  -->
 			<form id='actionForm' action="list" method='get'>
 				<input type='hidden' name='pageNum'	value='${pageMaker.cri.pageNum}'> 
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 				<!-- 검색처리 추가 -->
+				<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
+				<input type='hidden' name='keyword'	value='<c:out value="${ pageMaker.cri.keyword }"/>'>
 			</form>
+			
+			<!-- 모달 (게시글 등록 완료시) -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						</div>
+						<div class="modal-body">처리가 완료되었습니다.</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			
 		</div> <!-- col-md-8 -->
 		
@@ -109,6 +147,7 @@ $(document).ready(function(){
 	let result = '<c:out value="${result}"></c:out>';
 	
 	console.log("result : " + result);
+	checkModal(result);
 	
 	history.replaceState({}, null, null);
 	//현재의 히스토리를 전부 비워 줍니다.
@@ -118,9 +157,23 @@ $(document).ready(function(){
 		self.location = "register";
 	});
 	
+	//모달창
+	function checkModal(result) {
+		
+		if (result === '') {
+			return;
+		}
+		if(parseInt(result) > 0) {
+			$(".modal-body").html("게시글" + parseInt(result) + "번이 등록되었습니다.");
+		}
+		
+		$("#myModal").modal("show");
+	}
+	
 	//페이지 처리
 	let actionForm = $("#actionForm");	
 	
+	//페이지 번호를 클릭시 이동
 	$(".page-item a").on("click",function(e){		
 		e.preventDefault(); //a의 원래 기능을 취소
 		console.log('page 번호 클릭');
@@ -132,12 +185,38 @@ $(document).ready(function(){
 		actionForm.submit(); //submit(),reset()은 form의 이벤트
 	});
 	
-	$(".move").on("click",function(e){
+	//게시글 제목 클릭시 이동
+	
+	$('.move').on("click",function(e){
 		e.preventDefault(); //a의 원래 기능을 취소
-		console.log('page 번호 클릭');
+		console.log('게시글 번호 클릭');
 		actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");  //게시물번호 bno를 actionForm에 추가
 		actionForm.attr("action", "get"); //콘트롤라 get으로 요청
 		actionForm.submit();
+	});
+	
+	//검색 처리
+	let searchForm = $("#searchForm");
+	
+	$("#searchForm #search").on("click", function(e){
+		if(!searchForm.find("option:selected").val()){
+			alert("검색 종류를 선택하세요.");
+			return false;
+		}
+		
+		if(!searchForm.find("input[name='keyword']").val()) {
+			alert("키워드를 입력하세요");
+			return false;
+		}
+		
+		searchForm.find("input[name='pageNum']").val("1");
+		e.preventDefault();
+		searchForm.submit();
+	});
+	
+	$("#searchForm #clear").on("click", function(e){
+		
+		searchForm.empty().submit();
 	});
 	
 });
