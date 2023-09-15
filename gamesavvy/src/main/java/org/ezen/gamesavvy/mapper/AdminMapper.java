@@ -2,29 +2,48 @@ package org.ezen.gamesavvy.mapper;
 
 import java.util.List;
 
+import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
 
 public interface AdminMapper {
 	
+/*================================= 관리자 회원 목록 =====================================*/
 	//관리자 페이지 회원 목록
   	public List<MemberVO> getAllMembers();
   	
-  	//관리자 페이지 게시판 목록
-  	public List<GamesavvyVO> getAllList();
+  	//관리자 페이지 회원 목록
+  	public List<MemberVO> getAllMembersWithPaging(Criteria cri);
+  	
+  	//관리자 페이지 회원목록 총갯수.
+  	public int getMembersTotalCount(Criteria cri);
   	
   	//관리자 페이지 회원 강제 탈퇴
   	public void deleteMember(String userid);
   	
-  	//public void deleteLikes(String userid);
-
   	public void deleteMemberAuth(String userid);
-
-  	public void deleteBoardByWriter(String userid);
-
-  	//public void deleteReplyByWriter(String writer);
   	
+  	public void deleteBoardByWriter(String userid);
+  	
+  	//추천
+  	//public void deleteLikes(String userid);
+  	
+  	//댓글
+  	//public void deleteReplyByWriter(String writer);
+/*====================================================================================*/
+/*=============================== 관리자 게시판 목록 =====================================*/
+  	//관리자 페이지 게시판 목록
+  	public List<GamesavvyVO> getAllList();
+  	
+  	//관리자 페이지 게시판 목록
+  	public List<GamesavvyVO> getAllListWithPaging(Criteria cri);
+  	
+  	//관리자 페이지 게시글 총갯수.
+  	public int getListTotalCount(Criteria cri);
+  	
+  	//게시판 번호
   	public void deleteBoardByBno(Long bno);
+/*====================================================================================*/
   	
   	public void updateMember(MemberVO member);
 	

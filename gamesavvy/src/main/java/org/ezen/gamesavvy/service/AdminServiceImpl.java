@@ -2,6 +2,7 @@ package org.ezen.gamesavvy.service;
 
 import java.util.List;
 
+import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
 import org.ezen.gamesavvy.mapper.AdminMapper;
@@ -9,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.log4j.Log4j;
+
 @Service
+@Log4j
 public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
@@ -17,14 +21,21 @@ public class AdminServiceImpl implements AdminService {
 	
 	//관리자 페이지 회원 목록
 	@Override
-	public List<MemberVO> getAllMember(){
-		return amapper.getAllMembers();
+	public List<MemberVO> getAllMember(Criteria cri){
+		
+		log.info("getAll Members With Paging..." + cri);
+		
+		return amapper.getAllMembersWithPaging(cri);
 	}
 	
 	//관리자 페이지 게시판 목록
+	//페이지 처리
 	@Override
-	public List<GamesavvyVO> getAllList(){
-		return amapper.getAllList();
+	public List<GamesavvyVO> getAllList(Criteria cri){
+		
+		log.info("getAll List With Paging..." + cri);
+		
+		return amapper.getAllListWithPaging(cri);
 	}
 
 	//관리자 회원관리 페이지 회원 강제 탈퇴
@@ -46,6 +57,24 @@ public class AdminServiceImpl implements AdminService {
 		// 연관 데이터 삭제 순서: 
 
 		amapper.deleteBoardByBno(bno);
+		
+	}
+	// 게시글 총 갯수
+	@Override
+	public int getListTotal(Criteria cri) {
+		
+		log.info("getListTotal...." + cri);
+		
+		return amapper.getListTotalCount(cri);
+		
+	}
+	// 회원 총 갯수
+	@Override
+	public int getMembersTotal(Criteria cri) {
+		
+		log.info("getListTotal...." + cri);
+		
+		return amapper.getMembersTotalCount(cri);
 		
 	}
 	
