@@ -2,8 +2,10 @@ package org.ezen.gamesavvy.controller;
 
 import java.util.List;
 
+import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
+import org.ezen.gamesavvy.domain.PageDTO;
 import org.ezen.gamesavvy.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -25,15 +27,18 @@ public class AdminController {
 	
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/adminMember")
-	public String adminMember(Model model) {
+	public void adminMember(Criteria cri, Model model) {
 		
 		log.info("회원관리 페이지...");
 		
-		List<MemberVO> admin = aservice.getAllMember();
+		List<MemberVO> admin = aservice.getAllMember(cri);
 		
 		model.addAttribute("admin", admin);
 		
-		return "admin/adminMember";
+		int total = aservice.getMembersTotal(cri);
+		log.info("total.." + total);
+		
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
 	}
 	
@@ -49,15 +54,19 @@ public class AdminController {
 	
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/adminList")
-	public String adminList(Model model) {
+	public void adminList(Criteria cri, Model model) {
 		
 		log.info("게시판관리 페이지...");
 		
-		List<GamesavvyVO> adminList = aservice.getAllList();
+		List<GamesavvyVO> adminList = aservice.getAllList(cri);
 		
 		model.addAttribute("adminList", adminList);
 		
-		return "admin/adminList";
+		int total = aservice.getListTotal(cri);
+		log.info("total.." + total);
+		
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		
 	}
 	//관리자 게시판 관리 페이지, 삭제
 	@Secured({"ROLE_ADMIN"})

@@ -9,8 +9,48 @@
         SELECT * FROM gs_member
     </select>
     
+    <!-- 관리자 페이지 회원관리 페이징처리 -->
+    <select id="getAllMembersWithPaging" resultType="org.ezen.gamesavvy.domain.MemberVO">
+    	<![CDATA[
+			select userid, username, enabled, address, regdate, updatedate 
+			from
+			(
+				select /*+INDEX_DESC(gs_member pk_gs_member)*/ 
+				rownum rn, userid, username, enabled, address, regdate, updatedate 
+				from gs_member 
+				where rownum <= #{pageNum} * #{amount} 
+			)
+			where rn > (#{pageNum} -1) * #{amount} 
+		]]>
+    </select>
+    
+    <!-- 관리자페이지 회원 총 갯수 -->
+    <select id="getMembersTotalCount" resultType="int">
+    	select count(*) from gs_member
+    </select>
+    
     <select id="getAllList" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
         SELECT * FROM gs_board
+    </select>
+    
+    <!-- 관리자 페이지 게시판 관리 페이징처리 -->
+    <select id="getAllListWithPaging" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
+    	<![CDATA[
+			select bno, title, content, userid, regdate, updatedate 
+			from
+			(
+				select /*+INDEX_DESC(gs_board pk_gs_board)*/ 
+				rownum rn, bno, title, content,	userid, regdate, updatedate 
+				from gs_board 
+				where rownum <= #{pageNum} * #{amount} 
+			)
+			where rn > (#{pageNum} -1) * #{amount} 
+		]]>
+    </select>
+    
+    <!-- 관리자페이지 게시글 총 갯수 -->
+    <select id="getListTotalCount" resultType="int">
+    	select count(*) from gs_board where bno > 0
     </select>
     
     <!-- 관리자 페이지용 회원 강제 탈퇴 , 관리자 페이지 만들고 적용
