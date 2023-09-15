@@ -33,11 +33,11 @@
 	
 	<select id="getListWithPaging" resultType="org.ezen.gamesavvy.domain.GamesavvyVO"> 
 		<![CDATA[
-			select bno, title, content, userid, regdate, updatedate 
+			select bno, title, content, userid, regdate, updatedate, replyCnt
 			from
 			(
 				select /*+INDEX_DESC(gs_board pk_gs_board)*/ 
-				rownum rn, bno, title, content,	userid, regdate, updatedate 
+				rownum rn, bno, title, content,	userid, regdate, updatedate, replyCnt
 				from gs_board 
 			where ]]>
 			<include refid="criteria"></include>
@@ -84,12 +84,12 @@
 		
 	</select>
 	
-	<!-- 아직 미적용 댓글 수 카운터...
+	<!-- 댓글 수 카운트 -->
 	<update id="updateReplyCnt">
 	
-	    update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
+	    update gs_board set replycnt = replycnt + #{amount} where bno = #{bno}
 	    
 	</update>
-	-->
+	
 	
 </mapper>
