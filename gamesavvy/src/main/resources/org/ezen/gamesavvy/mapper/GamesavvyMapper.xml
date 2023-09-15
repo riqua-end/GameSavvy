@@ -5,6 +5,28 @@
   
 <mapper namespace="org.ezen.gamesavvy.mapper.GamesavvyMapper">
 	
+	<!-- 공통으로 사용되는 sql태그, 사용전에 정의, 사용은 include태그의 refid로 사용 -->
+  	<sql id="criteria">
+  		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+  			<foreach collection="typeArr" item='type'>
+  				<trim prefix="OR">
+  					<choose>
+  						<when test="type == 'T'.toString()">
+  							title like '%' ||#{keyword}||'%'
+  						</when>
+  						<when test="type == 'C'.toString()">
+  							content like '%'||#{keyword}||'%'
+  						</when>
+  						<when test="type == 'W'.toString()">
+  							userid like '%'||#{keyword}||'%'
+  						</when>
+  					</choose>
+  				</trim>
+  			</foreach>
+  		</trim>
+  	</sql>
+	
+	
 	<select id="getList" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
 		<![CDATA[select * from gs_board where bno > 0 ORDER BY BNO DESC]]>
 	</select>
@@ -14,10 +36,13 @@
 			select bno, title, content, userid, regdate, updatedate 
 			from
 			(
-				select /*+INDEX_DESC(gs_board pk_board)*/ 
+				select /*+INDEX_DESC(gs_board pk_gs_board)*/ 
 				rownum rn, bno, title, content,	userid, regdate, updatedate 
 				from gs_board 
-				where rownum <= #{pageNum} * #{amount} 
+			where ]]>
+			<include refid="criteria"></include>
+		<![CDATA[	 
+			rownum <= #{pageNum} * #{amount}
 			)
 			where rn > (#{pageNum} -1) * #{amount} 
 		]]>
