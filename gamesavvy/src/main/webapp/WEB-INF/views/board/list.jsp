@@ -11,6 +11,15 @@
 <title>Insert title here</title>
 <meta charset="UTF-8">
 
+<style>
+#regBtn {
+    background: #444;
+    border: 1px solid #303030;
+    color: #fff;
+    padding: 0 20px;
+}
+</style>
+
 <!-- RWD -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- MS -->
@@ -23,12 +32,13 @@
 <div class="container mt-4 mb-4" id="maincontent">
 	<div class="row">
 		
-		<%@include file="../include/left.jsp" %>
-		
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<div id="submain">
 				<h2 class="text-center">자유게시판</h2>
-				<div class="table-responsive-md">
+				<div> <!-- 등록 버튼 -->
+					<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>
+				</div>
+				<div class="table-responsive-md mt-4">
 					<table id="boardTable" class="table table-hover text-center">
 						<thead>
 							<tr>
@@ -95,15 +105,26 @@
 <script>
 $(document).ready(function(){
 	
+	//EL의 result는 RedirectAttributes의 rttr.addFlashAttribute("result", board.getBno());로 전달된 값
+	let result = '<c:out value="${result}"></c:out>';
+	
+	console.log("result : " + result);
+	
+	history.replaceState({}, null, null);
+	//현재의 히스토리를 전부 비워 줍니다.
+	//뒤로가기 방지
+	
+	$("#regBtn").on("click", function(){
+		self.location = "register";
+	});
+	
 	//페이지 처리
 	let actionForm = $("#actionForm");	
 	
 	$(".page-item a").on("click",function(e){		
 		e.preventDefault(); //a의 원래 기능을 취소
 		console.log('page 번호 클릭');
-		actionForm
-		.find("input[name='pageNum']")
-		.val($(this).attr("href"));
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 		//find(selector)메서드는 자식 엘리먼트에서 selector에 해당하는 엘리먼트를 선택 
 		//pageNum이 neme인 input의 value에 클릭한 a의 href값(페이지 번호)을 넣어줌
 		//this는 이벤트가 일어난 객체이므로 <a>가 됨
@@ -114,8 +135,7 @@ $(document).ready(function(){
 	$(".move").on("click",function(e){
 		e.preventDefault(); //a의 원래 기능을 취소
 		console.log('page 번호 클릭');
-		actionForm
-		.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");  //게시물번호 bno를 actionForm에 추가
+		actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");  //게시물번호 bno를 actionForm에 추가
 		actionForm.attr("action", "get"); //콘트롤라 get으로 요청
 		actionForm.submit();
 	});

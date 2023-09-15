@@ -2,6 +2,7 @@ package org.ezen.gamesavvy.controller;
 
 import java.util.List;
 
+import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
 import org.ezen.gamesavvy.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,6 @@ public class AdminController {
 	private AdminService aservice;
 	
 	@Secured({ "ROLE_ADMIN" })
-	@GetMapping("/adminList")
-	public void adminList() {
-		
-		log.info("게시판관리 페이지...");
-	
-	}
-	
-	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/adminMember")
 	public String adminMember(Model model) {
 		
@@ -44,7 +37,7 @@ public class AdminController {
 		
 	}
 	
-	//관리자 페이지, 회원 강제 탈퇴
+	//관리자 회원관리 페이지, 회원 강제 탈퇴
 	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/delete/{userid}")
 	public String deleteMember(@PathVariable String userid) {
@@ -54,5 +47,26 @@ public class AdminController {
 		return "redirect:/admin/adminMember"; //강제 탈퇴 후 관리제 페이지로 이동
 	}
 	
+	@Secured({ "ROLE_ADMIN" })
+	@GetMapping("/adminList")
+	public String adminList(Model model) {
+		
+		log.info("게시판관리 페이지...");
+		
+		List<GamesavvyVO> adminList = aservice.getAllList();
+		
+		model.addAttribute("adminList", adminList);
+		
+		return "admin/adminList";
+	}
+	//관리자 게시판 관리 페이지, 삭제
+	@Secured({"ROLE_ADMIN"})
+	@GetMapping("/deleteList/{bno}")
+	public String deleteList(@PathVariable Long bno) {
+		
+		log.info("회원 강제 탈퇴 : " + bno);
+		aservice.removeList(bno);
+		return "redirect:/admin/adminList"; //강제 탈퇴 후 관리제 페이지로 이동
+	}
 	
 }

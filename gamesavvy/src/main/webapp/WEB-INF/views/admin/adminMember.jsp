@@ -23,10 +23,8 @@
 <div class="container mt-4 mb-4" id="maincontent">
 	<div class="row">
 		
-		<%@include file="../include/left.jsp" %>
-		
-		<div class="col-md-8">
-			<h2 class="text-center">Admin Member</h2>
+		<div class="col-md-9">
+			<h2 class="text-center">회원관리</h2>
 			<table class="table table-bordered">
         		<thead style="background-color: black; color: white;">
           			<tr>
@@ -54,9 +52,6 @@
 		</div> <!-- col-md-8 -->
 		
 		<%@include file="../include/right.jsp" %>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<%@include file="../include/adminMenu.jsp" %>
-		</sec:authorize>
 		
 	</div> <!-- row -->
 </div> <!-- maincontent -->

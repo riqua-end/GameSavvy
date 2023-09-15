@@ -11,36 +11,6 @@
 <head>
 <title>Insert title here</title>
 <meta charset="UTF-8">
-
-<style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  z-index: 1;
-  background: #eee;
-  overflow-x: hidden;
-  padding: 8px 0;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  color: #2196F3;
-  display: block;
-}
-
-.sidenav a:hover {
-  color: #064579;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
-
 <!-- RWD -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- MS -->
@@ -49,26 +19,46 @@ body {
 </head>
 <body>
 
-<div class="col-md-2">
-	<h4 class="text-center">메뉴</h4>
-	<div class="sidenav">
+<div class="col-md-3">
+	<div class="webzine-login">
+	<div class="log-out">
   		<!-- 로그인 안한 경우 -->
-		 	<sec:authorize access="isAnonymous()">
-		 		<a id="customlogin" href="../member/login">로그인</a>
-		 		<a id="memberJoin" href="../member/join">회원가입</a>
-		 	</sec:authorize>
-		 		
-		 	<!-- 로그인 한 경우 -->
-		 	<sec:authorize access="isAuthenticated()">
-		 			<a href="#"><sec:authentication property="principal.username"/></a>
-		 			<a href="../member/modify">회원정보</a>
-		 			<a href="../member/logout">로그아웃</a>
-		 	</sec:authorize>
-  		<hr></hr>
-  		<a href="#">e스포츠정보</a>
-  		<a href="#">e스포츠일정</a>
+	 	<sec:authorize access="isAnonymous()">
+	 		<p>더 안전하고 편리하게 사용하세요.</p>
+	 		<a id="customlogin" href="../member/login" class="login-btn">로그인</a>
+	 			<div>
+	 				<a id="memberJoin" href="../member/join">회원가입</a>
+	 			</div>
+	 	</sec:authorize>
+	 	<!-- 로그인 한 경우 -->
+	 	<sec:authorize access="isAuthenticated()">
+	 			<a><sec:authentication property="principal.username"/>님 환영합니다.</a>
+	 			<hr></hr>
+	 			<a href="../member/modify">회원정보</a>
+	 			<a href="../member/logout">로그아웃</a>
+	 	</sec:authorize>
+	</div> <!-- log-out -->
+	</div> <!-- webzine-login -->
+	<div class="webzine-menu">
+    	<h4>메뉴</h4>
+    	<hr></hr>
+    	<div class="sidenav">
+       		<a href="../home/home">홈</a>
+        	<a href="../board/list">자유게시판</a>
+    	</div>
 	</div>
-</div> <!-- col-md-2 -->
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<div class="webzine-admin">
+		<h4>관리자 메뉴</h4>
+		<hr></hr>
+		<div class="sidenav">
+			<a href="../admin/adminMember">회원관리</a>
+			<a href="../admin/adminList">게시판관리</a>
+			<a href="#">공지게시판</a>
+		</div>
+	</div>
+	</sec:authorize>
+</div> <!-- col-md-3 -->
 
 </body>
 </html>
