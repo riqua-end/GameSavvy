@@ -189,6 +189,7 @@ $(document).ready(function(){
 	$('.move').on("click",function(e){
 		e.preventDefault(); //a의 원래 기능을 취소
 		console.log('게시글 번호 클릭');
+		console.log('page 번호 클릭');
 		actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");  //게시물번호 bno를 actionForm에 추가
 		actionForm.attr("action", "get"); //콘트롤라 get으로 요청
 		actionForm.submit();
