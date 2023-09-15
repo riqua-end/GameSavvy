@@ -20,6 +20,9 @@ gs_img varchar2(1000)
 -- pk설정
 alter table gs_board add constraint pk_gs_board primary key(bno);
 
+-- fk설정 (gs_member userid)
+alter table gs_board add CONSTRAINT fk_gs_board foreign key (userid) references gs_member (userid);
+
 -- 테스트용
 insert into gs_board (bno, title, content, userid) 
 values(seq_gs_board.nextval, '테스트 제목','테스트 내용','user1000');
