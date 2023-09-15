@@ -24,8 +24,34 @@
 	<div class="row">
 		
 		<div class="col-md-9">
-			<h2 class="text-center">Admin List</h2>
-			
+			<h2 class="text-center">게시판 관리</h2>
+			<table class="table table-bordered">
+				<thead style="background-color: black; color: white;">
+					<tr>
+						<td>번호</td>
+						<td>분류</td>
+						<td>제목</td>
+						<td>작성자</td>
+						<td>작성일</td>
+						<td>삭제</td>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${adminList}" var="board">
+						<tr>
+							<td><c:out value="${board.bno}"/></td>
+							<!-- 나중에 다중게시판시 수정할 부분. -->
+							<td>분류</td>
+							<td><c:out value="${board.title}"/></td>
+							<td><c:out value="${board.userid}"/></td>
+							<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
+							<td>
+								<a class="btn btn-danger" href="#" onclick="showConfirmDialog('${board.bno}')">삭제</a>
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>			
 		</div> <!-- col-md-9 -->
 		
 		<%@include file="../include/right.jsp" %>
@@ -33,6 +59,14 @@
 	</div> <!-- row -->
 </div> <!-- maincontent -->
 <%@include file="../include/footer.jsp" %>
+
+<script>
+function showConfirmDialog(bno) {
+    if (confirm('삭제된 데이터는 복구할 수 없습니다. 정말로 ' + bno + ' 번 게시판을 삭제하시겠습니까?')) {
+        window.location.href = '<c:url value="/admin/deleteList/' + bno + '" />';
+    }
+}
+</script>
 
 </body>
 </html>

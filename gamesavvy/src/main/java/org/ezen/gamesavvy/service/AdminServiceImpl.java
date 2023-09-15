@@ -2,6 +2,7 @@ package org.ezen.gamesavvy.service;
 
 import java.util.List;
 
+import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
 import org.ezen.gamesavvy.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,14 @@ public class AdminServiceImpl implements AdminService {
 	public List<MemberVO> getAllMember(){
 		return amapper.getAllMembers();
 	}
+	
+	//관리자 페이지 게시판 목록
+	@Override
+	public List<GamesavvyVO> getAllList(){
+		return amapper.getAllList();
+	}
 
-	//관리자 페이지 회원 강제 탈퇴
+	//관리자 회원관리 페이지 회원 강제 탈퇴
 	@Transactional
 	@Override
 	public void removeMember(String userid) {
@@ -30,6 +37,16 @@ public class AdminServiceImpl implements AdminService {
 		amapper.deleteBoardByWriter(userid);
 	    amapper.deleteMemberAuth(userid);
 	    amapper.deleteMember(userid);
+	}
+	
+	//관리자 게시판 관리 페이지 삭제
+	@Transactional
+	@Override
+	public void removeList(Long bno) {
+		// 연관 데이터 삭제 순서: 
+
+		amapper.deleteBoardByBno(bno);
+		
 	}
 	
 }

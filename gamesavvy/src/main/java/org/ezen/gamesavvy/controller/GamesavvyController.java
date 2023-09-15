@@ -76,7 +76,7 @@ public class GamesavvyController {
 	
 	//페이지 정보처리 고려한 modify 시큐리티 적용
 	@PostMapping("/modify")
-	@PreAuthorize("principal.username == #board.userid") //로그인한 아이디와 게시글 작성한 동일 체크
+	@PreAuthorize("principal.username == #game.userid") //로그인한 아이디와 게시글 작성한 동일 체크
 	public String modify(GamesavvyVO game, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		
 		log.info("modify:" + game);

@@ -9,6 +9,10 @@
         SELECT * FROM gs_member
     </select>
     
+    <select id="getAllList" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
+        SELECT * FROM gs_board
+    </select>
+    
     <!-- 관리자 페이지용 회원 강제 탈퇴 , 관리자 페이지 만들고 적용
 	<delete id="deleteLikes" parameterType="string">
 	    DELETE FROM LIKE_TEST WHERE USER_ID = #{userid}
@@ -32,5 +36,9 @@
 	    DELETE FROM TEST_REPLY WHERE REPLYER = #{replyer}
 	</delete>
 	-->
+	
+	<delete id="deleteBoardByBno">
+		DELETE FROM gs_board WHERE BNO = #{BNO}
+	</delete>
 
 </mapper>
