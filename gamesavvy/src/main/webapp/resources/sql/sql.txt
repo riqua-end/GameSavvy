@@ -46,31 +46,20 @@ create sequence seq_gs_reply nocache;
 alter table gs_reply add constraint pk_gs_reply primary key (rno);
 
 --gs_reply에 외래키 지정
-alter table gs_reply add constraint fk_gs_reply foreign key (bno) references gs_board (bno);
+ALTER TABLE gs_reply
+ADD CONSTRAINT fk_gs_reply
+FOREIGN KEY (BNO)
+REFERENCES gs_board (BNO)
+ON DELETE CASCADE;
 
 commit;
 
 --댓글 처리를 위한 인덱스 생성(처리 속도 개선)
 Create index idx_gs_reply on gs_reply (bno desc,rno asc) ;
 
---댓글 개수 처리
-alter table gs_reply add (replycnt number default 0);
-
 --댓글 개수 초기화 처리
 update gs_board set replycnt = (select count(rno) from gs_reply where gs_reply.bno = gs_board.bno);
 
-
---댓글 테이블 기존 외래키 제약 조건 삭제
-ALTER TABLE gs_reply
-DROP CONSTRAINT fk_gs_reply;
-
-
---댓글 테이블 외래 키 제약 조건 변경
-ALTER TABLE gs_reply
-ADD CONSTRAINT fk_gs_reply
-FOREIGN KEY (BNO)
-REFERENCES gs_board (BNO)
-ON DELETE CASCADE;
 commit;
 
 
