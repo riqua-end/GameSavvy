@@ -32,6 +32,4 @@ public interface ReplyMapper {
 	//게시글 삭제시 댓글 모두 삭제
 	public int deleteAll(Long bno);
 	
-	//댓글 회원 아이디로 조회
-	public List<ReplyVO> getRepliesByReplyer(String userid);
 }

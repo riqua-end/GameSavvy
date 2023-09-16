@@ -22,7 +22,7 @@ public class ReplyServiceImpl implements ReplyService {
 	private ReplyMapper mapper;
 	
 	@Setter(onMethod_ = @Autowired)
-	private GamesavvyMapper boardMapper; 
+	private GamesavvyMapper boardMapper;
 	
 	@Transactional
 	@Override
@@ -75,4 +75,5 @@ public class ReplyServiceImpl implements ReplyService {
 		
 		return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri, bno));
 	}
+	
 }

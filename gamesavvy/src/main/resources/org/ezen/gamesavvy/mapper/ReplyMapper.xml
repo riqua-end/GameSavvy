@@ -56,12 +56,5 @@
 		delete from gs_reply where bno = #{bno}
 	</delete>
 	
-	<!-- 회원이 작성한 댓글 목록 가져오기 -->
-    <select id="getRepliesByReplyer" resultType="org.ezen.gamesavvy.domain.ReplyVO">
-        <![CDATA[
-            SELECT * FROM gs_reply
-            WHERE replyer = #{userid}
-        ]]>
-    </select>
 	
 </mapper>

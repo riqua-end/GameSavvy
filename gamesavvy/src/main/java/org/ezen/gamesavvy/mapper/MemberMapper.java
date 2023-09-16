@@ -1,6 +1,5 @@
 package org.ezen.gamesavvy.mapper;
 
-import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.ezen.gamesavvy.domain.AuthVO;
