@@ -1,10 +1,17 @@
 package org.ezen.gamesavvy.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.PageDTO;
 import org.ezen.gamesavvy.service.GamesavvyService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +43,25 @@ public class GamesavvyController {
 		log.info("total: " + total);
 		
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		
+		// 각 게시물의 추천 수를 가져와서 모델에 추가
+		// 현재 페이지의 게시물 목록에서 각 게시물의 번호(bno)를 추출하여 리스트로 저장
+		List<Long> bnoList = service.getList(cri)  // 서비스를 통해 현재 페이지의 게시물 목록을 가져옴
+		    .stream()                               // 목록을 스트림으로 변환하여 각 게시물에 접근
+		    .map(GamesavvyVO::getBno)               // 각 게시물에 대해 getBno() 메서드를 호출하여 게시물 번호를 추출
+		    .collect(Collectors.toList());          // 추출된 게시물 번호를 리스트로 수집
+		
+		// 각 게시물의 추천 수를 저장할 맵을 생성
+	    Map<Long, Integer> recommendCounts = new HashMap<>();
+	    
+	    // 각 게시물의 번호를 기반으로 추천 수를 조회하고 맵에 저장
+	    for (Long bno : bnoList) {
+	        int recommendCount = service.getRecommendCount(bno);
+	        recommendCounts.put(bno, recommendCount);
+	    }
+	    // 모델에 추천 수를 추가
+	    // list.jsp에서 ${recommendCounts[board.bno]} 를 사용해서 각 게시물의 추천수를 출력
+	    model.addAttribute("recommendCounts", recommendCounts);
 		
 	}
 	
@@ -62,20 +89,37 @@ public class GamesavvyController {
 		return "redirect:list";
 	}
 	
-	//페이지 처리를 한 get,modify
+	// 게시글 조회 및 수정 페이지
+	// 이 메서드는 URL 경로가 "/get" 또는 "/modify"인 경우에 실행
 	@GetMapping({ "/get", "/modify" })
-	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
-		// bean규칙의 DTO객체는 자동 model에 포함
-		// @ModelAttribute("cri")는 model에 cri속성으로 cri객체를 강제로 저장
-		// 기본형을 Model에 포함시킬때
-		log.info("/get or modify");
-		
-		//게시글의 조회수 처리
-		service.updateCnt(bno);
-		
-		
-		model.addAttribute("board", service.get(bno));
+	public void get(@RequestParam("bno") Long bno, // URL에서 전달되는 게시물 번호를 파라미터로 받음
+	                @ModelAttribute("cri") Criteria cri, // @ModelAttribute로 설정된 "cri" 속성을 모델에 추가
+	                Model model, // 뷰에 전달할 데이터를 담는 모델 객체
+	                Authentication authentication) { // 현재 사용자의 인증 정보를 확인하기 위한 객체
+
+	    log.info("/get or modify");
+
+	    // 게시글의 조회수를 증가. 조회 페이지에 접근한 경우 조회수를 증가
+	    service.updateCnt(bno);
+
+	    // 추천 기능을 구현하기 위한 변수들을 초기화
+	    String username = null; // 현재 로그인한 사용자의 이름을 저장할 변수
+	    boolean isLiked = false; // 현재 사용자가 해당 게시물을 추천했는지 여부를 저장할 변수
+	    int recommendCount = 0; // 해당 게시물의 총 추천 수를 저장할 변수
+
+	    // 현재 사용자가 로그인되어 있고, 인증된 경우에만 추천 기능을 확인
+	    if (authentication != null && authentication.isAuthenticated()) {
+	        username = authentication.getName(); // 현재 로그인한 사용자의 이름을 가져옴
+	        isLiked = service.isLikedByUser(bno, username); // 현재 사용자가 해당 게시물을 추천했는지 확인
+	        recommendCount = service.getRecommendCount(bno); // 해당 게시물의 총 추천 수를 가져옴
+	    }
+
+	    // 뷰로 전달할 데이터를 모델에 추가
+	    model.addAttribute("board", service.get(bno)); // 해당 게시물의 상세 정보를 모델에 추가
+	    model.addAttribute("isLiked", isLiked); // 현재 사용자가 해당 게시물을 추천했는지 여부를 모델에 추가
+	    model.addAttribute("recommendCount", recommendCount); // 해당 게시물의 총 추천 수를 모델에 추가
 	}
+
 	
 	//페이지 정보처리 고려한 modify 시큐리티 적용
 	@PostMapping("/modify")
@@ -105,6 +149,69 @@ public class GamesavvyController {
 		}
 
 		return "redirect:list" + cri.getListLink();
+	}
+	
+	
+	//추천
+	@PostMapping("/like")
+	@ResponseBody
+	public ResponseEntity<String> like(@RequestParam("bno") Long bno, Authentication authentication) {
+	    String username = authentication.getName(); // 현재 로그인한 사용자의 이름
+
+	    if (service.isLikedByUser(bno, username)) {
+	        // 이미 좋아요한 경우, 추천을 취소하도록 처리
+	        service.decreaseRecommendCount(bno);
+	        service.removeLike(bno, username);
+	        return ResponseEntity.ok("unliked");
+	    } else {
+	        // 좋아요하지 않은 경우, 추천수 증가 및 좋아요 상태 추가
+	        service.increaseRecommendCount(bno);
+	        service.addLike(bno, username);
+	        return ResponseEntity.ok("liked");
+	    }
+	}
+	
+	//추천 취소
+	@PostMapping("/dislike")
+	@ResponseBody
+	public ResponseEntity<String> dislike(@RequestParam("bno") Long bno, Authentication authentication) {
+	    String username = authentication.getName(); // 현재 로그인한 사용자의 이름
+
+	    if (service.isLikedByUser(bno, username)) {
+	        // 이미 좋아요한 경우, 추천을 취소하도록 처리
+	        service.decreaseRecommendCount(bno);
+	        service.removeLike(bno, username);
+	        return ResponseEntity.ok("unliked");
+	    } else {
+	        // 이미 좋아요하지 않은 경우, 아무 작업 없이 "unliked" 응답
+	        return ResponseEntity.ok("unliked");
+	    }
+	}
+	
+	//추천수 조회
+	@GetMapping("/getRecommendCount")
+    @ResponseBody
+    public ResponseEntity<Integer> getRecommendCount(@RequestParam("bno") Long bno) {
+        int recommendCount = service.getRecommendCount(bno);
+        return ResponseEntity.ok(recommendCount);
+    }
+	
+	//로그인한 사용자의 추천 여부 확인
+	@GetMapping("/checkLiked")
+	@ResponseBody
+	public ResponseEntity<String> checkLiked(@RequestParam("bno") Long bno, Authentication authentication) {
+	    if (authentication != null && authentication.isAuthenticated()) {
+	        String username = authentication.getName(); // 현재 로그인한 사용자의 이름
+
+	        if (service.isLikedByUser(bno, username)) {
+	            return ResponseEntity.ok("liked");
+	        } else {
+	            return ResponseEntity.ok("unliked");
+	        }
+	    } else {
+	        // 인증되지 않은 사용자라면 "unliked" 응답
+	        return ResponseEntity.ok("unliked");
+	    }
 	}
 	
 }

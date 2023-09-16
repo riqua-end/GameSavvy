@@ -26,6 +26,9 @@ alter table gs_board add CONSTRAINT fk_gs_board foreign key (userid) references 
 --조회수 추가
 alter table gs_board add (cnt number default 0);
 
+--추천 기능 구현
+alter table gs_board add (recommend_count number default 0);
+
 -- 테스트용
 insert into gs_board (bno, title, content, userid) 
 values(seq_gs_board.nextval, '테스트 제목','테스트 내용','user1000');
@@ -110,21 +113,11 @@ CREATE TABLE gs_like (
     user_id VARCHAR2(50) NOT NULL,
     board_id NUMBER NOT NULL,
     like_date DATE DEFAULT SYSDATE,
-    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES test_member (userid),
-    CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES test_board (bno),
-    CONSTRAINT unique_like_user_board UNIQUE (user_id, board_id)
+    CONSTRAINT fk_like_user_id FOREIGN KEY (user_id) REFERENCES gs_member (userid),
+    CONSTRAINT fk_like_board_id FOREIGN KEY (board_id) REFERENCES gs_board (bno) ON DELETE CASCADE,
+    CONSTRAINT unique_like_gs_board UNIQUE (user_id, board_id)
 );
 
-ALTER TABLE like_test
+ALTER TABLE gs_like
 ADD like_status NUMBER(1) DEFAULT 0;
 
--- 기존 외래 키 제약 조건 삭제
-ALTER TABLE like_test
-DROP CONSTRAINT fk_board_id;
-
--- 새로운 외래 키 제약 조건 생성
-ALTER TABLE like_test
-ADD CONSTRAINT fk_board_id
-FOREIGN KEY (board_id)
-REFERENCES test_board (bno)
-ON DELETE CASCADE;

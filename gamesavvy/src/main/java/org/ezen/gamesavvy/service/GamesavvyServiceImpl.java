@@ -7,6 +7,7 @@ import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.mapper.GamesavvyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -81,4 +82,49 @@ public class GamesavvyServiceImpl implements GamesavvyService {
 		return gmapper.updateCnt(bno);
 	}
 	
+	
+	/* ================== 게시글 추천 기능 구현 ==================== */
+	
+	//게시글 추천 증가
+	@Override
+	@Transactional
+	public void increaseRecommendCount(Long bno) {
+		
+		log.info("게시글 추천");
+		gmapper.updateRecommendCount(bno, 1);
+	}
+	
+	//게시글 추천 감소
+	@Override
+	@Transactional
+	public void decreaseRecommendCount(Long bno) {
+		
+		log.info("게시글 추천 취소");
+		gmapper.updateRecommendCount(bno, -1);
+	}
+	
+	//추천수 조회
+	@Override
+	public int getRecommendCount(Long bno) {
+		return gmapper.getRecommendCount(bno);
+	}
+	
+	//좋아요 추가
+	@Override
+    public void addLike(Long bno, String username) {
+        gmapper.addLike(bno, username);
+    }
+    
+	//좋아요 제거
+    @Override
+    public void removeLike(Long bno, String username) {
+        gmapper.removeLike(bno, username);
+    }
+    
+    //로그인한 사용자의 추천여부 파악
+  	@Override
+  	public boolean isLikedByUser(Long bno,String username) {
+  		int count = gmapper.isLikedByUser(bno, username);
+  	    return count > 0;
+  	}
 }

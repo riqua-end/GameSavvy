@@ -27,5 +27,24 @@ public interface GamesavvyService {
 	
 	//게시글 조회수
 	public int updateCnt(Long bno);
-
+	
+	// =======================================================
+	
+	//추천수 증가
+	public void increaseRecommendCount(Long bno);
+	
+	//추천수 감소
+	public void decreaseRecommendCount(Long bno);
+	
+	//추천수 조회
+	public int getRecommendCount(Long bno);
+	
+	//좋아요 추가
+	public void addLike(Long bno, String username);
+	
+	//좋아요 제거
+	public void removeLike(Long bno, String username);
+	
+	//해당 사용자가 해당 게시물을 추천했는지 확인
+	public boolean isLikedByUser(Long bno, String username);
 }
