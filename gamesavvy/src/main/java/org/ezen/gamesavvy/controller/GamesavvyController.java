@@ -69,6 +69,11 @@ public class GamesavvyController {
 		// @ModelAttribute("cri")는 model에 cri속성으로 cri객체를 강제로 저장
 		// 기본형을 Model에 포함시킬때
 		log.info("/get or modify");
+		
+		//게시글의 조회수 처리
+		service.updateCnt(bno);
+		
+		
 		model.addAttribute("board", service.get(bno));
 	}
 	

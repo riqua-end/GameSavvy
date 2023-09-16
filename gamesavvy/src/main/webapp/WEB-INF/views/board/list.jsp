@@ -46,7 +46,7 @@
 								<th style="width: 45%" class="font-weight-normal">제목</th>
 								<th style="width: 15%" class="font-weight-normal">작성자</th>
 								<th style="width: 15%" class="font-weight-normal">작성일</th>
-								<th style="width: 15%" class="font-weight-normal">수정일</th>
+								<th style="width: 15%" class="font-weight-normal">조회수</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -64,7 +64,7 @@
 									</td>
 									<td><c:out value="${board.userid}" /></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updatedate}" /></td>
+									<td><c:out value="${board.cnt }"/></td>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -2,13 +2,11 @@ package org.ezen.gamesavvy.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.mapper.GamesavvyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -75,6 +73,12 @@ public class GamesavvyServiceImpl implements GamesavvyService {
 		
 		return gmapper.getTotalCount(cri);
 		
+	}
+	
+	//게시글 조회수 처리
+	@Override
+	public int updateCnt(Long bno) {
+		return gmapper.updateCnt(bno);
 	}
 	
 }
