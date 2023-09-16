@@ -2,7 +2,6 @@ package org.ezen.gamesavvy.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
@@ -30,9 +29,6 @@ public interface AdminMapper {
   	
   	//댓글
   	public void deleteReplyByReplyer(String userid);
-  	
-  	// 댓글 수 업데이트
-    public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
   	
   	//추천
   	//public void deleteLikes(String userid);
