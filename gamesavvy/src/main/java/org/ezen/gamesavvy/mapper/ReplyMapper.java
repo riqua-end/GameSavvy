@@ -31,4 +31,5 @@ public interface ReplyMapper {
 	
 	//게시글 삭제시 댓글 모두 삭제
 	public int deleteAll(Long bno);
+	
 }

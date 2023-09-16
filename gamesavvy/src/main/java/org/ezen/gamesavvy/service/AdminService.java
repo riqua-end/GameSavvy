@@ -23,5 +23,5 @@ public interface AdminService {
 	public void removeMember(String userid);
 	
 	public void removeList(Long bno);
-	
+
 }

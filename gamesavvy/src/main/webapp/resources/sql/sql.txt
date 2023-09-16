@@ -23,6 +23,9 @@ alter table gs_board add constraint pk_gs_board primary key(bno);
 -- fk설정 (gs_member userid)
 alter table gs_board add CONSTRAINT fk_gs_board foreign key (userid) references gs_member (userid);
 
+--조회수 추가
+alter table gs_board add (cnt number default 0);
+
 -- 테스트용
 insert into gs_board (bno, title, content, userid) 
 values(seq_gs_board.nextval, '테스트 제목','테스트 내용','user1000');
@@ -62,6 +65,8 @@ update gs_board set replycnt = (select count(rno) from gs_reply where gs_reply.b
 
 commit;
 
+--gs_member에 외래키 지정
+ALTER TABLE gs_reply ADD CONSTRAINT fk_reply_member FOREIGN KEY (replyer) REFERENCES gs_member(userid) ON DELETE CASCADE;
 
 ====================================================================================  회원 테이블
 
@@ -92,3 +97,34 @@ token varchar(64) not null,
 last_used timestamp not null);
 
 commit;
+
+
+====================================================================================
+
+
+--게시판 좋아요 기능 관련 테이블
+CREATE SEQUENCE seq_gs_like START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE gs_like (
+    like_id NUMBER PRIMARY KEY,
+    user_id VARCHAR2(50) NOT NULL,
+    board_id NUMBER NOT NULL,
+    like_date DATE DEFAULT SYSDATE,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES test_member (userid),
+    CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES test_board (bno),
+    CONSTRAINT unique_like_user_board UNIQUE (user_id, board_id)
+);
+
+ALTER TABLE like_test
+ADD like_status NUMBER(1) DEFAULT 0;
+
+-- 기존 외래 키 제약 조건 삭제
+ALTER TABLE like_test
+DROP CONSTRAINT fk_board_id;
+
+-- 새로운 외래 키 제약 조건 생성
+ALTER TABLE like_test
+ADD CONSTRAINT fk_board_id
+FOREIGN KEY (board_id)
+REFERENCES test_board (bno)
+ON DELETE CASCADE;

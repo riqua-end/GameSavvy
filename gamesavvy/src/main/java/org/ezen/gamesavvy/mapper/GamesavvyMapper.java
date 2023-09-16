@@ -35,5 +35,5 @@ public interface GamesavvyMapper {
 	// 게시판의 댓글 숫자 업데이트..
 	//amount는 댓글등록시에는 1, 댓글 삭제시는 -1을 나타내는 파라메터
 	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
-	
+
 }

@@ -17,4 +17,7 @@ public class GamesavvyVO {
 	//댓글 수
 	private int replycnt;
 	
+	//조회수
+	private int cnt;
+	
 }

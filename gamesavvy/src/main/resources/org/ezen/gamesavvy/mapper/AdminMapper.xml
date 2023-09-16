@@ -71,11 +71,10 @@
 	    DELETE FROM gs_board WHERE USERID = #{userid}
 	</delete>
 	
-	<!-- 댓글
+	<!-- 댓글 -->
 	<delete id="deleteReplyByWriter">
-	    DELETE FROM TEST_REPLY WHERE REPLYER = #{replyer}
+	    DELETE FROM gs_reply WHERE REPLYER = #{userid}
 	</delete>
-	-->
 	
 	<delete id="deleteBoardByBno">
 		DELETE FROM gs_board WHERE BNO = #{BNO}
