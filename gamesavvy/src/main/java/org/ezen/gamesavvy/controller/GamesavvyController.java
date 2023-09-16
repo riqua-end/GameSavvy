@@ -1,7 +1,5 @@
 package org.ezen.gamesavvy.controller;
 
-import java.util.List;
-
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.PageDTO;

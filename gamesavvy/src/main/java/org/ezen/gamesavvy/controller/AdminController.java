@@ -6,6 +6,7 @@ import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
 import org.ezen.gamesavvy.domain.PageDTO;
+import org.ezen.gamesavvy.mapper.ReplyMapper;
 import org.ezen.gamesavvy.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -24,6 +26,10 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService aservice;
+	
+	@Setter(onMethod_ = @Autowired)
+	private ReplyMapper mapper;
+	
 	
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/adminMember")
@@ -46,9 +52,8 @@ public class AdminController {
 	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/delete/{userid}")
 	public String deleteMember(@PathVariable String userid) {
-		
 		log.info("회원 강제 탈퇴 : " + userid);
-		aservice.removeMember(userid);
+        aservice.removeMember(userid);
 		return "redirect:/admin/adminMember"; //강제 탈퇴 후 관리제 페이지로 이동
 	}
 	

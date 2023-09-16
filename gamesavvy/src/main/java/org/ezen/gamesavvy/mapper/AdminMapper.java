@@ -29,7 +29,7 @@ public interface AdminMapper {
   	//public void deleteLikes(String userid);
   	
   	//댓글
-  	//public void deleteReplyByWriter(String writer);
+  	//public void deleteReplyByWriter(String userid);
 /*====================================================================================*/
 /*=============================== 관리자 게시판 목록 =====================================*/
   	//관리자 페이지 게시판 목록
@@ -46,5 +46,5 @@ public interface AdminMapper {
 /*====================================================================================*/
   	
   	public void updateMember(MemberVO member);
-	
+  	
 }

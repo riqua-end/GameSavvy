@@ -77,5 +77,5 @@ public class AdminServiceImpl implements AdminService {
 		return amapper.getMembersTotalCount(cri);
 		
 	}
-	
+
 }
