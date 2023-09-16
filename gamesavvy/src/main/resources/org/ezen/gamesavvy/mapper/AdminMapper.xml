@@ -72,12 +72,19 @@
 	</delete>
 	
 	<!-- 댓글 -->
-	<delete id="deleteReplyByWriter">
+	<delete id="deleteReplyByReplyer">
 	    DELETE FROM gs_reply WHERE REPLYER = #{userid}
 	</delete>
 	
 	<delete id="deleteBoardByBno">
 		DELETE FROM gs_board WHERE BNO = #{BNO}
 	</delete>
+	
+	<!-- 댓글 수 업데이트 -->
+    <update id="updateReplyCnt">
+        UPDATE gs_board
+        SET replycnt = replycnt + #{amount}
+        WHERE bno = #{bno}
+    </update>
 
 </mapper>
