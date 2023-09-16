@@ -60,6 +60,20 @@
 			  	</c:if>
 			</sec:authorize>
 				<button data-oper='list' class="btn btn-danger">게시판목록</button> 
+			
+			
+			<!-- 로그인한 사용자만 좋아요 버튼 출력 -->
+			<sec:authorize access="isAuthenticated()">
+	            <!-- 좋아요 버튼 -->
+				<div style="text-align: center;">
+				    <div>
+				        <button id="likeButton" class="btn btn-primary"><i class="far fa-heart" style="color: #ffffff;"></i> 좋아요</button>
+				        <button id="unLikeButton" class="btn btn-danger" style="display: none;"><i class="fas fa-heart" style="color: #ffffff;"></i> 좋아요 취소</button>
+				        <span id="likeCount">${recommendCount}</span>
+				    </div>
+				</div>
+	        </sec:authorize>
+			
 			<!-- 버튼 클릭을 처리하기 위한 form,안보이는 창(나중 페이지 정보 댓글 정보 등을 같이 처리 -->
 			<form id='operForm' action="modify" method="get">
 			  	<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
@@ -138,6 +152,100 @@ $(document).ready(function(){
 });
 </script>
 
+<!-- 추천 기능 구현 -->
+<script>
+$(document).ready(function(){
+    // 게시글 고유 번호 가져오기
+    let boardId = '<c:out value="${board.bno}"/>';
+    
+    // 현재 로그인한 사용자의 이름 가져오기 (Spring Security의 태그 사용)
+    <sec:authorize access="isAuthenticated()">
+        <c:set var="username" value="${pinfo.principalUsername}" />
+    </sec:authorize>
+    // 위에서 가져온 사용자 이름 변수 저장
+    let userId = '${username}';
+    
+    // 좋아요 버튼과 좋아요 취소 버튼 가져오기
+    let likeButton = $("#likeButton");
+    let unLikeButton = $("#unLikeButton");
+    // 추천 수를 표시할 span 태그 가져오기
+    let likeCountSpan = $("#likeCount");
+    
+    // 좋아요 버튼 클릭 이벤트 처리
+    likeButton.click(function () {
+        toggleLike(true); // 좋아요 버튼 클릭 시 toggleLike 함수 호출
+    });
+
+    // 좋아요 취소 버튼 클릭 이벤트 처리
+    unLikeButton.click(function () {
+        toggleLike(false); // 좋아요 취소 버튼 클릭 시 toggleLike 함수 호출
+    });
+
+    // 추천 상태 토글 함수 정의
+    function toggleLike(like) {
+        // 서버로 보낼 URL 설정 (좋아요인 경우와 좋아요 취소인 경우 분기)
+        let url = like ? '../board/like' : '../board/dislike';
+
+        // AJAX 요청 보내기
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { bno: boardId }, // 게시글 번호 데이터 전송
+            dataType: 'text', // 서버 응답을 text 형식으로 받아옴 (liked 또는 unliked)
+            success: function (response) {
+                // 서버 응답에 따라 버튼 상태 변경
+                if (response === 'liked') {
+                    likeButton.hide(); // 좋아요 버튼 숨기기
+                    unLikeButton.show(); // 좋아요 취소 버튼 보이기
+                } else if (response === 'unliked') {
+                    likeButton.show(); // 좋아요 버튼 보이기
+                    unLikeButton.hide(); // 좋아요 취소 버튼 숨기기
+                }
+                updateRecommendCount(); // 추천 수 업데이트 함수 호출
+            }
+        });
+    }
+
+    // 추천수 업데이트 함수 정의
+    function updateRecommendCount() {
+        // AJAX 요청 보내기
+        $.ajax({
+            type: 'GET',
+            url: '../board/getRecommendCount', // 추천 수를 가져올 URL
+            data: { bno: boardId }, // 게시글 번호 데이터 전송
+            dataType: 'json', // 서버 응답을 json 형식으로 받아옴
+            success: function (data) {
+                likeCountSpan.text('추천수 : ' + data); // 추천 수 표시 업데이트
+            }
+        });
+    }
+
+    // 페이지 로딩 시 좋아요 상태와 추천수 초기화 함수 정의
+    function initLikeStatus() {
+        // AJAX 요청 보내기
+        $.ajax({
+            type: 'GET',
+            url: '../board/checkLiked', // 좋아요 상태 확인을 위한 URL
+            data: { bno: boardId }, // 게시글 번호 데이터 전송
+            dataType: 'text', // 서버 응답을 text 형식으로 받아옴
+            success: function (response) {
+                // 서버 응답에 따라 버튼 상태 변경
+                if (response === 'liked') {
+                    likeButton.hide(); // 좋아요 버튼 숨기기
+                    unLikeButton.show(); // 좋아요 취소 버튼 보이기
+                } else {
+                    likeButton.show(); // 좋아요 버튼 보이기
+                    unLikeButton.hide(); // 좋아요 취소 버튼 숨기기
+                }
+                updateRecommendCount(); // 추천 수 업데이트 함수 호출
+            }
+        });
+    }
+
+    initLikeStatus(); // 페이지 로딩 시 좋아요 상태와 추천수 초기화 함수 호출
+    
+});
+</script>
 
 <script>
 $(document).ready(function(){

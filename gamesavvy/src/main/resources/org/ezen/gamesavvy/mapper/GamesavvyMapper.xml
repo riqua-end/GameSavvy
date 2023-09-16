@@ -97,5 +97,48 @@
   		set cnt = cnt + 1
   		where bno = #{bno}
   	</update>
+  	
+  	<!-- ====================== 게시물 추천 기능 구현 ===============  -->
+  	
+  	<!-- 추천수 증가 -->
+  	<update id="updateRecommendCount">
+  		update gs_board
+  		set recommend_count = recommend_count + #{count}
+  		where bno = #{bno}
+  	</update>
+  	
+  	<!-- 추천수 감소 -->
+  	<update id="decreaseRecommendCount">
+  		update gs_board
+  		set recommend_count = recommend_count - #{count}
+  		where bno = #{bno}
+  	</update>
 	
+	<!-- 추천수 조회 -->
+	<select id="getRecommendCount" resultType="int" parameterType="long">
+	    select recommend_count
+	    from gs_board
+	    where bno = #{bno}
+	</select>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="addLike">
+	    INSERT INTO gs_like (like_id,user_id, board_id, like_status)
+	    VALUES (seq_gs_like.NEXTVAL,#{username}, #{bno}, 1)
+	</insert>
+	
+	<!-- 좋아요 제거 -->
+	<delete id="removeLike">
+	    DELETE FROM gs_like
+	    WHERE user_id = #{username}
+	    AND board_id = #{bno}
+	</delete>
+	
+	<!-- 해당 사용자가 해당 게시물을 추천했는지 확인 -->
+	<select id="isLikedByUser" resultType="int" parameterType="map">
+	    SELECT COUNT(*) FROM gs_like
+	    WHERE board_id = #{bno}
+	    AND user_id = #{username}
+	    AND like_status = 1
+	</select>
 </mapper>

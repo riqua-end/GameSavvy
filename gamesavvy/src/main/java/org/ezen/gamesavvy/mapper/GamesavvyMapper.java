@@ -39,4 +39,26 @@ public interface GamesavvyMapper {
 	//게시판 조회수 처리
 	public int updateCnt(Long bno);
 	
+	
+	
+	/* =================== 게시물 추천 기능 구현 ====================== */
+	
+	// 추천수 증가
+	public void updateRecommendCount(@Param("bno") Long bno, @Param("count") int recommendCount);
+	
+	// 추천수 감소
+	public void decreaseRecommendCount(@Param("bno")Long bno);
+	
+	// 추천수 조회
+	public int getRecommendCount(Long bno);
+	
+	// 로그인한 사용자가 해당 게시물을 추천했는지 확인
+	public int isLikedByUser(@Param("bno") Long bno, @Param("username") String username);
+	
+    // 좋아요 추가
+    public void addLike(@Param("bno") Long bno, @Param("username") String username);
+
+    // 좋아요 제거
+    public void removeLike(@Param("bno") Long bno, @Param("username") String username);
+
 }

@@ -43,10 +43,11 @@
 						<thead class="table-dark">
 							<tr>
 								<th style="width: 10%" class="font-weight-normal">번호</th>
-								<th style="width: 45%" class="font-weight-normal">제목</th>
+								<th style="width: 35%" class="font-weight-normal">제목</th>
 								<th style="width: 15%" class="font-weight-normal">작성자</th>
-								<th style="width: 15%" class="font-weight-normal">작성일</th>
-								<th style="width: 15%" class="font-weight-normal">조회수</th>
+								<th style="width: 10%" class="font-weight-normal">작성일</th>
+								<th style="width: 10%" class="font-weight-normal">조회수</th>
+								<th style="width: 10%" class="font-weight-normal">추천</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -65,6 +66,7 @@
 									<td><c:out value="${board.userid}" /></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
 									<td><c:out value="${board.cnt }"/></td>
+									<td><c:out value="${recommendCounts[board.bno]}"/></td>
 								</tr>
 							</c:forEach>
 						</tbody>

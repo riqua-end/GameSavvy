@@ -20,4 +20,6 @@ public class GamesavvyVO {
 	//조회수
 	private int cnt;
 	
+	//추천수
+	private int recommendCount;
 }
