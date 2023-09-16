@@ -79,12 +79,5 @@
 	<delete id="deleteBoardByBno">
 		DELETE FROM gs_board WHERE BNO = #{BNO}
 	</delete>
-	
-	<!-- 댓글 수 업데이트 -->
-    <update id="updateReplyCnt">
-        UPDATE gs_board
-        SET replycnt = replycnt + #{amount}
-        WHERE bno = #{bno}
-    </update>
 
 </mapper>

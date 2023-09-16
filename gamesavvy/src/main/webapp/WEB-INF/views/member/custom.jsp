@@ -18,48 +18,24 @@
     margin-bottom: -20px;
     background-color: rgb(247, 247, 247);
 }
-.boxMember {
-    display: grid;
-    grid-template-columns: 372px auto;
-    width: 1050px;
-    margin: 0px auto;
-    gap: 4px;
-}
-.boxMember1 {
-    padding: 30px;
-    grid-row: 1 / 3;
+.boxUserProfile {
+    min-width: 48px;
+    height: 100px;
     display: flex;
-    flex-direction: column;
-    background: rgb(255, 255, 255);
-}
-
-.boxMember2 {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-}
-
-.boxMember3 {
-    display: flex;
-    flex-direction: column;
     -webkit-box-pack: center;
     justify-content: center;
-    min-width: 50%;
-    min-height: 48px;
-    margin-left: 20px;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0px 5px;
+    border-radius: 100%;
+    font-weight: normal;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid rgb(148, 146, 150);
+    background-color: rgb(255, 255, 255);
+    color: rgb(148, 146, 150);
 }
 
-.boxUserName {
-    display: block;
-    overflow: hidden;
-    font-weight: 500;
-    font-size: 20px;
-    color: rgb(51, 51, 51);
-    line-height: 28px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
 </style>
 <!-- RWD -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,25 +51,26 @@
 		<div class="col-md-9">
 			<h2 class="text-center">회원정보</h2>
 			<div class="boxbox">
+				<div class="row">
+					<div class="col-md-2">
+						<div class="boxUserProfile">프로필</div>
+					</div> <!-- col-md-6 -->
+					<div class="col-md-4">
+						<strong class="boxUserName"><sec:authentication property="principal.member.username"/>님</strong>
+					</div> <!-- col-md-6 -->
+					<div class="col-md-3">
+						<strong class="boxUserName">"정원석""님"</strong>
+					</div> <!-- col-md-6 -->
+					<div class="col-md-3">
+						<strong class="boxUserName">"정원석""님"</strong>
+					</div> <!-- col-md-6 -->
+				</div> <!-- row -->
+			</div> <!-- boxbox -->
 			
-			<div class="boxMember">
-				<div class="boxMember1">
-					<div class="boxMember2">
-						<div class="boxMember3">
-							<strong class="boxUserName">
-							"정원석"
-							"님"
-							</strong>
-						</div>
-					</div>
-				</div>
-			</div>
-			</div>
 			
-		</div> <!-- col-md-8 -->
-		
+			
+		</div> <!-- col-md-9 -->
 		<%@include file="../include/right.jsp" %>
-		
 	</div> <!-- row -->
 </div> <!-- maincontent -->
 <%@include file="../include/footer.jsp" %>
