@@ -2,7 +2,6 @@ package org.ezen.gamesavvy.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 
@@ -25,5 +24,8 @@ public interface GamesavvyService {
 	
 	//게시글 총 갯수
 	public int getTotal(Criteria cri);
+	
+	//게시글 조회수
+	public int updateCnt(Long bno);
 
 }

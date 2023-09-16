@@ -33,11 +33,11 @@
 	
 	<select id="getListWithPaging" resultType="org.ezen.gamesavvy.domain.GamesavvyVO"> 
 		<![CDATA[
-			select bno, title, content, userid, regdate, updatedate, replyCnt
+			select bno, title, content, userid, regdate, updatedate, replyCnt, cnt
 			from
 			(
 				select /*+INDEX_DESC(gs_board pk_gs_board)*/ 
-				rownum rn, bno, title, content,	userid, regdate, updatedate, replyCnt
+				rownum rn, bno, title, content,	userid, regdate, updatedate, replyCnt, cnt
 				from gs_board 
 			where ]]>
 			<include refid="criteria"></include>
@@ -90,5 +90,12 @@
 	    update gs_board set replycnt = replycnt + #{amount} where bno = #{bno}
 	    
 	</update>
+	
+	<!-- 게시글 조회수 처리 -->
+  	<update id="updateCnt" parameterType="Long">
+  		update gs_board
+  		set cnt = cnt + 1
+  		where bno = #{bno}
+  	</update>
 	
 </mapper>
