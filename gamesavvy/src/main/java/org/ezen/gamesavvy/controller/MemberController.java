@@ -86,7 +86,12 @@ public class MemberController {
 		}
 	}
 	
-	
+	@GetMapping("/custom")
+	public void custom() {
+		
+		log.info("custom");
+		
+	}
 	
 	//회원 정보 수정 --- 시큐리티 암호화 패스워드 변경
 	@PostMapping("/modify")
