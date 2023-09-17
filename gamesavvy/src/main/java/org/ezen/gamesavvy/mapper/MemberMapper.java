@@ -31,4 +31,7 @@ public interface MemberMapper {
   	
   	// 사용자 작성한 게시글 수.
   	public int getUserTotalCount(@Param("cri") Criteria cri, @Param("userid") String userid);
+  	
+  	// 사용자 작성한 댓글 수.
+  	public int getReplyTotalCount(String userid);
 }

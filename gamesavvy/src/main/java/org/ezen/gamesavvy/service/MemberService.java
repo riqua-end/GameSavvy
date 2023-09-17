@@ -27,4 +27,7 @@ public interface MemberService {
 	
 	// 사용자가 작성한 게시글 수.
 	public int getUserTotal(Criteria cri, String userid);
+	
+	// 사용자가 작성한 댓글 수.
+	public int getReplyTotal(String userid);
 }

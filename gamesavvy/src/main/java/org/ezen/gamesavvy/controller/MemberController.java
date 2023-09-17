@@ -101,10 +101,16 @@ public class MemberController {
             List<GamesavvyVO> custom = memberservice.getUser(cri, userid);
             model.addAttribute("custom", custom);
         }
+        // 현재 로그인한 사용자의 게시판 갯수
         String userid = principal.getName();
         int total = memberservice.getUserTotal(cri, userid);
         model.addAttribute("total", total);
         log.info("total: " + total);
+        
+        // 현재 로그인한 사용자의 댓글 갯수
+        int replyTotal = memberservice.getReplyTotal(userid);
+        model.addAttribute("replyTotal", replyTotal);
+        log.info("replyTotal" + replyTotal);
         
         model.addAttribute("pageMaker", new PageDTO(cri, total));
         
