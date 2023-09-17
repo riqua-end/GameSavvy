@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
 	    }
 		
 		// 연관 데이터 삭제 순서: LIKE_TEST, TEST_REPLY, TEST_BOARD, TEST_MEMBER_AUTH
-		//amapper.deleteLikes(userid);
+		amapper.deleteLikes(userid);
 		amapper.deleteBoardByWriter(userid);
 	    amapper.deleteMemberAuth(userid);
 	    amapper.deleteMember(userid);

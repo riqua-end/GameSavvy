@@ -31,7 +31,7 @@ public interface AdminMapper {
   	public void deleteReplyByReplyer(String userid);
   	
   	//추천
-  	//public void deleteLikes(String userid);
+  	public void deleteLikes(String userid);
   	
 /*====================================================================================*/
 /*=============================== 관리자 게시판 목록 =====================================*/
