@@ -1,8 +1,12 @@
 package org.ezen.gamesavvy.mapper;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.ezen.gamesavvy.domain.AuthVO;
+import org.ezen.gamesavvy.domain.Criteria;
+import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
 
 public interface MemberMapper {
@@ -18,19 +22,13 @@ public interface MemberMapper {
 	
 	// 사용자 이름으로 회원 정보 조회
     MemberVO getMemberByUsername(@Param("userid") String userid);
-    
-
   	
-  	//관리자 페이지 회원 강제 탈퇴
-  	public void deleteMember(String userid);
-
-  	public void deleteLikes(String userid);
-
-  	public void deleteMemberAuth(String userid);
-
-  	public void deleteBoardByWriter(String writer);
-
-  	public void deleteReplyByWriter(String writer);
-
+  	// 회원 정보 수정.
   	public void updateMember(MemberVO member);
+  	
+  	// 로그인한 사용자 게시글 불러오기 페이징 처리.
+  	public List<GamesavvyVO> readUser(@Param("cri") Criteria cri, @Param("userid") String userid);
+  	
+  	// 사용자 작성한 게시글 수.
+  	public int getUserTotalCount(@Param("cri") Criteria cri, @Param("userid") String userid);
 }

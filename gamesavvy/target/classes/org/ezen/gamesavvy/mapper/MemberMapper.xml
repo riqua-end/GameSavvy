@@ -40,34 +40,28 @@
 		values(#{userid},#{auth})
 	</insert>
 	
-	<!-- 관리자 페이지용 회원 목록 조회, 관리자 페이지 만들고 적용
-    <select id="getAllMembers" resultType="org.ezen.ezenProject.domain.MemberVO">
-        SELECT *
-        FROM gs_member
-    </select>
-    -->
-    <!-- 관리자 페이지용 회원 강제 탈퇴 , 관리자 페이지 만들고 적용
-	<delete id="deleteLikes" parameterType="string">
-	    DELETE FROM LIKE_TEST WHERE USER_ID = #{userid}
-	</delete>
+	<!-- 사용자가 작성한 게시글 목록을 페이징하여 가져오기 -->
+	<select id="readUser" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
+    	<![CDATA[
+    		SELECT bno, title, content, userid, regdate, updatedate, replyCnt, cnt
+    		FROM 
+    		(
+        		SELECT /*+INDEX_DESC(gs_board pk_gs_board)*/
+        		rownum rn, bno, title, content, userid, regdate, updatedate, replyCnt, cnt
+        		FROM gs_board
+        		WHERE userid = #{userid, jdbcType=VARCHAR}
+    			and rownum <= #{cri.pageNum} * #{cri.amount} 
+			)
+			where rn > (#{cri.pageNum} -1) * #{cri.amount} 
+		]]>
+	</select>
 	
+	<!-- 사용자가 작성한 게시글 카운트 -->
+	<select id="getUserTotalCount" resultType="int">
 	
-	<delete id="deleteMemberAuth" parameterType="string">
-	    DELETE FROM gs_member_auth WHERE USERID = #{userid}
-	</delete>
-	
-	<delete id="deleteMember" parameterType="string">
-	    DELETE FROM gs_member WHERE USERID = #{userid}
-	</delete>
-	
-	<delete id="deleteBoardByWriter">
-	    DELETE FROM gs_board WHERE WRITER = #{writer}
-	</delete>
-	
-	<delete id="deleteReplyByWriter">
-	    DELETE FROM TEST_REPLY WHERE REPLYER = #{replyer}
-	</delete>
-	-->
+		select count(*) from gs_board where userid = #{userid}
+		
+	</select>
 	
 	<!-- 회원 정보 수정 -->
     <update id="updateMember" parameterType="org.ezen.gamesavvy.domain.MemberVO">

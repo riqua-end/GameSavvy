@@ -1,7 +1,11 @@
 package org.ezen.gamesavvy.service;
 
 
+import java.util.List;
+
 import org.ezen.gamesavvy.domain.AuthVO;
+import org.ezen.gamesavvy.domain.Criteria;
+import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
 import org.ezen.gamesavvy.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @Service
+@Log4j
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
@@ -74,26 +80,33 @@ public class MemberServiceImpl implements MemberService {
     public MemberVO getMemberByUsername(String userid) {
         return membermapper.getMemberByUsername(userid);
     }
-
-
-
-	//관리자 페이지 회원 강제 탈퇴
-	@Transactional
-	@Override
-	public void removeMember(String userid) {
-		// 연관 데이터 삭제 순서: LIKE_TEST, TEST_REPLY, TEST_BOARD, TEST_MEMBER_AUTH
-		membermapper.deleteLikes(userid);
-		membermapper.deleteReplyByWriter(userid);
-		membermapper.deleteBoardByWriter(userid);
-	    membermapper.deleteMemberAuth(userid);
-	    membermapper.deleteMember(userid);
-	}
-
+	
+	// 회원 정보 수정.
 	@Override
     public void modifyMember(MemberVO member, String newPassword) {
         String bcryptNewPassword = passwordEncoder.encode(newPassword);
         member.setUserpw(bcryptNewPassword);
         membermapper.updateMember(member);
     }
+	
+	// 로그인한 사용자 게시판 불러오기 페이징 처리.
+	@Override
+	public List<GamesavvyVO> getUser(Criteria cri, String userid) {
+		
+		log.info("get..." + userid);
+		
+		return membermapper.readUser(cri, userid);
+		
+	}
+	
+	// 로그인한 사용자 게시판 수.
+	@Override
+	public int getUserTotal(Criteria cri, String userid) {
+		
+		log.info("getTotal..." + cri);
+		
+		return membermapper.getUserTotalCount(cri, userid);
+		
+	}
 
 }

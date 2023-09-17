@@ -56,6 +56,16 @@ public class GamesavvyServiceImpl implements GamesavvyService {
 		
 	}
 	
+	//페이지 미처리
+	@Override
+	public List<GamesavvyVO> getLi() {
+		
+		log.info("get Li....");
+		
+		return gmapper.getLi();
+		
+	}
+	
 	//페이지 처리
 	@Override
 	public List<GamesavvyVO> getList(Criteria cri) {
