@@ -9,7 +9,7 @@ import org.ezen.gamesavvy.domain.GamesavvyVO;
 public interface GamesavvyMapper {
 	
 	//@Select("select * from gs_board where bno > 0")
-	public List<GamesavvyVO> getList();
+	public List<GamesavvyVO> getLi();
 	
 	// 페이지 관련 Criteria객체를 파라메터로 갖는 메서드
 	public List<GamesavvyVO> getListWithPaging(Criteria cri);

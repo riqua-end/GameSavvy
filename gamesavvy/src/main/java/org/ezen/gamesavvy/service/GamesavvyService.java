@@ -19,6 +19,9 @@ public interface GamesavvyService {
 	//삭제
 	public boolean remove(Long bno);
 	
+	//페이지 미처리 리스트
+	public List<GamesavvyVO> getLi();
+	
 	//페이지 처리한 리스트
 	public List<GamesavvyVO> getList(Criteria cri);
 	

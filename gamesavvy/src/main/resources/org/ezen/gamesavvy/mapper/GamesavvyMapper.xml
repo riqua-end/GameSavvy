@@ -27,7 +27,7 @@
   	</sql>
 	
 	
-	<select id="getList" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
+	<select id="getLi" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
 		<![CDATA[select * from gs_board where bno > 0 ORDER BY BNO DESC]]>
 	</select>
 	
