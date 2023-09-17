@@ -28,7 +28,6 @@ import lombok.Setter;
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping("/home")
 public class HomeController {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -53,17 +52,12 @@ public class HomeController {
 		return "home";
 		*/
 		
-		return "redirect:/home";
+		return "redirect:home/home";
 	}
 	
-	@RequestMapping(value = "home/home", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		return "/home";
-	}
+
 	
-	@GetMapping("/home")
+	@GetMapping("/home/home")
 	public void get(Model model) {
 		
 		model.addAttribute("home", gameservice.getLi());
