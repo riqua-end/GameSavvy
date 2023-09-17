@@ -7,7 +7,6 @@ import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
 import org.ezen.gamesavvy.domain.PageDTO;
-import org.ezen.gamesavvy.service.GamesavvyService;
 import org.ezen.gamesavvy.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,9 +31,6 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberservice;
-	
-	@Autowired
-	private GamesavvyService gameservice;
 	
 	@Setter(onMethod_ = @Autowired)
 	private BCryptPasswordEncoder passwordEncoder;
