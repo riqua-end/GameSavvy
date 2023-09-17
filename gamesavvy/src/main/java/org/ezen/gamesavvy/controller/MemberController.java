@@ -1,8 +1,13 @@
 package org.ezen.gamesavvy.controller;
 
 import java.security.Principal;
+import java.util.List;
 
+import org.ezen.gamesavvy.domain.Criteria;
+import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.MemberVO;
+import org.ezen.gamesavvy.domain.PageDTO;
+import org.ezen.gamesavvy.service.GamesavvyService;
 import org.ezen.gamesavvy.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -27,6 +32,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberservice;
+	
+	@Autowired
+	private GamesavvyService gameservice;
 	
 	@Setter(onMethod_ = @Autowired)
 	private BCryptPasswordEncoder passwordEncoder;
@@ -86,12 +94,25 @@ public class MemberController {
 		}
 	}
 	
-	@GetMapping("/custom")
-	public void custom() {
-		
-		log.info("custom");
-		
-	}
+	// 회원 정보 페이징 처리
+    @GetMapping("/custom")
+    public void custom(Criteria cri, Model model, Principal principal) {
+        
+        log.info("custom");
+        
+        if (principal != null) {
+            String userid = principal.getName(); // 현재 로그인한 사용자의 아이디
+            List<GamesavvyVO> custom = memberservice.getUser(cri, userid);
+            model.addAttribute("custom", custom);
+        }
+        String userid = principal.getName();
+        int total = memberservice.getUserTotal(cri, userid);
+        model.addAttribute("total", total);
+        log.info("total: " + total);
+        
+        model.addAttribute("pageMaker", new PageDTO(cri, total));
+        
+    }
 	
 	//회원 정보 수정 --- 시큐리티 암호화 패스워드 변경
 	@PostMapping("/modify")

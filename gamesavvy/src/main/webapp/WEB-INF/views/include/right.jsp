@@ -34,7 +34,7 @@
 	 	<sec:authorize access="isAuthenticated()">
 	 			<a><sec:authentication property="principal.username"/>님 환영합니다.</a>
 	 			<hr></hr>
-	 			<a href="../member/modify">회원정보</a>
+	 			<a href="../member/custom">회원정보</a>
 	 			<a href="../member/logout">로그아웃</a>
 	 	</sec:authorize>
 	</div> <!-- log-out -->
