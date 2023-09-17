@@ -108,5 +108,15 @@ public class MemberServiceImpl implements MemberService {
 		return membermapper.getUserTotalCount(cri, userid);
 		
 	}
+	
+	//로그인한 사용자 댓글 수.
+	@Override
+	public int getReplyTotal(String userid) {
+		
+		log.info("get Reply Total..." + userid);
+		
+		return membermapper.getReplyTotalCount(userid);
+		
+	}
 
 }

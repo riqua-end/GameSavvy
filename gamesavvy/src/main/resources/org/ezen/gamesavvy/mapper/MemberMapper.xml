@@ -58,9 +58,12 @@
 	
 	<!-- 사용자가 작성한 게시글 카운트 -->
 	<select id="getUserTotalCount" resultType="int">
-	
 		select count(*) from gs_board where userid = #{userid}
-		
+	</select>
+	
+	<!-- 회원이 작성한 댓글 목록의 카운트 가져오기 -->
+	<select id="getReplyTotalCount" resultType="int">
+    	SELECT COUNT(*) FROM gs_reply WHERE replyer = #{userId}
 	</select>
 	
 	<!-- 회원 정보 수정 -->

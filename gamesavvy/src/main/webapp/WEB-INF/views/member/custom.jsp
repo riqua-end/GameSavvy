@@ -87,6 +87,8 @@
 					</div> <!-- col-md-6 -->
 					<div class="col-md-3">
 						<strong>내가 작성한 댓글 수</strong>
+						<br></br>
+						<h3>${replyTotal}</h3>
 					</div> <!-- col-md-6 -->
 				</div> <!-- row -->
 			</div> <!-- boxbox -->
