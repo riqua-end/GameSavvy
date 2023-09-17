@@ -53,11 +53,11 @@
     	select count(*) from gs_board where bno > 0
     </select>
     
-    <!-- 관리자 페이지용 회원 강제 탈퇴 , 관리자 페이지 만들고 적용
+    <!-- 관리자 페이지용 회원 강제 탈퇴 -->
 	<delete id="deleteLikes" parameterType="string">
-	    DELETE FROM LIKE_TEST WHERE USER_ID = #{userid}
+	    DELETE FROM gs_like WHERE USER_ID = #{userid}
 	</delete>
-	-->
+	
 	
 	<delete id="deleteMemberAuth" parameterType="string">
 	    DELETE FROM gs_member_auth WHERE USERID = #{userid}

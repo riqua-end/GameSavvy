@@ -43,11 +43,11 @@
 	<!-- 사용자가 작성한 게시글 목록을 페이징하여 가져오기 -->
 	<select id="readUser" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
     	<![CDATA[
-    		SELECT bno, title, content, userid, regdate, updatedate, replyCnt, cnt
+    		SELECT bno, title, content, userid, regdate, updatedate, replycnt, cnt
     		FROM 
     		(
         		SELECT /*+INDEX_DESC(gs_board pk_gs_board)*/
-        		rownum rn, bno, title, content, userid, regdate, updatedate, replyCnt, cnt
+        		rownum rn, bno, title, content, userid, regdate, updatedate, replycnt, cnt
         		FROM gs_board
         		WHERE userid = #{userid, jdbcType=VARCHAR}
     			and rownum <= #{cri.pageNum} * #{cri.amount} 
@@ -63,7 +63,7 @@
 	
 	<!-- 회원이 작성한 댓글 목록의 카운트 가져오기 -->
 	<select id="getReplyTotalCount" resultType="int">
-    	SELECT COUNT(*) FROM gs_reply WHERE replyer = #{userId}
+    	SELECT COUNT(*) FROM gs_reply WHERE replyer = #{userid}
 	</select>
 	
 	<!-- 회원 정보 수정 -->
