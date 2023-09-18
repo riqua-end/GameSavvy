@@ -45,7 +45,7 @@
 				<!-- 회원 가입시 csrf 토큰 값 히든으로 보내주기 -->
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<div class="form-group">
-					<div class="row mb-3" id="font_size">
+					<div class="row" id="font_size">
 						<label for="uId" class="col-sm-2 col-form-label" id="fst" style="padding-top:29px;">아이디<span style="color: red">*</span></label>
 					
 						<div class="col-sm-6" id="sst" style="padding-top:19px;">
@@ -53,7 +53,8 @@
 							<button type="button" id="id_chk" class="btn btn-outline">아이디중복체크</button>
 						 	<input	type="hidden" name="reid">
 						</div>
-					</div>	
+					</div>
+					<span id="userIDError" style="color: red;"></span>	
 				</div>
 				<div class="form-group">
 					<div class="row mb-3" id="font_size">
@@ -67,7 +68,7 @@
 				</div>
 				<div class="form-group">
 					<div class="row" id="font_size">
-						<label for="uPwchk" class="col-sm-2 col-form-label" id="fst">비밀번호확인<span style="color: red">*</span></label>
+						<label for="uPwChk" class="col-sm-2 col-form-label" id="fst">비밀번호확인<span style="color: red">*</span></label>
 						
 						<div class="col-sm-6" id="sst">
 							<input type="password" class="form-control" name="userpwChk" id="uPwChk"	placeholder="비밀번호확인입력" required/>
@@ -163,33 +164,54 @@ $(function(){
 		
 	});
 	
-	$("#id_chk").click(function(e){
-		e.preventDefault();
-		
-		if(document.frm1.userid.value == "") {
-			alert('아이디를 입력하여 주십시오.');
-			document.frm1.userid.focus();
-			return false;
-		}
-		
-		let userid = document.frm1.userid.value;
-		
-		$.ajax({
-			url : "../member/idChk?userid=" + userid,
-			type : "GET",
-			success : function(result) {
-				if(result == "success"){
-					document.frm1.reid.value = userid;
-					alert("사용 가능한 아이디 입니다.");
-				}
-				else {
-					document.frm1.userid.focus();
-					document.frm1.userid.value = "";
-					alert("다른 아이디를 등록하세요");
-				}
-			}
-		});
+	$("#id_chk").click(function(e) {
+	    e.preventDefault();
+
+	    // 입력된 아이디 값 가져오기
+	    let userID = document.frm1.userid.value;
+
+	    // 정규 표현식을 사용하여 특수문자 체크
+	    let regex = /^[a-zA-Z0-9]+$/;
+
+	    if (!userID.trim()) {
+	        alert('아이디를 입력하여 주십시오.');
+	        document.frm1.userid.focus();
+	        return false;
+	    } else if (!regex.test(userID)) {
+	        alert('특수문자를 사용할 수 없는 아이디입니다.');
+	        document.frm1.userid.focus();
+	        document.frm1.userid.value = "";
+	     	// 아이디 중복 체크 후 해당 span 초기화
+            $("#userIDError").text("");  // 내용을 비웁니다.
+            $("#userIDError").css("color", "");  // 글자 색 초기화
+            $("#userIDError").css("margin", "");  // 여백 초기화
+	        return false;
+	    }
+
+	    // 아이디 중복 체크 로직 추가
+	    $.ajax({
+	        url: "../member/idChk?userid=" + userID,
+	        type: "GET",
+	        success: function(result) {
+	            if (result === "success") {
+	                document.frm1.reid.value = userID;
+	                alert("사용 가능한 아이디 입니다.");
+	                
+	            } else {
+	                document.frm1.userid.focus();
+	                document.frm1.userid.value = "";
+	                alert("중복된 아이디입니다. 다른 아이디를 등록하세요.");
+	                
+	             	// 아이디 중복 체크 후 해당 span 초기화
+	                $("#userIDError").text("");  // 내용을 비웁니다.
+	                $("#userIDError").css("color", "");  // 글자 색 초기화
+	                $("#userIDError").css("margin", "");  // 여백 초기화
+	            }
+	        }
+	    });
 	});
+
+
 	
 	
 	$("#uPwChk").blur(function(){
@@ -217,6 +239,26 @@ $(function(){
 		self.location = "/";
 	});
 	
+});
+</script>
+
+<script>
+// 클라이언트 측 유효성 검사
+document.getElementById("uId").addEventListener("input", function() {
+    var userID = this.value;
+    
+    // 특수문자를 포함하지 않는 사용자 아이디를 위한 정규 표현식
+    var regex = /^[a-zA-Z0-9]+$/;
+
+    if (!regex.test(userID)) {
+        document.getElementById("userIDError").textContent = "특수문자를 사용할 수 없습니다.";
+        document.getElementById("userIDError").style.color = "red";
+        document.getElementById("userIDError").style.margin = "0 155px";
+    } else {
+        document.getElementById("userIDError").textContent = "";
+        //document.getElementById("userIDError").style.color = "green";
+       	//document.getElementById("userIDError").style.margin = "0 155px";
+    }
 });
 </script>
 
