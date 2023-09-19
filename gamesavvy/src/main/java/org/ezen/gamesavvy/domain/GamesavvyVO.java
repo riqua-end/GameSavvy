@@ -1,6 +1,7 @@
 package org.ezen.gamesavvy.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -22,4 +23,7 @@ public class GamesavvyVO {
 	
 	//추천수
 	private int recommendCount;
+	
+	//GamesavvyVO를 한번에 처리 하도록 List<GsAttachVO>를 추가
+	private List<GsAttachVO> attachList;
 }

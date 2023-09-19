@@ -1,5 +1,8 @@
 package org.ezen.gamesavvy.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,8 +10,11 @@ import java.util.stream.Collectors;
 
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
+import org.ezen.gamesavvy.domain.GsAttachVO;
 import org.ezen.gamesavvy.domain.PageDTO;
 import org.ezen.gamesavvy.service.GamesavvyService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -71,6 +77,7 @@ public class GamesavvyController {
 		log.info("---registerForm");
 	}
 	
+	//게시판 + 첨부물 등록 처리
 	@PostMapping("/register")
 	@PreAuthorize("isAuthenticated()")
 	public String register(GamesavvyVO game, RedirectAttributes rttr) {
@@ -79,6 +86,12 @@ public class GamesavvyController {
 		// RedirectAttributes는 redirect:일시 파라메터를 실어보내는 객체(form의 getParameter역활)
 		
 		log.info("register: " + game);
+		
+		if (game.getAttachList() != null) {
+			game.getAttachList().forEach(attach -> log.info(attach));
+		}
+		
+		log.info("==========================");
 		
 		service.register(game);
 
@@ -142,16 +155,64 @@ public class GamesavvyController {
 	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr, String userid) {
 
 		log.info("remove..." + bno);
+		
+		List<GsAttachVO> attachList = service.getAttachList(bno);
 
 		if (service.remove(bno)) {
-
+			
+			// delete attach files (c:upload폴더에 저장된 파일 삭제)
+			deleteFiles(attachList);
+			
 			rttr.addFlashAttribute("result", "success");
 		}
 
 		return "redirect:list" + cri.getListLink();
 	}
 	
+	//조회 화면에서 첨부 파일 처리
+	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<GsAttachVO>> getAttachList(Long bno) {
+		
+		log.info("getAttachList : " + bno);
+		
+		return new ResponseEntity<>(service.getAttachList(bno), HttpStatus.OK);
+	}
 	
+	private void deleteFiles(List<GsAttachVO> attachList) {
+		
+		if (attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		log.info("delete attach files...................");
+		log.info(attachList);
+		
+		attachList.forEach(attach -> {
+			try {
+				Path file = Paths.get(
+						"C:/upload/" + attach.getUploadPath() + "/" + attach.getUuid() + "_" + attach.getFileName()); //원본파일과 일반 파일
+
+				Files.deleteIfExists(file); //파일존재시 삭제
+
+				if (Files.probeContentType(file).startsWith("image")) {
+
+					Path thumbNail = Paths.get("C:/upload/" + attach.getUploadPath() + "/s_" + attach.getUuid() + "_"
+							+ attach.getFileName());
+
+					Files.delete(thumbNail);
+				}
+
+			} catch (Exception e) {
+				log.error("delete file error" + e.getMessage());
+			} // end catch
+		});
+	}
+	
+	
+	
+	
+// =============================================================== //	
 	//추천
 	@PostMapping("/like")
 	@ResponseBody

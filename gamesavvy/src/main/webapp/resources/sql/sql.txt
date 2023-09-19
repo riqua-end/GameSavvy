@@ -102,7 +102,7 @@ last_used timestamp not null);
 commit;
 
 
-====================================================================================
+====================================================================================  좋아요 테이블
 
 
 --게시판 좋아요 기능 관련 테이블
@@ -121,3 +121,22 @@ CREATE TABLE gs_like (
 ALTER TABLE gs_like
 ADD like_status NUMBER(1) DEFAULT 0;
 
+
+====================================================================================  파일첨부 테이블
+
+
+--파일첨부 테이블
+create table gs_attach(
+uuid varchar2(100) not null,
+uploadPath varchar2(200) not null,
+fileName varchar2(100) not null,
+filetype char(1) default 'I',
+bno number(10,0)
+);
+--attach pk만들기
+alter table gs_attach add constraint pk_gs_attach primary key (uuid);
+
+--tbl_attach fk만들기
+alter table gs_attach add constraint fk_gs_attach foreign key (bno) references gs_board(bno);
+
+--gs_type 컬럼 추가 예정

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.ezen.gamesavvy.mapper.GsAttachMapper">
+	
+	<insert id="insert" parameterType="org.ezen.gamesavvy.domain.GsAttachVO">
+	
+		insert into gs_attach (uuid, uploadpath, filename,	filetype, bno)
+		values (#{uuid}, #{uploadPath}, #{fileName},#{fileType}, #{bno} )
+		
+	</insert>
+	
+	<delete id="delete">
+
+		delete from gs_attach where uuid = #{uuid}
+
+	</delete>
+	
+	<delete id="deleteAll">
+
+		delete gs_attach where bno = #{bno}
+
+	</delete>
+	
+	<select id="findByBno" resultType="org.ezen.gamesavvy.domain.GsAttachVO">
+		
+		select * from gs_attach where bno = #{bno}
+		
+	</select>
+	
+	<!-- 어제 날짜 sysdate-1를 yyyy/mm/dd패턴의 문자열로 반환 -->
+	<!-- Task 적용 후 적용 
+	<select id="getOldFiles" resultType="org.ezen.gamesavvy.domain.GsAttachVO">
+		
+		select * from gs_attach where uploadpath = to_char(sysdate -1 ,'yyyy/mm/dd')
+		
+	</select>
+	-->
+</mapper>
