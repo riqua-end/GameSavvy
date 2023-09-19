@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
+import org.ezen.gamesavvy.domain.GsAttachVO;
 import org.ezen.gamesavvy.mapper.GamesavvyMapper;
+import org.ezen.gamesavvy.mapper.GsAttachMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +22,30 @@ public class GamesavvyServiceImpl implements GamesavvyService {
 	@Setter(onMethod_ = @Autowired)
 	private GamesavvyMapper gmapper;
 	
+	@Autowired
+	private GsAttachMapper attachMapper;
+	
+	//게시판 + 첨부 파일 처리
+	//게시물의 등록과 첨부 파일의 등록은 양쪽 모두 insert가 진행되기 때문에 트랜잭션처리
+	@Transactional
 	@Override
 	public void register(GamesavvyVO game) {
 		
 		log.info("register...." + game);
 		
+		// insertSelectKey 메서드를 호출하여 bno를 얻어옴
 		gmapper.insertSelectKey(game);
 		
+		//첨부물이 없으면 return
+		if (game.getAttachList() == null || game.getAttachList().size() <= 0) {
+			return;
+		}
+		
+		game.getAttachList().forEach(attach -> {
+			
+			attach.setBno(game.getBno());
+			attachMapper.insert(attach);
+		});
 	}
 
 	@Override
@@ -37,20 +56,39 @@ public class GamesavvyServiceImpl implements GamesavvyService {
 		return gmapper.read(bno);
 		
 	}
-
+	
+	//게시판 + 첨부파일 처리
+	//첨부 파일은 수정이라는 개념이 없으므로 삭제 후 등록처리
 	@Override
 	public boolean modify(GamesavvyVO game) {
 		
 		log.info("modify...." + game);
 		
-		return gmapper.update(game) == 1;
+		//게시글 bno에 해당되는 것을 모두 삭제
+		attachMapper.deleteAll(game.getBno());
+		
+		boolean modifyResult = gmapper.update(game) == 1;
+		
+		if (modifyResult && game.getAttachList() != null && game.getAttachList().size() > 0) {
+			
+			game.getAttachList().forEach(attach -> {
+				attach.setBno(game.getBno());
+				attachMapper.insert(attach);
+			});
+		}
+		
+		return modifyResult;
 		
 	}
-
+	
+	//게시글 + 첨부파일 일괄 삭제
 	@Override
 	public boolean remove(Long bno) {
 		
 		log.info("remove..." + bno);
+		
+		//삭제시 bno를 외래키로 사용하는 자식 테이블부터 삭제
+		attachMapper.deleteAll(bno);
 		
 		return gmapper.delete(bno) == 1;
 		
@@ -90,6 +128,15 @@ public class GamesavvyServiceImpl implements GamesavvyService {
 	@Override
 	public int updateCnt(Long bno) {
 		return gmapper.updateCnt(bno);
+	}
+	
+	//게시판 조회에서 사용하는 첨부물 처리 메서드
+	@Override
+	public List<GsAttachVO> getAttachList(Long bno) {
+		
+		log.info("get Attach list by bno : " + bno);
+		
+		return attachMapper.findByBno(bno);
 	}
 	
 	

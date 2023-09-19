@@ -16,6 +16,46 @@
 <!-- MS -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,IE=EmulateIE9"/> 
+
+<style>
+/* 이미지 슬라이더 스타일 */
+.slider {
+    display: flex;
+    align-items: center;
+}
+
+/* 이미지 모달 내부 이미지 스타일 */
+.modal-image {
+    max-width: 100%; /* 이미지 너비를 부모 요소에 맞게 조절합니다. */
+    max-height: 350px; /* 이미지 높이를 최대 300px로 제한하여 비율을 유지합니다. */
+    display: block; /* 이미지를 블록 요소로 표시하여 여백을 자동으로 처리합니다. */
+    margin: 0 auto; /* 이미지를 가운데 정렬합니다. */
+}
+
+<!-- 이미지 스타일 추가 -->
+
+/* 이미지 컨테이너 스타일 */
+.card-img-container {
+    max-width: 100%; /* 컨테이너의 최대 너비 설정 */
+    max-height: 350px; /* 컨테이너의 최대 높이 설정 */
+    display: flex; /* 이미지를 가운데 정렬하기 위해 flex 사용 */
+    justify-content: center; /* 이미지를 가운데 정렬하기 위해 가로 정렬 설정 */
+    align-items: center; /* 이미지를 가운데 정렬하기 위해 세로 정렬 설정 */
+}
+
+/* 이미지 스타일 */
+.card-img-container img {
+    max-width: 100%; /* 이미지의 최대 너비 설정 */
+    max-height: 100%; /* 이미지의 최대 높이 설정 */
+    width: auto; /* 너비를 자동으로 조절하여 비율 유지 */
+    height: auto; /* 높이를 자동으로 조절하여 비율 유지 */
+}
+
+</style>
+<!-- Slick Carousel 스타일 및 스크립트 추가 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+
 </head>
 <body>
 
@@ -25,32 +65,32 @@
 		
 		<div class="col-md-9">
 			<h2 class="text-center">게시글 내용</h2>
-			<form>
-				<div class="form-group">
-					<label for="bno">번호:</label> 
-					<input type="text"
-						class="form-control" id="bno" name="bno" readonly
-						value='<c:out value="${board.bno }"/>' />
-				</div>
-				<div class="form-group">
-					<label for="title">제목:</label> 
-					<input type="text"
-						class="form-control" id="title" name="title" readonly
-						value='<c:out value="${board.title }"/>' />
-				</div>
-				<div class="form-group">
-					<label for="content">내용:</label>
-<textarea class="form-control" id="content" name="content"	rows="10" readonly>
-<c:out value="${board.content}" />
-</textarea>
-				</div>
-				<div class="form-group">
-					<label for="userid">작성자:</label> 
-					<input type="text"
-						class="form-control" id="userid" name="userid" readonly
-						value='<c:out value="${board.userid }"/>' />
-				</div>
-			</form>
+			<div class="container mt-4 mb-4">
+			    <div class="border-top mb-2"></div>
+			    <div class="d-flex justify-content-between align-items-center p-1">
+			        <span class="mb-0 font-weight-bold h4 p-1">${board.title}</span>
+			        <span class="text-muted text-right"><fmt:formatDate value="${board.regdate}" pattern="yyyy.MM.dd" /></span>
+			    </div>
+			    <div class="border-top mb-2 mt-2"></div>
+			    <div class="d-flex justify-content-between align-items-center p-1">
+			        <div class="text-left">
+			            <span class="text-primary font-weight-bold h5 p-1">${board.userid}</span>
+			        </div>
+			        <div class="text-right">
+			            <span class="mr-3">조회 수 <b><c:out value="${board.cnt}"/></b></span>
+			            <span class="mr-3">추천 수 <b>${recommendCount}</b></span>
+			            <span>댓글 <b><c:out value="${board.replycnt}"/></b></span>
+			        </div>
+			    </div>
+			    <div class="border-bottom mb-3 mt-2"></div>
+			    
+			    <!-- 첨부 파일 이미지 -->
+			    <div class="p-1 card-img-top card-img-container" style="position: relative;" id="cardRow_<c:out value="${board.bno}" />">
+			    	<!-- 여기에 이미지 추가됨 -->
+			    </div>
+			    <div class="p-1">${board.content}</div>
+			</div>
+
 			<!-- 시큐리티적용 로그인아이디와 게시글 작성기 동일시만 버튼 보임 -->
 			<sec:authentication property="principal" var="pinfo" />
 			  <!-- EL안에서는 pinfo사용 -->
@@ -132,6 +172,11 @@
 
 <!-- reply.js ajax 처리를 위한 스크립트 -->
 <script type="text/javascript" src="../js/reply.js"></script>
+
+<!-- 이미지 클릭시 슬라이더 모달창 -->
+<%@ include file ="../include/imgModal.jsp"%>
+<!-- slick 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
 $(document).ready(function(){	
@@ -488,6 +533,103 @@ $(document).ready(function(){
 	
 });
 
+</script>
+
+
+<script>
+$(document).ready(function () {
+    // 페이지 로딩시 이미지 목록을 가져와서 추가하는 함수
+    function loadImages() {
+        // 이미지를 가져올 게시물의 bno 목록
+        let bno = '<c:out value="${board.bno}"/>';
+        $.getJSON("getAttachList", { bno: bno }, function (arr) {
+            console.log(arr); // arr은 컨트롤러에서 반환하는 json으로 된 List<GsAttachVO>객체
+            let str = '<div class="d-flex flex-row flex-wrap justify-content-start align-items-center" style="margin: 0px;">';
+            $(arr).each(function (i, obj) {
+                if (!obj.fileType) { // 일반 파일일시
+                    let fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+                    str += "<div class='card-body'>";
+                    str += "<p class='mx-auto' style='width:90%;' title='" + obj.fileName + "'>";
+                    str += "<a href='../upload/download?fileName=" + fileCallPath + "'>";
+                    str += "<img class='mx-auto d-block img-thumbnail' src='../images/qna.png' >";
+                    str += "</a>";
+                    str += "</p>";
+                    str += "</div>";
+                    str += "</div>";
+                } else { // 이미지 파일일시
+                    let fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName); //섬네일
+                    let originPath = obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName; // 원본파일 경로
+                    // 이미지 생성 부분
+                    
+                    str += '<div class="card">';
+                    str += '<a href="javascript:void(0);" data-bno-id="' + bno + '" data-image-path="' + originPath + '" class="btn-show-images">';
+                    str += '<img class="card-img-top review-image" src="../upload/display?fileName=' + fileCallPath + '" alt="Review Image">';
+                    str += "</a>";
+                    str += '</div>';
+                }
+            });
+            str += '</div>';
+            $("#cardRow_" + bno).html(str);
+        });
+        
+    }
+
+    // 페이지 로딩 시 이미지 목록을 불러옴
+    loadImages();
+    
+ 	// 이미지 클릭 시 슬라이더 열기
+    $(document).on("click", ".btn-show-images", function () {
+        let bno = $(this).data("bno-id");
+        let clickedIndex = $(this).parent().index(); // 클릭한 이미지의 부모 요소(카드)의 인덱스
+        openImageModal(bno, clickedIndex);
+    });
+
+ 	// 이미지 모달 열기 및 이미지 목록을 동적으로 생성하는 함수
+    function openImageModal(bno, clickedIndex) {
+        let modalContent = '';
+        let fileCallPath = ''; // fileCallPath를 미리 정의
+
+        $.getJSON("getAttachList", { bno: bno }, function (arr) {
+            let str = '<div class="slider">';
+            $(arr).each(function (i, obj) {
+                let fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+                str += '<div>';
+                str += '<img class="img-fluid modal-image" src="../upload/display?fileName=' + fileCallPath + '">';
+                str += '</div>';
+            });
+
+            str += '</div>';
+            $("#imageModalContent").html(str); // 모달 내용 설정
+
+            // 이미지가 한 개인 경우에는 슬라이더를 초기화하지 않고, 이미지만 표시
+            if (arr.length > 1) {
+                // 슬라이더 초기화
+                $('.slider').slick({
+                    slidesToShow: 1, // 1개씩 보이도록 설정
+                    slidesToScroll: 1,
+                    dots : true,
+                    initialSlide: clickedIndex, // 클릭한 이미지가 첫 번째로 보이도록 설정
+                    prevArrow: '<button type="button" class="slick-prev" style="background-color: black; font-size: 20px;"></button>',
+                    nextArrow: '<button type="button" class="slick-next" style="background-color: black; font-size: 20px;"></button>'
+                });
+
+                // 클릭한 이미지가 첫 번째로 보이도록 슬라이더 위치 설정
+                $('.slider').slick('slickGoTo', clickedIndex);
+            } else {
+                // 이미지가 한 개일 때 이미지 컨테이너를 가운데 정렬
+                $('.slider').css('display', 'flex');
+                $('.slider').css('justify-content', 'center');
+                $('.slider').css('align-items', 'center');
+            }
+
+            // 이미지 모달 열기
+            $(".imageModal").modal("show");
+        });
+    }
+
+
+
+});
 </script>
 </body>
 </html>

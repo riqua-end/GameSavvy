@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
+import org.ezen.gamesavvy.domain.GsAttachVO;
 
 public interface GamesavvyService {
 	
@@ -30,6 +31,9 @@ public interface GamesavvyService {
 	
 	//게시글 조회수
 	public int updateCnt(Long bno);
+	
+	//게시글 조회 화면 (get)에서 사용하는 첨부물 처리 추상메서드
+	public List<GsAttachVO> getAttachList(Long bno);
 	
 	// =======================================================
 	
