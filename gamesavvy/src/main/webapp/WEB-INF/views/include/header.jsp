@@ -68,20 +68,20 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">공지사항</a>
-                            <a class="dropdown-item" href="#">자유게시판</a>
-                            <a class="dropdown-item" href="#">공략게시판</a>
-                            <a class="dropdown-item" href="#">정보게시판</a>
-                            <a class="dropdown-item" href="#">리뷰게시판</a>
+                            <a class="dropdown-item" href="../board/list?gs_type=5">공지사항</a>
+                            <a class="dropdown-item" href="../board/list?gs_type=1">자유게시판</a>
+                            <a class="dropdown-item" href="../board/list?gs_type=2">공략게시판</a>
+                            <a class="dropdown-item" href="../board/list?gs_type=3">정보게시판</a>
+                            <a class="dropdown-item" href="../board/list?gs_type=4">리뷰게시판</a>
                         </div>
                     </div>
                 </nav>
             </div>
             <div class="col d-flex justify-content-center flex-wrap align-items-center">
-                <div class="px-5 text-black"><a class="mainMenu" href="#">자유게시판</a></div>
-                <div class="px-5 text-black"><a class="mainMenu" href="#">공략게시판</a></div>
-                <div class="px-5 text-black"><a class="mainMenu" href="#">정보게시판</a></div>
-                <div class="px-5 text-black"><a class="mainMenu" href="#">리뷰게시판</a></div>
+                <div class="px-5 text-black"><a class="mainMenu" href="../board/list?gs_type=1">자유게시판</a></div>
+                <div class="px-5 text-black"><a class="mainMenu" href="../board/list?gs_type=2">공략게시판</a></div>
+                <div class="px-5 text-black"><a class="mainMenu" href="../board/list?gs_type=3">정보게시판</a></div>
+                <div class="px-5 text-black"><a class="mainMenu" href="../board/list?gs_type=4">리뷰게시판</a></div>
             </div>
             <div class="col-2 text-black d-flex align-items-center justify-content-center">
                 <h4>

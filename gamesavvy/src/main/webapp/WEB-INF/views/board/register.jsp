@@ -34,7 +34,6 @@
 			<h2 class="text-center">게시물 등록</h2>
 			<form action="register" method="post" id="freg" name="freg" role="form">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<input type='hidden' name='gs_type' value="${game.gs_type }"/>
 					<div class="form-group">
 					    <label for="gs_type">게시판 종류:</label>
 					    <select class="form-control" id="gs_type" name="gs_type">
