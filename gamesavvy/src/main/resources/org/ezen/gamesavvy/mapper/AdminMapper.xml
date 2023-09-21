@@ -58,23 +58,37 @@
 	    DELETE FROM gs_like WHERE USER_ID = #{userid}
 	</delete>
 	
-	
+	<!-- 권한 삭제 -->
 	<delete id="deleteMemberAuth" parameterType="string">
 	    DELETE FROM gs_member_auth WHERE USERID = #{userid}
 	</delete>
 	
+	<!-- 회원 삭제 -->
 	<delete id="deleteMember" parameterType="string">
 	    DELETE FROM gs_member WHERE USERID = #{userid}
 	</delete>
 	
+	<!-- 게시판 삭제 -->
 	<delete id="deleteBoardByWriter">
 	    DELETE FROM gs_board WHERE USERID = #{userid}
 	</delete>
 	
-	<!-- 댓글 -->
+	<!-- 댓글 삭제 -->
 	<delete id="deleteReplyByReplyer">
 	    DELETE FROM gs_reply WHERE REPLYER = #{userid}
 	</delete>
+	
+	<!-- 첨부파일 삭제-->
+	<delete id="deleteGsAttach">
+		delete from gs_attach where uuid = #{uuid}
+	</delete>
+	
+	<!-- 첨부 파일 UUID 목록 가져오기 -->
+	<select id="getUuidByUserId" parameterType="string" resultType="string">
+    	SELECT uuid
+    	FROM gs_attach
+    	WHERE bno IN (SELECT bno FROM gs_board WHERE userid = #{userid})
+	</select>
 	
 	<delete id="deleteBoardByBno">
 		DELETE FROM gs_board WHERE BNO = #{BNO}
