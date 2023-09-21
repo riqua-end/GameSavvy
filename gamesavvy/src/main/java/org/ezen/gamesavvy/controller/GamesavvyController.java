@@ -80,12 +80,14 @@ public class GamesavvyController {
 	//게시판 + 첨부물 등록 처리
 	@PostMapping("/register")
 	@PreAuthorize("isAuthenticated()")
-	public String register(GamesavvyVO game, RedirectAttributes rttr) {
+	public String register(@RequestParam("gs_type") int gs_type, GamesavvyVO game, RedirectAttributes rttr) {
 		
 		log.info("==========================");
 		// RedirectAttributes는 redirect:일시 파라메터를 실어보내는 객체(form의 getParameter역활)
 		
 		log.info("register: " + game);
+		
+		game.setGs_type(gs_type);
 		
 		if (game.getAttachList() != null) {
 			game.getAttachList().forEach(attach -> log.info(attach));
@@ -98,8 +100,21 @@ public class GamesavvyController {
 		rttr.addFlashAttribute("result", game.getBno());
 		// board.getBno()는 bno값을 반환
 		// 1회용 데이터 처리
+		
+		// gs_type에 따라 다른 리스트 페이지로 이동
+	    if (gs_type == 1) {
+	        return "redirect:list?gs_type=1";
+	    } else if (gs_type == 2) {
+	        return "redirect:list?gs_type=2";
+	    } else if (gs_type == 3) {
+	        return "redirect:list?gs_type=3";
+	    } else if (gs_type == 4) {
+	        return "redirect:list?gs_type=4";
+	    } else {
+	        // 다른 경우에는 기본 리스트 페이지로 이동
+	        return "redirect:/list";
+	    }
 
-		return "redirect:list";
 	}
 	
 	// 게시글 조회 및 수정 페이지

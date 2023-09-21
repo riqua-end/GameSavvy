@@ -51,16 +51,16 @@
 	</select>
 	
 	<insert id="insert" parameterType="org.ezen.gamesavvy.domain.GamesavvyVO">
-		insert into gs_board (bno,title,content,userid)
-		values (seq_gs_board.nextval, #{title}, #{content}, #{userid})
+		insert into gs_board (bno,title,content,userid,gs_type)
+		values (seq_gs_board.nextval, #{title}, #{content}, #{userid}, #{gs_type})
 	</insert>
 	
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="bno" order="BEFORE"	resultType="Long">
 			select seq_gs_board.nextval from dual
 		</selectKey>
-		insert into gs_board (bno,title,content, userid)
-		values (#{bno},#{title}, #{content}, #{userid})
+		insert into gs_board (bno,title,content, userid,gs_type)
+		values (#{bno},#{title}, #{content}, #{userid}, #{gs_type})
 	</insert>
 	
 	<select id="read" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
