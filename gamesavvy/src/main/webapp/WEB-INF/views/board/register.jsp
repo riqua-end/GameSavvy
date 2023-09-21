@@ -34,6 +34,17 @@
 			<h2 class="text-center">게시물 등록</h2>
 			<form action="register" method="post" id="freg" name="freg" role="form">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<input type='hidden' name='gs_type' value="${game.gs_type }"/>
+					<div class="form-group">
+					    <label for="gs_type">게시판 종류:</label>
+					    <select class="form-control" id="gs_type" name="gs_type">
+					        <option value="" selected>카테고리를 선택해주세요.</option>
+					        <option value="1">자유게시판</option>
+					        <option value="2">공략게시판</option>
+					        <option value="3">정보게시판</option>
+					        <option value="4">리뷰게시판</option>
+					    </select>
+					</div>
 					<div class="form-group">
 						<label for="title">제목:</label>
 						<input type="text" class="form-control" id="title" placeholder="Enter Title" 
@@ -51,7 +62,7 @@
 					</div>
 					<button type="submit" class="btn btn-success">작성</button>&nbsp;&nbsp;
 					<button type="reset" class="btn btn-danger">취소</button>	&nbsp;&nbsp;
-					<a id="listLink" href="list" class="btn btn-primary">목록보기</a>
+					<a id="listLink" href="list?gs_type=${game.gs_type}" class="btn btn-primary">목록보기</a>
 
 			</form>
 			
