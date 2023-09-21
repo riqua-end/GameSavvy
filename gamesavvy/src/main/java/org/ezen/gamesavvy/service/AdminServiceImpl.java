@@ -8,6 +8,7 @@ import org.ezen.gamesavvy.domain.MemberVO;
 import org.ezen.gamesavvy.domain.ReplyVO;
 import org.ezen.gamesavvy.mapper.AdminMapper;
 import org.ezen.gamesavvy.mapper.GamesavvyMapper;
+import org.ezen.gamesavvy.mapper.GsAttachMapper;
 import org.ezen.gamesavvy.mapper.ReplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	GamesavvyMapper boardmapper;
+	
+	@Autowired
+	GsAttachMapper atmapper;
 	
 	//관리자 페이지 회원 목록
 	@Override
@@ -52,13 +56,18 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void removeMember(String userid) {
 		
-		// 댓글 수 업데이트
+		// 댓글 수 업데이트 삭제
 	    List<ReplyVO> replies = rmapper.getRepliesByReplyer(userid); // 해당 회원이 작성한 댓글 목록 가져오기
 	    for (ReplyVO reply : replies) {
 	        boardmapper.updateReplyCnt(reply.getBno(), -1); // 댓글 삭제 시 -1
 	    }
 		
-		// 연관 데이터 삭제 순서: LIKE_TEST, TEST_REPLY, TEST_BOARD, TEST_MEMBER_AUTH
+	    // GS_ATTACH 테이블에서 해당 회원의 첨부 파일을 모두 삭제
+	    List<String> uuidsToDelete = amapper.getUuidByUserId(userid); // 해당 회원의 첨부 파일 uuid 목록 가져오기
+	    for (String uuid : uuidsToDelete) {
+	        amapper.deleteGsAttach(uuid); // 각각의 첨부 파일 삭제
+	    }
+		// 연관 데이터 삭제 순서: GS_ATTACH, LIKE_TEST, TEST_REPLY, TEST_BOARD, TEST_MEMBER_AUTH
 		amapper.deleteLikes(userid);
 		amapper.deleteBoardByWriter(userid);
 	    amapper.deleteMemberAuth(userid);
@@ -72,7 +81,8 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void removeList(Long bno) {
 		// 연관 데이터 삭제 순서: 
-
+		
+		atmapper.deleteAll(bno);
 		amapper.deleteBoardByBno(bno);
 		
 	}

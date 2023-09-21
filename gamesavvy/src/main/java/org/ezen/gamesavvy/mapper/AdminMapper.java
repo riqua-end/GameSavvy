@@ -33,6 +33,12 @@ public interface AdminMapper {
   	//추천
   	public void deleteLikes(String userid);
   	
+  	//첨부파일 uuid값
+  	public void deleteGsAttach(String userid);
+  	
+  	//첨부파일 uuid 목록 찾기.
+  	public List<String> getUuidByUserId(String userid);
+  	
 /*====================================================================================*/
 /*=============================== 관리자 게시판 목록 =====================================*/
   	//관리자 페이지 게시판 목록
