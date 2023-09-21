@@ -123,6 +123,8 @@
 				<!-- 검색처리 추가 -->
 				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+				<!-- gs_type -->
+				<input type='hidden' name='gs_type' value='<c:out value="${cri.gs_type }"/>'>
 			</form>
 			
 			

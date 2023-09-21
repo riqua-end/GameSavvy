@@ -44,7 +44,7 @@
     	<hr></hr>
     	<div class="sidenav">
        		<a href="../home/home">홈</a>
-        	<a href="../board/list">자유게시판</a>
+        	<a href="../board/list?gs_type=1">자유게시판</a>
     	</div>
 	</div>
 	<sec:authorize access="hasRole('ROLE_ADMIN')">

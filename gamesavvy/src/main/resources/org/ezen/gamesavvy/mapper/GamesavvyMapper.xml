@@ -32,20 +32,22 @@
 	</select>
 	
 	<select id="getListWithPaging" resultType="org.ezen.gamesavvy.domain.GamesavvyVO"> 
-		<![CDATA[
-			select bno, title, content, userid, regdate, updatedate, replyCnt, cnt
-			from
-			(
-				select /*+INDEX_DESC(gs_board pk_gs_board)*/ 
-				rownum rn, bno, title, content,	userid, regdate, updatedate, replyCnt, cnt
-				from gs_board 
-			where ]]>
-			<include refid="criteria"></include>
-		<![CDATA[	 
-			rownum <= #{pageNum} * #{amount}
-			)
-			where rn > (#{pageNum} -1) * #{amount} 
-		]]>
+	    <![CDATA[
+	        SELECT bno, title, content, userid, regdate, updatedate, replyCnt, cnt, gs_type
+	        FROM
+	        (
+	            SELECT /*+INDEX_DESC(gs_board pk_gs_board)*/ 
+	            ROWNUM rn, bno, title, content, userid, regdate, updatedate, replyCnt, cnt, gs_type
+	            FROM gs_board 
+	            WHERE 1=1
+	        ]]>
+	        <include refid="criteria"></include>
+	        <![CDATA[	 
+	            AND gs_type = #{gs_type}	
+	            AND ROWNUM <= #{pageNum} * #{amount}
+	        )
+	        WHERE rn > (#{pageNum} - 1) * #{amount} 
+	    ]]>
 	</select>
 	
 	<insert id="insert" parameterType="org.ezen.gamesavvy.domain.GamesavvyVO">

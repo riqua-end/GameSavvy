@@ -26,4 +26,7 @@ public class GamesavvyVO {
 	
 	//GamesavvyVO를 한번에 처리 하도록 List<GsAttachVO>를 추가
 	private List<GsAttachVO> attachList;
+	
+	//다중게시판 gs_type
+	private int gs_type;
 }

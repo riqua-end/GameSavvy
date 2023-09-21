@@ -13,10 +13,6 @@ regdate date default sysdate,
 updatedate date default sysdate,
 replycnt number default 0);
 
--- 아직 추가 안함.
-gs_type number(10,0),
-gs_img varchar2(1000)
-
 -- pk설정
 alter table gs_board add constraint pk_gs_board primary key(bno);
 
@@ -29,9 +25,18 @@ alter table gs_board add (cnt number default 0);
 --추천 기능 구현
 alter table gs_board add (recommend_count number default 0);
 
--- 테스트용
-insert into gs_board (bno, title, content, userid) 
-values(seq_gs_board.nextval, '테스트 제목','테스트 내용','user1000');
+-- gs_board 테이블에 gs_type 컬럼 추가
+ALTER TABLE gs_board ADD gs_type NUMBER(10,0);
+
+-- 기존 데이터 업데이트 예시
+UPDATE gs_board SET gs_type = 1; -- 자유게시판
+
+-- gs_type 의 게시판 구분
+gs_type == '1' 자유게시판
+gs_type == '2' 공략게시판
+gs_type == '3' 정보게시판
+gs_type == '4' 리뷰게시판
+gs_type == '5' 공지사항
 
 ====================================================================================  댓글 테이블
 

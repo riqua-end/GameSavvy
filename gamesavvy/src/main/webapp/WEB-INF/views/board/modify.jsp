@@ -33,9 +33,10 @@
        			<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
        			<!-- 검색 적용 -->
        			<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>	
+				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+				<!-- gs_type -->
+				<input type='hidden' name='gs_type' value='<c:out value="${cri.gs_type }"/>'>
 				
-       			<!-- 검색 적용 -->	
 				<div class="form-group">
 					<label for="bno">번호:</label>
 					<input type="text" class="form-control" id="bno" name="bno" readonly value='<c:out value="${board.bno }"/>' />		
@@ -123,12 +124,15 @@ $(function(){ //$(document).ready(function(){});의 단축형
 			//검색처리
 			let keywordTag = $("input[name='keyword']").clone();
 		    let typeTag = $("input[name='type']").clone();
+		    //gs_type
+		    let gsType = $("input[name='gs_type']").clone();
 		    formObj.empty(); //formObj의 자식 엘리먼트를 모두 제거(4개포함 게시판 컬럼)
 		    
 		    formObj.append(pageNumTag); //자식으로 붙여쓰기
 		    formObj.append(amountTag);
 		    formObj.append(keywordTag);
 		    formObj.append(typeTag);
+		    formObj.append(gsType);
 		}
 		// 첨부파일 고려
 		else if(operation == 'modify') {
