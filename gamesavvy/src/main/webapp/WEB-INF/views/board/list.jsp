@@ -120,6 +120,8 @@
 				<!-- 검색처리 추가 -->
 				<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
 				<input type='hidden' name='keyword'	value='<c:out value="${ pageMaker.cri.keyword }"/>'>
+				<!-- gs_type -->
+				<input type='hidden' name='gs_type' value='<c:out value="${pageMaker.cri.gs_type }"/>'>
 			</form>
 			
 			<!-- 모달 (게시글 등록 완료시) -->
