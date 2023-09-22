@@ -30,6 +30,19 @@
 		<![CDATA[select * from gs_board where bno > 0 ORDER BY BNO DESC]]>
 	</select>
 	
+	<!-- 각 게시판 타입별로 최대 5개의 게시글 가져오는 쿼리 -->
+    <select id="getTop5ByTypeFromDatabase" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
+        <![CDATA[
+    		SELECT *
+    		FROM (
+        		SELECT *
+        		FROM gs_board
+        		WHERE gs_type = #{gs_type}
+        		ORDER BY bno DESC
+    			) WHERE ROWNUM <= 5
+		]]>
+    </select>
+	
 	<select id="getListWithPaging" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
 		 
 		<![CDATA[
