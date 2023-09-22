@@ -110,18 +110,28 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<form id='searchForm' action="list" method='get'>
-						<select name='type'>
-							<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
-							<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자 </option>
-						</select>
-						
-						<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
-						<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
-						<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
-						
-						<button id="search" class='btn btn-outline-primary btn-sm'>Search</button>
-						<button id="clear" class="btn btn-outline-info btn-clear btn-sm" type="button">Clear</button>
+					    <select name='type'>
+					        <option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+					        <option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
+					    </select>
+					
+					    <!-- gs_type 추가 -->
+					    <select name='gs_type'>
+					        <option value="1" <c:if test="${pageMaker.cri.gs_type == 1}">selected</c:if>>자유게시판</option>
+					        <option value="2" <c:if test="${pageMaker.cri.gs_type == 2}">selected</c:if>>공략게시판</option>
+					        <option value="3" <c:if test="${pageMaker.cri.gs_type == 3}">selected</c:if>>정보게시판</option>
+					        <option value="4" <c:if test="${pageMaker.cri.gs_type == 4}">selected</c:if>>리뷰게시판</option>
+					    </select>
+					
+					    <input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+					    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+					    <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					    <input type='hidden' name='gs_type' value='<c:out value="${pageMaker.cri.gs_type }"/>'>
+					
+					    <button id="search" class='btn btn-outline-primary btn-sm'>Search</button>
+					    <button data-oper='clear' class="btn btn-outline-info btn-clear btn-sm" type="button">Clear</button>
 					</form>
+
 				</div>
 			</div>
 			
@@ -230,15 +240,25 @@ $(document).ready(function(){
 			return false;
 		}
 		
+		// 페이지 번호를 1로 설정하여 첫 페이지로 이동
 		searchForm.find("input[name='pageNum']").val("1");
 		e.preventDefault();
 		searchForm.submit();
 	});
 	
-	$("#searchForm #clear").on("click", function(e){
+	// clear 버튼 클릭 시 검색 폼 초기화 및 페이지 이동
+    $("button[data-oper='clear']").on("click", function(e){
+        e.preventDefault();
+
+        // 검색 폼 초기화
+        searchForm.find("select[name='type']").val(""); // 검색 종류 초기화
+        searchForm.find("input[name='keyword']").val(""); // 키워드 초기화
+        searchForm.find("input[name='gs_type']").val(""); //gs_type 초기화
 		
-		searchForm.empty().submit();
-	});
+     	// 페이지 번호를 1로 설정하여 첫 페이지로 이동
+        searchForm.find("input[name='pageNum']").val("1");
+        searchForm.submit();
+    });
 	
 });
 </script>
