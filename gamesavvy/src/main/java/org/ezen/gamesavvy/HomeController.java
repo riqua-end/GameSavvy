@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.Setter;
 
@@ -48,17 +49,16 @@ public class HomeController {
 	@GetMapping("/home/home")
 	public void get(Model model) {
 		
-		model.addAttribute("home", gameservice.getLi());
+		// 각 게시판 타입별로 최대 5개의 게시글 가져오기
+		List<GamesavvyVO> board1 = gameservice.getTop5ByType(1); // 자유게시판
+		List<GamesavvyVO> board2 = gameservice.getTop5ByType(2); // 공략게시판
+		List<GamesavvyVO> board3 = gameservice.getTop5ByType(3); // 정보게시판
+		List<GamesavvyVO> board4 = gameservice.getTop5ByType(4); // 리뷰게시판
 		
-		List<GamesavvyVO> homeData = gameservice.getLi();
-
-	    // 최신순으로 정렬하고 최대 5개의 항목 선택
-	    List<GamesavvyVO> sortedData = homeData.stream()
-	            .sorted((c1, c2) -> c2.getBno().compareTo(c1.getBno())) // 최신순 정렬
-	            .limit(5) // 최대 5개 항목 선택
-	            .collect(Collectors.toList());
-
-	    model.addAttribute("home", sortedData);
+		model.addAttribute("board1", board1);
+		model.addAttribute("board2", board2);
+		model.addAttribute("board3", board3);
+		model.addAttribute("board4", board4);
 		
 	    // 각 게시물의 추천 수를 가져와서 모델에 추가
 	    // 현재 페이지의 게시물 목록에서 각 게시물의 번호(bno)를 추출하여 리스트로 저장

@@ -20,6 +20,9 @@ public interface GamesavvyService {
 	//삭제
 	public boolean remove(Long bno);
 	
+	// 각 게시판 타입별로 최대 5개의 게시글 가져오기
+    List<GamesavvyVO> getTop5ByType(int gs_type);
+	
 	//페이지 미처리 리스트
 	public List<GamesavvyVO> getLi();
 	

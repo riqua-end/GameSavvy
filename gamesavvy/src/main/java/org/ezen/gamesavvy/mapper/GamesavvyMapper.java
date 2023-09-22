@@ -8,6 +8,9 @@ import org.ezen.gamesavvy.domain.GamesavvyVO;
 
 public interface GamesavvyMapper {
 	
+	// 각 게시판 타입별로 최대 5개의 게시글 가져오기
+	List<GamesavvyVO> getTop5ByTypeFromDatabase(int gs_type);
+	
 	//@Select("select * from gs_board where bno > 0")
 	public List<GamesavvyVO> getLi();
 	

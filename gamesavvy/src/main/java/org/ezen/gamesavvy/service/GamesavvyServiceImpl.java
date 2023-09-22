@@ -94,6 +94,14 @@ public class GamesavvyServiceImpl implements GamesavvyService {
 		
 	}
 	
+	// 각 게시판 타입별로 최대 5개의 게시글 가져오기
+	@Override
+    public List<GamesavvyVO> getTop5ByType(int gs_type) {
+        // 해당 게시판 타입별로 최대 5개의 게시글을 가져오는 로직을 여기에 구현
+        // 예를 들어, 데이터베이스에서 해당 타입의 최신 5개 게시글을 가져오도록 구현할 수 있습니다.
+        return gmapper.getTop5ByTypeFromDatabase(gs_type); // 데이터베이스 쿼리를 실행하여 최신 5개 게시글 가져오기
+    }
+	
 	//페이지 미처리
 	@Override
 	public List<GamesavvyVO> getLi() {
