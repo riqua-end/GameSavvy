@@ -27,13 +27,28 @@ public class ReplyServiceImpl implements ReplyService {
 	@Transactional
 	@Override
 	public int register(ReplyVO vo) {
-		
-		log.info("register" + vo);
-		
-		boardMapper.updateReplyCnt(vo.getBno(), 1); //댓글수 처리 메서드
-		
-		return mapper.insert(vo);
+	    log.info("register" + vo);
+
+	    // 부모 댓글의 ID가 있을 경우에만 depth를 설정
+	    if (vo.getParent_id() != null) {
+	        // 부모 댓글을 조회하여 부모 댓글의 depth + 1 값을 자식 댓글의 depth로 설정
+	        ReplyVO parentReply = mapper.read(vo.getParent_id());
+	        if (parentReply != null) {
+	            vo.setDepth(parentReply.getDepth() + 1);
+	            log.info("Setting depth to: " + vo.getDepth());
+	        }
+	    } else {
+	        // 부모 댓글이 아닌 경우 depth를 0으로 설정
+	        vo.setDepth(0L);
+	        log.info("Setting depth to 0");
+	    }
+
+	    // 댓글 수 처리 메서드
+	    boardMapper.updateReplyCnt(vo.getBno(), 1);
+
+	    return mapper.insert(vo);
 	}
+
 	
 	@Override
 	public ReplyVO get(Long rno) {
