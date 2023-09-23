@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -28,21 +29,39 @@ public class ReplyController {
 	
 	private ReplyService service;
 	
-	// 댓글 등록
-	
 	@PreAuthorize("isAuthenticated()")
-	@PostMapping(value = "/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE + ";charset=UTF-8"})
-	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {
-			
-		log.info("ReplyVO" + vo);
-		
-		int insertCount = service.register(vo);
-		
-		log.info("Reply Insert Count" + insertCount);
-		
-		return insertCount == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE + ";charset=UTF-8" })
+	public ResponseEntity<String> create(@RequestBody ReplyVO vo, @RequestParam(value = "parentRno", required = false) Long parentRno) {
+	    if (parentRno != null) {
+	        // 부모 댓글의 ID를 ReplyVO에 설정
+	        vo.setParent_id(parentRno);
+
+	        // 부모 댓글을 조회하여 부모 댓글의 depth + 1 값을 자식 댓글의 depth로 설정
+	        ReplyVO parentReply = service.get(parentRno);
+	        if (parentReply != null) {
+	            vo.setDepth(parentReply.getDepth() + 1);
+	            log.info("Setting depth to: " + vo.getDepth());
+	        }
+	    } else {
+	        // 부모 댓글인 경우 depth를 0으로 설정
+	        vo.setDepth(0L);
+	        log.info("Setting depth to 0");
+	    }
+
+	    log.info("ReplyVO: " + vo);
+
+	    int insertCount = service.register(vo); // 댓글 등록 서비스 호출
+
+	    log.info("Reply Insert Count: " + insertCount);
+
+	    if (insertCount == 1) {
+	        return new ResponseEntity<>("success", HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
+
+
 	
 	//List 처리
 
@@ -95,4 +114,6 @@ public class ReplyController {
 		return service.modify(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	
 }

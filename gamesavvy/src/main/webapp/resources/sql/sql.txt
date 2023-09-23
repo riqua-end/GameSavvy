@@ -76,6 +76,13 @@ commit;
 --gs_member에 외래키 지정
 ALTER TABLE gs_reply ADD CONSTRAINT fk_reply_member FOREIGN KEY (replyer) REFERENCES gs_member(userid) ON DELETE CASCADE;
 
+--대댓글 처리를 위한 parent_id 컬럼 추가
+alter table gs_reply add parent_id number (10,0);
+
+--depth 추가
+ALTER TABLE gs_reply
+ADD depth NUMBER(10, 0);
+
 ====================================================================================  회원 테이블
 
 --사용자 정의 security용 실습용 회원 관련 테이블

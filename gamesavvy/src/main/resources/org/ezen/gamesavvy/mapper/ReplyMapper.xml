@@ -8,8 +8,8 @@
 	
 	<!-- 등록 -->
 	<insert id="insert" parameterType="org.ezen.gamesavvy.domain.ReplyVO">
-		insert into gs_reply (rno,bno,reply,replyer)
-		values (seq_gs_reply.nextval, #{bno}, #{reply}, #{replyer})
+		insert into gs_reply (rno,bno,reply,replyer,parent_id,depth)
+		values (seq_gs_reply.nextval, #{bno}, #{reply}, #{replyer}, #{parent_id, jdbcType=NUMERIC}, #{depth})
 	</insert>
 	
 	<!-- 조회 -->
@@ -31,19 +31,19 @@
 	
 	<!-- 댓글의 페이징 처리 -->
 	<select id="getListWithPaging" resultType="org.ezen.gamesavvy.domain.ReplyVO">
-		<![CDATA[
-			select rno,bno,reply,replyer,replyDate,updatedate
-			from
-			(
-				select /*+INDEX(gs_reply idx_gs_reply) */
-				rownum rn,rno,bno,reply,replyer,replyDate,updatedate
-				from gs_reply
-				where bno = #{bno}
-						and rno > 0
-						and rownum <= #{cri.pageNum} * #{cri.amount}
-			)
-			where rn > (#{cri.pageNum} -1) * #{cri.amount}
-		]]>
+	    <![CDATA[
+	        select rno, bno, reply, replyer, replyDate, updatedate, parent_id, depth
+	        from
+	        (
+	            select /*+INDEX(gs_reply idx_gs_reply) */
+	            rownum rn, rno, bno, reply, replyer, replyDate, updatedate, parent_id, depth
+	            from gs_reply
+	            where bno = #{bno}
+	                and rno > 0
+	                and rownum <= #{cri.pageNum} * #{cri.amount}
+	        )
+	        where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+	    ]]>
 	</select>
 	
 	<select id="getCountByBno" resultType="int">
@@ -63,5 +63,5 @@
             WHERE replyer = #{userid}
         ]]>
     </select>
-	
+    
 </mapper>

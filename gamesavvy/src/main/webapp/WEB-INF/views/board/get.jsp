@@ -51,6 +51,16 @@
     height: auto; /* 높이를 자동으로 조절하여 비율 유지 */
 }
 
+/* 댓글 수정, 삭제 버튼 스타일 */
+.btn-group {
+    margin-left: 10px; /* 버튼 사이 여백 조절 */
+}
+
+/* 답글 달기 버튼 스타일 */
+.btn-group.reply {
+    margin-left: 10px; /* 버튼 사이 여백 조절 */
+}
+
 </style>
 <!-- Slick Carousel 스타일 및 스크립트 추가 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
@@ -150,13 +160,14 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <ul class="chat list-group">
-                            <!-- 
+                            <!-- 부모 댓글
                             <li class='list-group-item clearfix' data-rno='2'>
                                 <strong class='text-primary'>user00</strong>
                                 <small class='float-right text-mute'>2023-05-03</small>
                                 <p>댓글 내용입니다</p>
                             </li>
                             -->
+                            <!-- 자식 댓글이 나오는 곳 -->
                         </ul>
                     </div>
                 </div>
@@ -306,9 +317,8 @@ $(document).ready(function(){
     
     showList(1); //댓글 리스트 보여주기
     
-    $("#addReplyBtn").on("click", function(){
-        
-    	// 댓글 작성 여부 확인
+    $("#addReplyBtn").on("click", function () {
+        // 댓글 작성 여부 확인
         if (!replyer) {
             let isConfirm = confirm("댓글을 작성하려면 로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?");
             if (isConfirm) {
@@ -317,15 +327,14 @@ $(document).ready(function(){
             }
             return;
         }
-    	
-    	// 댓글 내용을 formData에 직접 추가
+
         let reply = {
-        		reply: $("#replyForm textarea[name='reply']").val(),
-        		replyer: replyer,
-        		bno: $("#replyForm input[name='bno']").val()
-    	};
+            reply: $("#replyForm textarea[name='reply']").val(),
+            replyer: replyer,
+            bno: $("#replyForm input[name='bno']").val()
+        };
         let replyValue = $("textarea[name='reply']");
-        if(replyValue.val().trim() === "") {
+        if (replyValue.val().trim() === "") {
             alert("댓글을 입력해 주세요.");
             replyValue.focus();
             return;
@@ -338,61 +347,155 @@ $(document).ready(function(){
             showList(-1); // 등록 후 댓글 목록 보이게 함
         });
     });
-	
- 	
+
     
-    
+ 	// 댓글 목록을 출력하는 함수
     function showList(page) {
         console.log("show list" + page);
-        
-        replyService.getList({bno:bnoValue,page:page||1},function(rpDto){
-            
-            let replyCnt = rpDto.replyCnt;
-            let list = rpDto.list;
+
+        // 댓글 목록을 서버로부터 가져오는 replyService.getList 함수 호출
+        replyService.getList({ bno: bnoValue, page: page || 1 }, function (rpDto) {
+            let replyCnt = rpDto.replyCnt; // 댓글 총 개수
+            let list = rpDto.list; // 댓글 목록 데이터
+
             console.log("replyCnt" + replyCnt);
             console.log("list" + list);
-            
-            if(page == -1) {
-                pageNum = Math.ceil(replyCnt/10.0);
+
+            if (page == -1) {
+                // 페이지가 -1인 경우, 마지막 페이지를 계산하여 다시 showList 호출
+                pageNum = Math.ceil(replyCnt / 10.0);
                 showList(pageNum);
                 return;
             }
-            
-            let str = "";
-            
-            if(list == null || list.length == 0) {
-                replyUL.html("");
-                return;
-            }
-            
-            for (let i = 0, len = list.length; i < len; i++) {
-                str += "<li class='list-group-item clearfix pb-0' data-rno='" + list[i].rno + "'>";
-                str += "<strong class='text-info' data-replyer='" + list[i].replyer + "'>" + 
-                       "<i class='fab fa-waze' style='color: #3b71ce;'></i> " +
-                       list[i].replyer + "</strong>";
-                str += "<small class='float-right text-muted'>" + replyService.displayTime(list[i].replyDate) + "</small>";
-                str += "<p>" + list[i].reply + "</p>";
-                // 댓글 작성자만 댓글 수정, 삭제 버튼 보이게 처리
-                if (replyer === list[i].replyer) {
-                    str += "<div class='btn-group float-right'>";
-                    str += "<a href='#' class='btn btn-sm btn-primary modify'>수정</a>";
-                    str += "<a href='#' class='btn btn-sm btn-danger delete'>삭제</a>";
-                    str += "</div>";
-                }
-                str += "</li>";
-            }
 
-            
+            // 댓글 목록 데이터를 트리 구조로 정리
+            let treeData = organizeReplyData(list);
+
+            // 트리 구조로부터 HTML 생성
+            let str = generateReplyHTML(treeData);
+
+            // 생성된 HTML을 댓글 목록 영역에 적용
             replyUL.html(str);
-            
-         	// 댓글 목록을 출력한 후에, 현재 사용자의 이름(댓글 작성자)을 각 댓글 항목에 데이터 속성으로 저장
+
+            // 댓글 목록을 출력한 후에, 현재 사용자의 이름(댓글 작성자)을 각 댓글 항목에 데이터 속성으로 저장
             replyUL.find("strong[data-replyer]").each(function () {
                 $(this).data("currentUsername", replyer);
             });
-            
+
+            // 댓글 페이지를 표시하는 함수 호출
             showReplyPage(replyCnt);
         });
     }
+
+ 	// 댓글 데이터를 트리 구조로 정리하는 함수
+    function organizeReplyData(list) {
+        let treeData = {}; // 댓글 데이터를 트리 구조로 정리할 객체 생성
+
+        // 댓글 목록 순회
+        list.forEach(function (reply) {
+            if (!treeData[reply.rno]) {
+                // 트리 데이터에 해당 댓글의 rno가 없는 경우, 새로운 댓글로 초기화
+                treeData[reply.rno] = reply;
+                treeData[reply.rno].children = []; // 해당 댓글의 자식 댓글 목록 초기화
+            }
+            if (reply.parent_id) {
+                if (!treeData[reply.parent_id]) {
+                    // 해당 댓글의 부모 댓글이 트리 데이터에 없는 경우, 새로운 부모 댓글로 초기화
+                    treeData[reply.parent_id] = {
+                        children: []
+                    };
+                }
+                // 부모 댓글의 자식 댓글 목록에 현재 댓글 추가
+                treeData[reply.parent_id].children.push(reply);
+            }
+        });
+        return treeData; // 트리 구조로 정리된 댓글 데이터 반환
+    }
+
+    // 댓글을 HTML로 변환하는 함수
+    function generateReplyHTML(treeData) {
+        let str = ""; // HTML 문자열을 저장할 변수 초기화
+        for (let rno in treeData) {
+            let reply = treeData[rno]; // 현재 댓글 데이터
+
+            // 삭제된 댓글이 아닌 경우에만 처리
+            if (reply.reply !== "(삭제된 댓글입니다.)") {
+                if (!reply.parent_id) {
+                    // 부모 댓글인 경우
+                    str += generateReplyItem(treeData, rno, 0);
+                    // 자식 댓글이 있다면 자식 댓글도 추가
+                    if (reply.children.length > 0) {
+                        str += "<ul class='list-group child-replies ml-5'>";
+                        str += generateChildReplies(treeData, reply.children, 1);
+                        str += "</ul>";
+                    }
+                }
+            } else {
+                // 삭제된 댓글인 경우에도 부모 댓글의 정보를 출력
+                if (reply.parent_id) {
+                    str += generateReplyItem(treeData, reply.parent_id, 0);
+                }
+            }
+        }
+        return str; // 생성된 HTML 문자열 반환
+    }
+
+    // 자식 댓글을 HTML로 변환하는 함수
+    function generateChildReplies(treeData, children, depth) {
+        let str = ""; // HTML 문자열을 저장할 변수 초기화
+        children.forEach(function (child) {
+            // 삭제된 댓글은 출력하지 않음
+            if (child.reply !== "(삭제된 댓글입니다.)") {
+                str += generateReplyItem(treeData, child.rno, depth);
+                // 손자 댓글이 있다면 재귀적으로 추가
+                if (child.children.length > 0) {
+                    str += "<ul class='list-group child-replies ml-5'>";
+                    str += generateChildReplies(treeData, child.children, depth + 1);
+                    str += "</ul>";
+                }
+            }
+        });
+        return str; // 생성된 HTML 문자열 반환
+    }
+
+
+    // 댓글 아이템을 HTML로 생성하는 함수
+    function generateReplyItem(treeData, rno, depth) {
+        let reply = treeData[rno];
+        let str = "<li class='list-group-item clearfix pb-0' data-rno='" + reply.rno + "'>";
+
+        // 삭제된 부모 댓글인 경우를 처리
+        if (reply.parent_id === undefined) {
+            str += "<p class='text-danger font-weight-bold' style='font-size: 16px;'>(삭제된 댓글입니다.)</p>";
+        } else {
+            // 일반적인 댓글 아이템 생성
+            str += "<strong class='text-info' data-replyer='" + reply.replyer + "'>" +
+                "<i class='fab fa-waze' style='color: #3b71ce;'></i> " +
+                reply.replyer + "</strong>";
+            str += "<small class='float-right text-muted'>" + replyService.displayTime(reply.replyDate) + "</small>";
+            str += "<p>" + reply.reply + "</p>";
+
+            // 댓글 작성자와 현재 로그인한 사용자가 같을 경우 수정, 삭제 버튼 표시
+            if (replyer === reply.replyer) {
+                str += "<div class='btn-group float-right'>";
+                str += "<a href='#' class='btn btn-sm btn-primary modify'>수정</a>";
+                str += "<a href='#' class='btn btn-sm btn-danger delete'>삭제</a>";
+                str += "</div>";
+            } else {
+                // 댓글 작성자와 현재 로그인한 사용자가 다를 경우 답글 달기 버튼 표시
+                str += "<div class='btn-group float-right'>";
+                str += "<a href='#' class='btn btn-sm btn-success reply'>답글달기</a>";
+                str += "</div>";
+            }
+        }
+
+        str += "</li>";
+        return str;
+    }
+
+
+
+
     
     function showReplyPage(replyCnt) {
         
@@ -451,6 +554,7 @@ $(document).ready(function(){
     $(document).ajaxSend(function(e,xhr,options){
         xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);    
     });
+    
     
  	// 댓글 수정 버튼 클릭 이벤트 처리
     $(".chat").on("click", "a.modify", function(e) {
@@ -532,7 +636,62 @@ $(document).ready(function(){
     	
     	showList(pageNum);
     });
-	
+    
+    
+   	// 댓글 리스트 출력 후, 대댓글 버튼 클릭 이벤트 처리
+   	$(".chat").on("click", "a.reply", function(e) {
+   	    e.preventDefault(); // 기본 클릭 이벤트 동작을 막음
+   	    let li = $(this).closest("li"); // 클릭한 버튼의 가장 가까운 상위 li 요소를 찾음
+   	    let parentRno = li.data("rno"); // 부모 댓글의 아이디(rno)를 가져옴
+
+   	    // 대댓글 작성 폼이 아직 보이지 않는 경우
+   	    if (li.find(".reply-form").length === 0) {
+   	        // 대댓글 작성 폼 생성
+   	        let replyForm = "<div class='reply-form'>" +
+   	            "<textarea class='form-control' rows='2' style='resize:none; width:100%; border-radius:10px;'></textarea>" +
+   	            "<a href='#' class='btn btn-sm btn-success float-right add-reply'>대댓글 달기</a>" +
+   	            "</div>";
+
+   	        // 대댓글 작성 폼을 부모 댓글 아래에 추가
+   	        li.append(replyForm);
+
+   	        // 버튼 텍스트를 "답글 달기 취소"로 변경하고 버튼 색상을 변경
+   	        $(this).text("답글 달기 취소").removeClass("btn-success").addClass("btn-danger");
+   	    } else { // 대댓글 작성 폼이 이미 보이는 경우
+   	        // 대댓글 작성 폼을 제거
+   	        li.find(".reply-form").remove();
+
+   	        // 버튼 텍스트를 "답글 달기"로 변경하고 버튼 색상을 변경
+   	        $(this).text("답글 달기").removeClass("btn-danger").addClass("btn-success");
+   	    }
+
+   	    // 대댓글 작성 버튼 클릭 이벤트 처리
+   	    $(".add-reply").on("click", function(e) {
+   	        e.preventDefault(); // 기본 클릭 이벤트 동작을 막음
+   	        let replyText = $(this).prev("textarea").val(); // 대댓글 내용을 가져옴
+
+   	        // 대댓글 등록 서비스 호출 (부모 댓글의 아이디(rno)와 작성된 대댓글 내용을 전송)
+   	        let reply = {
+   	            reply: replyText,
+   	            replyer: replyer, // 현재 로그인한 사용자
+   	            bno: bnoValue, // 게시글 번호
+   	            parent_id: parentRno // 부모 댓글의 아이디(rno)
+   	        };
+
+   	        replyService.add(reply, function(result) {
+   	            alert("대댓글이 등록되었습니다.");
+   	            // 대댓글 등록 후, 해당 부모 댓글의 대댓글 목록을 갱신
+   	            showList(pageNum);
+   	        });
+
+   	        // 대댓글 작성 폼을 제거
+   	        li.find(".reply-form").remove();
+
+   	        // 버튼 텍스트를 "답글 달기"로 변경하고 버튼 색상을 변경
+   	        li.find(".reply").text("답글 달기").removeClass("btn-danger").addClass("btn-success");
+   	    });
+   	});
+
 });
 
 </script>
