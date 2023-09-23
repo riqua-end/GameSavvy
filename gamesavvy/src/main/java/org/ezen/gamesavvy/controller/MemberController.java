@@ -35,6 +35,24 @@ public class MemberController {
 	@Setter(onMethod_ = @Autowired)
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	// 게시판의 분류 정보를 반환하는 메서드
+	private String getCategoryName(int gs_type) {
+	    switch (gs_type) {
+	        case 1:
+	            return "자유";
+	        case 2:
+	            return "공략";
+	        case 3:
+	            return "정보";
+	        case 4:
+	            return "리뷰";
+	        case 5:
+	            return "공지";
+	        default:
+	            return "기타";
+	    }
+	}
+	
 	//로그인 페이지
 	@GetMapping("/login")
 	public void loginInput(String error, String logout, Model model) {
@@ -96,13 +114,19 @@ public class MemberController {
         
         log.info("custom");
         
+        String userid = principal.getName(); // 현재 로그인한 사용자의 아이디
+        List<GamesavvyVO> custom = memberservice.getUser(cri, userid);
+        
+        for(GamesavvyVO game : custom) {
+        	String categoryName = getCategoryName(game.getGs_type());
+        	game.setCategoryName(categoryName);
+        }
+        
         if (principal != null) {
-            String userid = principal.getName(); // 현재 로그인한 사용자의 아이디
-            List<GamesavvyVO> custom = memberservice.getUser(cri, userid);
+
             model.addAttribute("custom", custom);
         }
         // 현재 로그인한 사용자의 게시판 갯수
-        String userid = principal.getName();
         int total = memberservice.getUserTotal(cri, userid);
         model.addAttribute("total", total);
         log.info("total: " + total);

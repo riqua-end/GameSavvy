@@ -109,7 +109,7 @@
 							<tbody>
 								<c:forEach items="${custom}" var="board">
 									<tr>
-										<td>분류</td>
+										<td><c:out value="${board.categoryName}"/></td>
 										<td>
 											<a style="font-weight:bold;color: #000000;text-decoration: none;" href="/board/get?bno=${board.bno}">
 												<c:out value="${board.title}"/>

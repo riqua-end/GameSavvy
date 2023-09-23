@@ -42,6 +42,9 @@ public interface GamesavvyMapper {
 	//게시판 조회수 처리
 	public int updateCnt(Long bno);
 	
+	//공지사항
+	public List<GamesavvyVO> notice();
+	
 	
 	
 	/* =================== 게시물 추천 기능 구현 ====================== */

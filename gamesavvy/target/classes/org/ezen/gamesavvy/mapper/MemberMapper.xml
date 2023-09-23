@@ -43,11 +43,11 @@
 	<!-- 사용자가 작성한 게시글 목록을 페이징하여 가져오기 -->
 	<select id="readUser" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
     	<![CDATA[
-    		SELECT bno, title, content, userid, regdate, updatedate, replycnt, cnt
+    		SELECT bno, title, content, userid, regdate, updatedate, replycnt, cnt, gs_type
     		FROM 
     		(
         		SELECT /*+INDEX_DESC(gs_board pk_gs_board)*/
-        		rownum rn, bno, title, content, userid, regdate, updatedate, replycnt, cnt
+        		rownum rn, bno, title, content, userid, regdate, updatedate, replycnt, cnt, gs_type
         		FROM gs_board
         		WHERE userid = #{userid, jdbcType=VARCHAR}
     			and rownum <= #{cri.pageNum} * #{cri.amount} 

@@ -29,6 +29,9 @@ public interface GamesavvyService {
 	//페이지 처리한 리스트
 	public List<GamesavvyVO> getList(Criteria cri);
 	
+	//공지사항
+	public List<GamesavvyVO> notice();
+	
 	//게시글 총 갯수
 	public int getTotal(Criteria cri);
 	

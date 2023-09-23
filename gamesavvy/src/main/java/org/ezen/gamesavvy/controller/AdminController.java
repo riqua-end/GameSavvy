@@ -41,6 +41,8 @@ public class AdminController {
 	            return "정보";
 	        case 4:
 	            return "리뷰";
+	        case 5:
+	            return "공지";
 	        default:
 	            return "기타";
 	    }
