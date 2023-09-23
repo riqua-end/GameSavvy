@@ -42,6 +42,9 @@
 					        <option value="2">공략게시판</option>
 					        <option value="3">정보게시판</option>
 					        <option value="4">리뷰게시판</option>
+					        <sec:authorize access="hasRole('ROLE_ADMIN')">
+					        <option value="5">공지사항</option>
+					        </sec:authorize>
 					    </select>
 					</div>
 					<div class="form-group">

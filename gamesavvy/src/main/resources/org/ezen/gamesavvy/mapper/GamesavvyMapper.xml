@@ -64,7 +64,11 @@
 	</select>
 
 
-
+	<select id="notice" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
+		<![CDATA[
+			select * from (select * from gs_board where gs_type=5 order by bno desc) where rownum <= 2 order by bno desc
+		]]>	
+	</select>
 
 	
 	<insert id="insert" parameterType="org.ezen.gamesavvy.domain.GamesavvyVO">

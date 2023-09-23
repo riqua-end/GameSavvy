@@ -122,6 +122,15 @@ public class GamesavvyServiceImpl implements GamesavvyService {
 		
 	}
 	
+	//공지사항
+	public List<GamesavvyVO> notice(){
+		
+		log.info("공지사항...");
+		
+		return gmapper.notice();
+		
+	}
+	
 	// 게시물 총갯수 나중에 수정 필요할지도.. 
 	@Override
 	public int getTotal(Criteria cri) {

@@ -45,6 +45,22 @@ public class GamesavvyController {
 		log.info("cri: " + cri);
 		model.addAttribute("list", service.getList(cri));
 		
+		// 공지사항에 대한 추천 수를 추가합니다
+	    List<Long> noticeBnoList = service.notice()  // 서비스에서 공지사항을 가져옵니다
+	        .stream()                                 // 공지사항을 스트림으로 변환합니다
+	        .map(GamesavvyVO::getBno)                 // 각 공지사항의 bno를 추출합니다
+	        .collect(Collectors.toList());            // bno를 리스트로 수집합니다
+
+	    Map<Long, Integer> recommendCountsForNotices = new HashMap<>();
+	    
+	    for (Long bno : noticeBnoList) {
+	        int recommendCount = service.getRecommendCount(bno);
+	        recommendCountsForNotices.put(bno, recommendCount);
+	    }
+	    
+	    model.addAttribute("notice", service.notice());
+	    model.addAttribute("recommendCountsForNotices", recommendCountsForNotices);
+		
 		int total = service.getTotal(cri);
 		log.info("total: " + total);
 		
@@ -110,6 +126,8 @@ public class GamesavvyController {
 	        return "redirect:list?gs_type=3";
 	    } else if (gs_type == 4) {
 	        return "redirect:list?gs_type=4";
+	    } else if (gs_type == 5) {
+		    return "redirect:list?gs_type=5";
 	    } else {
 	        // 다른 경우에는 기본 리스트 페이지로 이동
 	        return "redirect:/list";
