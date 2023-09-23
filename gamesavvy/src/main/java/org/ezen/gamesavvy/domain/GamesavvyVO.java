@@ -29,4 +29,7 @@ public class GamesavvyVO {
 	
 	//다중게시판 gs_type
 	private int gs_type;
+	
+	// 카테고리 분류
+	private String categoryName;
 }

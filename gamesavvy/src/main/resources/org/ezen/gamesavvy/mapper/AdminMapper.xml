@@ -36,11 +36,11 @@
     <!-- 관리자 페이지 게시판 관리 페이징처리 -->
     <select id="getAllListWithPaging" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
     	<![CDATA[
-			select bno, title, content, userid, regdate, updatedate 
+			select bno, title, content, userid, regdate, updatedate, gs_type
 			from
 			(
 				select /*+INDEX_DESC(gs_board pk_gs_board)*/ 
-				rownum rn, bno, title, content,	userid, regdate, updatedate 
+				rownum rn, bno, title, content,	userid, regdate, updatedate, gs_type
 				from gs_board 
 				where rownum <= #{pageNum} * #{amount} 
 			)

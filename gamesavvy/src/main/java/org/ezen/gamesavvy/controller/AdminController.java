@@ -30,6 +30,21 @@ public class AdminController {
 	@Setter(onMethod_ = @Autowired)
 	private ReplyMapper mapper;
 	
+	// 게시판의 분류 정보를 반환하는 메서드
+	private String getCategoryName(int gs_type) {
+	    switch (gs_type) {
+	        case 1:
+	            return "자유";
+	        case 2:
+	            return "공략";
+	        case 3:
+	            return "정보";
+	        case 4:
+	            return "리뷰";
+	        default:
+	            return "기타";
+	    }
+	}
 	
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/adminMember")
@@ -64,6 +79,12 @@ public class AdminController {
 		log.info("게시판관리 페이지...");
 		
 		List<GamesavvyVO> adminList = aservice.getAllList(cri);
+		
+		// 각 게시물의 gs_type에 해당하는 categoryName 설정
+	    for (GamesavvyVO board : adminList) {
+	        String categoryName = getCategoryName(board.getGs_type());
+	        board.setCategoryName(categoryName);
+	    }
 		
 		model.addAttribute("adminList", adminList);
 		
