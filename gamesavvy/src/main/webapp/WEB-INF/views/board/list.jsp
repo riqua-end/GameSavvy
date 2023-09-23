@@ -47,6 +47,9 @@
 					<c:when test="${pageMaker.cri.gs_type == 4}">
 						<h1 class="h3 mb-2 text-center">리뷰게시판</h1>
 					</c:when>
+					<c:when test="${pageMaker.cri.gs_type == 5}">
+						<h1 class="h3 mb-2 text-center">공지사항</h1>
+					</c:when>
 				</c:choose>
 				<div> <!-- 등록 버튼 -->
 					<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>

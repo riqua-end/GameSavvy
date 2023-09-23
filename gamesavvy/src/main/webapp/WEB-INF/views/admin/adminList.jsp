@@ -28,12 +28,12 @@
 			<table class="table table-bordered">
 				<thead style="background-color: black; color: white;">
 					<tr>
-						<td>번호</td>
-						<td>분류</td>
-						<td>제목</td>
-						<td>작성자</td>
-						<td>작성일</td>
-						<td>삭제</td>
+						<th style="width: 7%">번호</th>
+						<th style="width: 10%">분류</th>
+						<th style="width: 43%">제목</th>
+						<th style="width: 10%">작성자</th>
+						<th style="width: 17%">작성일</th>
+						<th style="width: 13%">삭제</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,7 +41,9 @@
 						<tr>
 							<td><c:out value="${board.bno}"/></td>
 							<!-- 나중에 다중게시판시 수정할 부분. -->
-							<td>분류</td>
+							<td>
+								<c:out value="${board.categoryName}"/>
+							</td>
 							<td><c:out value="${board.title}"/></td>
 							<td><c:out value="${board.userid}"/></td>
 							<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>

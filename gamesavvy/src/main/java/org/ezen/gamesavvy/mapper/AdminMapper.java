@@ -52,6 +52,7 @@ public interface AdminMapper {
   	
   	//게시판 번호
   	public void deleteBoardByBno(Long bno);
+  	
 /*====================================================================================*/
   	
   	public void updateMember(MemberVO member);
