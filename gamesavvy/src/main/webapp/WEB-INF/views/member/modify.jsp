@@ -70,7 +70,7 @@
 							
 							<!-- 프로필 이미지 미리보기 -->
 							<div class="form-group text-center">
-							    <div class="uploadResult">
+							    <div class="uploadResult d-flex justify-content-center align-items-center">
 							        <div class="row" id="cardRow">
 							        	
 							        </div>
@@ -127,6 +127,7 @@
 </div>
 
 <%@ include file="../include/footer.jsp" %>
+<%@ include file="../include/imgModal.jsp" %>
 
 
 <script>
@@ -230,7 +231,7 @@ $(document).ready(function(){
                 str += "<a href=\"javascript:showImage(\'" + originPath +"\')\">"+
                     "<div class='rounded-circle mx-auto mb-2' style='overflow:hidden; width: 100px; height: 100px;'>"+
                     "<img src='../upload/display?fileName="+fileCallPath+"' style='object-fit:cover; width: 100%; height: 100%;'></div></a>"+
-                    "<span class='badge badge-danger position-absolute' style='top: 15px; right: 181px;' data-file='"+fileCallPath+"' data-type='image'> &times; </span>";
+                    "<span class='badge badge-danger position-absolute' style='top: 10px; right: 0px;' data-file='"+fileCallPath+"' data-type='image'> &times; </span>";
                 str += "</p>";
                 str += "</div>";
                 str += "</div>";
@@ -262,7 +263,7 @@ $(document).ready(function(){
 		let uuid = targetLi.find("p").data("uuid"); // 수정된 부분
 		
 		$.ajax({			
-			url : '../upload/deleteFile',
+			url : '../upload/deleteFileimage',
 		    data: {uuid: uuid,fileName: targetFile, type: type},
 		    dataType:'text',
 		    type: 'POST',
@@ -277,7 +278,7 @@ $(document).ready(function(){
 	
 	(function(){
 		let userid = '<c:out value="${currentMember.userid}"/>';
-		$.getJSON("getAttachList",{userid: userid},function(arr){
+		$.getJSON("getProfileList",{userid: userid},function(arr){
 			console.log(arr); //arr은 컨틀로라에서 반환하는 json으로 된 List<MemberProfileDTO>객체
 			let str = "";
 			let hasImage = false; // 이미지 여부를 확인하는 변수
@@ -298,7 +299,7 @@ $(document).ready(function(){
 	                str += "<a href=\"javascript:showImage(\'" + originPath +"\')\">"+
 	                    "<div class='rounded-circle mx-auto mb-2' style='overflow:hidden; width: 100px; height: 100px;'>"+
 	                    "<img src='../upload/display?fileName="+fileCallPath+"' style='object-fit:cover; width: 100%; height: 100%;'></div></a>"+
-	                    "<span class='badge badge-danger position-absolute' style='top: 15px; right: 181px;' data-file='"+fileCallPath+"' data-type='image'> &times; </span>";
+	                    "<span class='badge badge-danger position-absolute' style='top: 10px; right: 0px;' data-file='"+fileCallPath+"' data-type='image'> &times; </span>";
 	                str += "</p>";
 	                str += "</div>";
 	                str += "</div>";

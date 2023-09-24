@@ -84,7 +84,7 @@ public class GamesavvyController {
 	    // 모델에 추천 수를 추가
 	    // list.jsp에서 ${recommendCounts[board.bno]} 를 사용해서 각 게시물의 추천수를 출력
 	    model.addAttribute("recommendCounts", recommendCounts);
-		
+	    
 	}
 	
 	@GetMapping("/register")
