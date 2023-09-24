@@ -32,4 +32,5 @@ public class GamesavvyVO {
 	
 	// 카테고리 분류
 	private String categoryName;
+	
 }

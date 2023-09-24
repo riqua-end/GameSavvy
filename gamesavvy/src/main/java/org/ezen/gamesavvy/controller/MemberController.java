@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
+import org.ezen.gamesavvy.domain.MemberProfileDTO;
 import org.ezen.gamesavvy.domain.MemberVO;
 import org.ezen.gamesavvy.domain.PageDTO;
 import org.ezen.gamesavvy.service.MemberService;
+import org.ezen.gamesavvy.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,6 +34,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberservice;
+	
+	@Autowired
+	private ProfileService profileService;
 	
 	@Setter(onMethod_ = @Autowired)
 	private BCryptPasswordEncoder passwordEncoder;
@@ -184,11 +190,21 @@ public class MemberController {
         MemberVO currentMember = memberservice.getMemberByUsername(username);
         
         // 회원의 프로필 이미지 리스트 가져오기
-//        List<MemberProfileDTO> attachList = profileService.getAttachList(username);
+        List<MemberProfileDTO> attachList = profileService.getAttachList(username);
 
         model.addAttribute("currentMember", currentMember);
-//        model.addAttribute("attachList", attachList);
+        model.addAttribute("attachList", attachList);
         
         return "member/modify";
+	}
+	
+	//조회화면에서 첨부 파일 처리
+	@GetMapping(value = "/getProfileList", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<MemberProfileDTO>> getAttachList(String userid) {
+		
+		log.info("프로필 이미지 userid : " + userid);
+		
+		return new ResponseEntity<>(profileService.getAttachList(userid), HttpStatus.OK);
 	}
 }
