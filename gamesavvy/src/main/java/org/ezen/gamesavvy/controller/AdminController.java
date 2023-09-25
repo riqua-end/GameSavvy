@@ -82,18 +82,18 @@ public class AdminController {
 		
 		List<GamesavvyVO> adminList = aservice.getAllList(cri);
 		
-		// 각 게시물의 gs_type에 해당하는 categoryName 설정
-	    for (GamesavvyVO board : adminList) {
-	        String categoryName = getCategoryName(board.getGs_type());
-	        board.setCategoryName(categoryName);
-	    }
-		
 		model.addAttribute("adminList", adminList);
 		
 		int total = aservice.getListTotal(cri);
 		log.info("total.." + total);
 		
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		
+		// 각 게시물의 gs_type에 해당하는 categoryName 설정
+	    for (GamesavvyVO board : adminList) {
+	        String categoryName = getCategoryName(board.getGs_type());
+	        board.setCategoryName(categoryName);
+	    }
 		
 	}
 	//관리자 게시판 관리 페이지, 삭제

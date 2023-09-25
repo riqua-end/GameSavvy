@@ -71,12 +71,37 @@
 						<a class="page-link" href="${pageMaker.endPage + 1}">Next</a> <!-- 다음페이지 처음 페이지 표시 -->
 					</li>
 				</c:if>		
-			</ul>	
+			</ul>
+			<!-- 검색 처리 -->
+			<div class="row">
+				<div class="col-lg-12">
+					<form id='searchForm' action="adminList" method='get'>
+					    <select name='type'>
+					        <option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+					        
+					        <option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
+					    </select>
+					
+					    <input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+					    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+					    <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
+						
+						
+					    <button id="search" class='btn btn-outline-primary btn-sm'>Search</button>
+					    <button data-oper='clear' class="btn btn-outline-info btn-clear btn-sm" type="button">Clear</button>
+					</form>
+
+				</div>
+			</div>
 			<!-- 페이지 번호 클릭시 콘트롤라로 (public void list(Criteria cri, Model model)) 로 요청하는 form, 나중에 검색 데이터도 여기서 같이 처리  -->
-			<form id='actionForm' action="adminlist" method='get'>
+			<form id='actionForm' action="adminList" method='get'>
 				<input type='hidden' name='pageNum'	value='${pageMaker.cri.pageNum}'> 
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 				<!-- 검색처리 추가 -->
+				<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
+				<input type='hidden' name='keyword'	value='<c:out value="${ pageMaker.cri.keyword }"/>'>
+				<!-- gs_type -->
+				
 			</form>	
 		</div> <!-- col-md-9 -->
 		
@@ -110,6 +135,40 @@ $(document).ready(function(){
 		actionForm.attr("action", "adminList");
 		actionForm.submit(); //submit(),reset()은 form의 이벤트
 	});
+	
+	//검색 처리
+	let searchForm = $("#searchForm");
+	
+	$("#searchForm #search").on("click", function(e){
+		if(!searchForm.find("option:selected").val()){
+			alert("검색 종류를 선택하세요.");
+			return false;
+		}
+		
+		if(!searchForm.find("input[name='keyword']").val()) {
+			alert("키워드를 입력하세요");
+			return false;
+		}
+		
+		// 페이지 번호를 1로 설정하여 첫 페이지로 이동
+		searchForm.find("input[name='pageNum']").val("1");
+		e.preventDefault();
+		searchForm.submit();
+	});
+	
+	// clear 버튼 클릭 시 검색 폼 초기화 및 페이지 이동
+    $("button[data-oper='clear']").on("click", function(e){
+        e.preventDefault();
+
+        // 검색 폼 초기화
+        searchForm.find("select[name='type']").val(""); // 검색 종류 초기화
+        searchForm.find("input[name='keyword']").val(""); // 키워드 초기화
+        
+		
+     	// 페이지 번호를 1로 설정하여 첫 페이지로 이동
+        searchForm.find("input[name='pageNum']").val("1");
+        searchForm.submit();
+    });
 	
 });
 </script>

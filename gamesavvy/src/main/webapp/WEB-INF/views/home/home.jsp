@@ -22,12 +22,21 @@
 <%@include file="../include/header.jsp" %>
 <div class="container mt-4 mb-4" id="maincontent">
 	<div class="row">
-		
 		<div class="col-md-9">
 			<h2 class="text-center">Steam Savvy</h2>
+				<a target="_blank" href="http://www.sidizgaming.com/">
+					<img src="../resources/images/fff.PNG" alt="logo" class="Logo-img" style="width: 827px;">
+				</a>
+				<a target="_blank" href="https://dragonheir.nvsgames.com/?af_xp=referral&pid=KRcommunity&c=InvenDA&af_click_lookback=30d&af_adset=PCupbanner">
+					<img src="../resources/images/qqq.PNG" alt="logo" class="Logo-img" onclick="openNewWindow()" style="width: 825px;">
+				</a>
+				<a target="_blank" href="https://lineagem.plaync.com/conts/2023/230906_update">
+					<img src="../resources/images/ggg.PNG" alt="logo" class="Logo-img" style="width: 825px;">
+				</a>
+				<br></br>
 			<div class="row">
 				<div class="col-md-6">
-					<a href="../board/list?gs_type=1">자유게시판</a>
+					<a href="../board/list?gs_type=1"><strong>자유게시판</strong></a>
 					<div class="table-responsive-md mt-2">
 						<table id="boardTable" class="table table-hover text-center">
 							<thead class="table-dark">
@@ -57,7 +66,7 @@
 					</div> <!-- table-responsive-md mt-2 -->
 				</div> <!-- col-md-6 -->
 				<div class="col-md-6">
-					<a href="../board/list?gs_type=2">공략게시판</a>
+					<a href="../board/list?gs_type=2"><strong>공략게시판</strong></a>
 					<div class="table-responsive-md mt-2">
 						<table id="boardTable" class="table table-hover text-center">
 							<thead class="table-dark">
@@ -89,7 +98,7 @@
 			</div> <!-- row -->
 			<div class="row">
 				<div class="col-md-6">
-					<a href="../board/list?gs_type=3">정보게시판</a>
+					<a href="../board/list?gs_type=3"><strong>정보게시판</strong></a>
 					<div class="table-responsive-md mt-2">
 						<table id="boardTable" class="table table-hover text-center">
 							<thead class="table-dark">
@@ -119,7 +128,7 @@
 					</div> <!-- table-responsive-md mt-2 -->
 				</div> <!-- col-md-6 -->
 				<div class="col-md-6">
-					<a href="../board/list?gs_type=4">리뷰게시판</a>
+					<a href="../board/list?gs_type=4"><strong>리뷰게시판</strong></a>
 					<div class="table-responsive-md mt-2">
 						<table id="boardTable" class="table table-hover text-center">
 							<thead class="table-dark">
