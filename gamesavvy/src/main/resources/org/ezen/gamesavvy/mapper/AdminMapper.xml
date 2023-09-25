@@ -75,9 +75,14 @@
     </select>
     
     <!-- 관리자페이지 게시글 총 갯수 -->
-    <select id="getListTotalCount" resultType="int">
-    	<![CDATA[select count(*) from gs_board ]]>
-    </select>
+	<select id="getListTotalCount" resultType="int">
+	    <![CDATA[select count(*) from gs_board where ]]>
+	    <include refid="criteria"></include>
+	    <![CDATA[
+	    bno > 0
+	    ]]>
+	</select>
+
     
     <!-- 관리자 페이지용 회원 강제 탈퇴 -->
 	<delete id="deleteLikes" parameterType="string">
