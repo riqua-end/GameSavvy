@@ -11,8 +11,11 @@ import java.util.stream.Collectors;
 import org.ezen.gamesavvy.domain.Criteria;
 import org.ezen.gamesavvy.domain.GamesavvyVO;
 import org.ezen.gamesavvy.domain.GsAttachVO;
+import org.ezen.gamesavvy.domain.MemberProfileDTO;
 import org.ezen.gamesavvy.domain.PageDTO;
 import org.ezen.gamesavvy.service.GamesavvyService;
+import org.ezen.gamesavvy.service.ProfileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,11 +42,23 @@ public class GamesavvyController {
 	
 	private GamesavvyService service;
 	
+	@Autowired
+	private ProfileService profileService;
+	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		
 		log.info("cri: " + cri);
-		model.addAttribute("list", service.getList(cri));
+		List<GamesavvyVO> list = service.getList(cri);
+
+	    // 각 사용자에게 프로필 이미지를 가져와 연결합니다
+	    for (GamesavvyVO board : list) {
+	        String userid = board.getUserid();
+	        List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
+	        board.setProfileImages(profileImages);
+	    }
+
+	    model.addAttribute("list", list);
 		
 		// 공지사항에 대한 추천 수를 추가합니다
 	    List<Long> noticeBnoList = service.notice()  // 서비스에서 공지사항을 가져옵니다
@@ -201,6 +216,18 @@ public class GamesavvyController {
 
 		return "redirect:list" + cri.getListLink();
 	}
+	
+	//조회화면에서 첨부 파일 처리
+	@GetMapping(value = "/getProfileImages", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<MemberProfileDTO>> getProfileImages(String userid) {
+	    log.info("프로필 이미지 userid : " + userid);
+	    
+	    List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
+	    
+	    return new ResponseEntity<>(profileImages, HttpStatus.OK);
+	}
+
 	
 	//조회 화면에서 첨부 파일 처리
 	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_VALUE)

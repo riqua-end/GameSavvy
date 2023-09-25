@@ -116,7 +116,16 @@
 											</span>
 										</a>						
 									</td>
-									<td><c:out value="${board.userid}" /></td>
+									<!-- 프로필 이미지 표시 -->
+									
+									<td>
+									    <div class="uploadResult d-flex justify-content-center align-items-center">
+									        <div class="row" id="cardRow">
+									        	
+									        </div>
+									    </div>
+									    <c:out value="${board.userid}" />
+									</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
 									<td><c:out value="${board.cnt }"/></td>
 									<td><c:out value="${recommendCounts[board.bno]}"/></td>
@@ -210,6 +219,71 @@
 	</div> <!-- row -->
 </div> <!-- maincontent -->
 <%@include file="../include/footer.jsp" %>
+
+<script>
+(function(){
+	let userid = '<sec:authentication property="principal.username"/>';
+	$.getJSON("getProfileImages",{userid: userid},function(arr){
+		console.log(arr); //arr은 컨틀로라에서 반환하는 json으로 된 List<MemberProfileDTO>객체
+		let str = "";
+		let hasImage = false; // 이미지 여부를 확인하는 변수
+		
+		$(arr).each(function(i, obj){
+			if(obj.fileType === true) {
+				console.log(obj.fileType);
+				let fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid+"_"+obj.fileName); //섬네일
+				
+				let originPath = obj.uploadPath+ "\\"+obj.uuid +"_"+obj.fileName; //원본파일 경로
+				originPath = originPath.replace(new RegExp(/\\/g),"/"); //\\를 /로 대체 
+				
+				
+				str += "<div class='card justify-content-center border-0'>";
+                str += "<div class='card-body'>";
+                str += "<p class='mx-auto' style='width:90%; position: relative;' title='"+ obj.fileName + "'" ;
+                str +=  "data-path='"+obj.uploadPath +"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
+                str += "<a href=\"javascript:showImage(\'" + originPath +"\')\">"+
+                    "<div class='rounded-circle mx-auto mb-2' style='overflow:hidden; width: 100px; height: 100px;'>"+
+                    "<img src='../upload/display?fileName="+fileCallPath+"' style='object-fit:cover; width: 100%; height: 100%;'></div></a>"+
+                    "<span class='badge badge-danger position-absolute' style='top: 10px; right: 0px;' data-file='"+fileCallPath+"' data-type='image'> &times; </span>";
+                str += "</p>";
+                str += "</div>";
+                str += "</div>";
+                
+                hasImage = true; // 이미지가 하나 이상 있는 경우 true로 설정
+			}
+		});
+		
+		// 이미지가 없을 경우 기본 이미지를 표시하는 코드 추가
+        if (!hasImage) {
+            str += "<div class='card justify-content-center border-0'>";
+            str += "<div class='card-body'>";
+            str += "<p class='mx-auto' style='width:90%; position: relative;' title='Default Image'>";
+            str += "<div class='rounded-circle mx-auto mb-2' style='overflow:hidden; width: 100px; height: 100px;'>";
+            str += "<img src='../resources/images/default-image.png' style='object-fit:cover; width: 100%; height: 100%;'></div>";
+            str += "</p>";
+            str += "</div>";
+            str += "</div>";
+        }
+		
+		$(".uploadResult #cardRow").html(str);
+	});
+})();
+
+
+function updateDefaultImage() {
+    let defaultImage = "<div class='card justify-content-center border-0'>";
+    defaultImage += "<div class='card-body'>";
+    defaultImage += "<p class='mx-auto' style='width:90%; position: relative;' title='Default Image'>";
+    defaultImage += "<div class='rounded-circle mx-auto mb-2' style='overflow:hidden; width: 100px; height: 100px;'>";
+    defaultImage += "<img src='../resources/images/default-image.png' style='object-fit:cover; width: 100%; height: 100%;'></div>";
+    defaultImage += "</p>";
+    defaultImage += "</div>";
+    defaultImage += "</div>";
+    
+    $(".uploadResult #cardRow").prepend(defaultImage);
+}
+</script>
+
 
 <script>
 $(document).ready(function(){
