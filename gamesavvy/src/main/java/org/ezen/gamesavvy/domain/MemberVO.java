@@ -19,4 +19,6 @@ public class MemberVO {
 	
 	private List<AuthVO> authList;
 	
+	private List<MemberProfileDTO> profileImages;
+	
 }

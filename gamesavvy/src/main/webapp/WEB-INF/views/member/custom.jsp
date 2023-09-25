@@ -71,7 +71,11 @@
 				<div class="row">
 					<div class="col-md-2">
 						<div class="boxUserProfile">
-							<img src="../resources/images/logo.png" alt="logo" class="Logo-img" style="width: 120px;">
+							<c:forEach items="profileImages" var="member">
+								<div class="uploadResult">
+									
+								</div>
+							</c:forEach>
 						</div>
 					</div> <!-- col-md-6 -->
 					<div class="col-md-4">
@@ -176,6 +180,43 @@ $(document).ready(function(){
 	});
 	
 });
+</script>
+
+<script>
+(function(){
+	let userid = '<sec:authentication property="principal.username"/>';
+	
+	$.getJSON("getProfileImages",{userid: userid}, function(arr) {
+        let str = "";
+        let hasImage = false; // 이미지 여부를 확인하는 변수
+        
+        $(arr).each(function(i, obj){
+            if(obj.fileType === true) {
+                let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName); // 섬네일
+
+                let originPath = obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName; // 원본파일 경로
+                originPath = originPath.replace(new RegExp(/\\/g), "/"); // \\를 /로 대체
+				
+                str += "<div class='rounded-circle' style='overflow: hidden; width: 25px; height: 25px;'>";
+                str += "<img src='../upload/displayimg?fileName="+fileCallPath+"' style='object-fit:cover; width: 100%; height: 100%;'>";
+                str += "</div>";
+      
+                hasImage = true; // 이미지가 하나 이상 있는 경우 true로 설정
+            }
+        });
+
+        // 이미지가 없을 경우 기본 이미지를 표시하는 코드 추가
+        if (!hasImage) {
+            str += "<div class='rounded-circle' style='overflow: hidden; width: 25px; height: 25px;'>";
+            str += "<img src='../resources/images/default-image.png' style='object-fit:cover; width: 100%; height: 100%;'>";
+            str += "</div>";
+        }
+
+        // 작성자 아이디 요소 다음에 프로필 이미지 요소 추가
+        $(".uploadResult").html(str);
+    });
+})();
+
 </script>
 
 </body>

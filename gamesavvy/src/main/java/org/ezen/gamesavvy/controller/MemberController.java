@@ -123,6 +123,10 @@ public class MemberController {
         String userid = principal.getName(); // 현재 로그인한 사용자의 아이디
         List<GamesavvyVO> custom = memberservice.getUser(cri, userid);
         
+        List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
+        
+        model.addAttribute("profileImages", profileImages);
+        
         for(GamesavvyVO game : custom) {
         	String categoryName = getCategoryName(game.getGs_type());
         	game.setCategoryName(categoryName);
