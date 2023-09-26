@@ -7,18 +7,24 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.ezen.gamesavvy.domain.GamesavvyVO;
+import org.ezen.gamesavvy.domain.MemberProfileDTO;
 import org.ezen.gamesavvy.service.GamesavvyService;
+import org.ezen.gamesavvy.service.ProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 
 
@@ -27,10 +33,14 @@ import lombok.Setter;
  * Handles requests for the application home page.
  */
 @Controller
+@Log4j
 public class HomeController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private GamesavvyService gameservice;
+	
+	@Autowired
+	private ProfileService profileService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -54,6 +64,13 @@ public class HomeController {
 		List<GamesavvyVO> board2 = gameservice.getTop5ByType(2); // 공략게시판
 		List<GamesavvyVO> board3 = gameservice.getTop5ByType(3); // 정보게시판
 		List<GamesavvyVO> board4 = gameservice.getTop5ByType(4); // 리뷰게시판
+		
+		// 각 사용자에게 프로필 이미지를 가져와 연결합니다
+	    for (GamesavvyVO board : board1) {
+	        String userid = board.getUserid();
+	        List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
+	        board.setProfileImages(profileImages);
+	    }
 		
 		model.addAttribute("board1", board1);
 		model.addAttribute("board2", board2);
@@ -79,6 +96,17 @@ public class HomeController {
 	    // list.jsp에서 ${recommendCounts[board.bno]} 를 사용해서 각 게시물의 추천수를 출력
 	    model.addAttribute("recommendCounts", recommendCounts);
 	    
+	}
+	
+	//조회화면에서 첨부 파일 처리
+	@GetMapping(value = "/home/getProfileImages", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<MemberProfileDTO>> getProfileImages(String userid) {
+	    log.info("프로필 이미지 userid : " + userid);
+	    
+	    List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
+	    
+	    return new ResponseEntity<>(profileImages, HttpStatus.OK);
 	}
 	
 }
