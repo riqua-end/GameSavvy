@@ -130,8 +130,8 @@
 									   		</div>
 									    </div>
 									</td>
-									
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
+									<!-- 게시글 작성일 엘리먼트에 시간 정보를 표시 HH:mm:ss 추가 -->
+									<td class='date-cell'><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${board.regdate}" /></td>
 									<td><c:out value="${board.cnt }"/></td>
 									<td><c:out value="${recommendCounts[board.bno]}"/></td>
 								</tr>
@@ -224,6 +224,59 @@
 	</div> <!-- row -->
 </div> <!-- maincontent -->
 <%@include file="../include/footer.jsp" %>
+
+<script>
+    // 게시글 작성일을 상대적인 시간으로 포맷하는 함수
+    function formatDateToRelativeTime(date) {
+        // 현재 시간을 가져옴
+        let now = new Date();
+        // 게시글 작성일을 JavaScript Date 객체로 변환
+        let postDate = new Date(date);
+        // 현재 시간과 게시글 작성일의 차이를 밀리초 단위로 계산
+        let timeDiff = now.getTime() - postDate.getTime();
+        // 차이를 초 단위로 계산
+        let seconds = Math.floor(timeDiff / 1000);
+
+        // 게시된 지 60초 이내라면 "방금"을 반환
+        if (seconds < 60) {
+            return "방금";
+        }
+        // 게시된 지 1시간 이내라면 분 단위로 표시
+        else if (seconds < 3600) {
+        	let minutes = Math.floor(seconds / 60);
+            return minutes + "분 전";
+        }
+        // 게시된 지 24시간 이내라면 시간 단위로 표시
+        else if (seconds < 86400) {
+        	let hours = Math.floor(seconds / 3600);
+            return hours + "시간 전";
+        }
+        // 24시간이 지나면 "어제"를 반환
+        else {
+        	let days = Math.floor(seconds / 86400);
+            if (days === 1) {
+                return "어제";
+            } else {
+                // 년, 월, 일을 가져와서 "년-월-일" 형식으로 반환
+                let year = postDate.getFullYear();
+                let month = String(postDate.getMonth() + 1).padStart(2, '0');
+                let day = String(postDate.getDate()).padStart(2, '0');
+                return year + '-' + month + '-' + day;
+            }
+        }
+    }
+
+    // 모든 작성일 엘리먼트에 대해 작성일을 변환하여 설정
+    let dateElements = document.querySelectorAll(".date-cell");
+    dateElements.forEach((element) => {
+        // 엘리먼트에서 작성일을 가져옵니다.
+        let originalDate = element.textContent.trim();
+        // 작성일을 상대적인 시간으로 변환합니다.
+        let formattedDate = formatDateToRelativeTime(originalDate);
+        // 엘리먼트의 텍스트 내용을 변환된 작성일로 설정합니다.
+        element.textContent = formattedDate;
+    });
+</script>
 
 <script>
 (function(){
