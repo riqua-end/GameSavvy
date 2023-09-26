@@ -123,10 +123,6 @@ public class MemberController {
         String userid = principal.getName(); // 현재 로그인한 사용자의 아이디
         List<GamesavvyVO> custom = memberservice.getUser(cri, userid);
         
-        List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
-        
-        model.addAttribute("profileImages", profileImages);
-        
         for(GamesavvyVO game : custom) {
         	String categoryName = getCategoryName(game.getGs_type());
         	game.setCategoryName(categoryName);
@@ -148,6 +144,15 @@ public class MemberController {
         
         model.addAttribute("pageMaker", new PageDTO(cri, total));
         
+    }
+    
+    @GetMapping("/getProfileImages")
+    @ResponseBody
+    public List<MemberProfileDTO> getProfileImages(@RequestParam("userid") String userid) {
+        // userid를 기반으로 사용자의 프로필 이미지 정보를 가져옴
+        List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
+        
+        return profileImages;
     }
 	
 	//회원 정보 수정 --- 시큐리티 암호화 패스워드 변경

@@ -31,7 +31,6 @@
     font-weight: normal;
     font-size: 14px;
     text-align: center;
-    border: 1px solid rgb(148, 146, 150);
     background-color: rgb(255, 255, 255);
     color: rgb(148, 146, 150);
 }
@@ -71,29 +70,27 @@
 				<div class="row">
 					<div class="col-md-2">
 						<div class="boxUserProfile">
-							<c:forEach items="profileImages" var="member">
-								<div class="uploadResult">
-									
-								</div>
-							</c:forEach>
+							<div class="uploadResult">
+								
+							</div>
 						</div>
-					</div> <!-- col-md-6 -->
+					</div> <!-- col-md-2 -->
 					<div class="col-md-4">
 						<p class="userUser">
 							<strong class="strongUser"><sec:authentication property="principal.member.username"/></strong>
 						님 어서오세요.</p>
 						<a class="btnBtn" href="../member/modify">회원정보수정</a>
-					</div> <!-- col-md-6 -->
+					</div> <!-- col-md-4 -->
 					<div class="col-md-3">
 						<strong>내가 작성한 게시글 수</strong>
 						<br></br>
 						<h3>${total}</h3>
-					</div> <!-- col-md-6 -->
+					</div> <!-- col-md-3 -->
 					<div class="col-md-3">
 						<strong>내가 작성한 댓글 수</strong>
 						<br></br>
 						<h3>${replyTotal}</h3>
-					</div> <!-- col-md-6 -->
+					</div> <!-- col-md-3 -->
 				</div> <!-- row -->
 			</div> <!-- boxbox -->
 			<div class="row">
@@ -197,7 +194,7 @@ $(document).ready(function(){
                 let originPath = obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName; // 원본파일 경로
                 originPath = originPath.replace(new RegExp(/\\/g), "/"); // \\를 /로 대체
 				
-                str += "<div class='rounded-circle' style='overflow: hidden; width: 25px; height: 25px;'>";
+                str += "<div class='rounded-circle' style='overflow: hidden; width: 100px; height: 100px;'>";
                 str += "<img src='../upload/displayimg?fileName="+fileCallPath+"' style='object-fit:cover; width: 100%; height: 100%;'>";
                 str += "</div>";
       
@@ -207,7 +204,7 @@ $(document).ready(function(){
 
         // 이미지가 없을 경우 기본 이미지를 표시하는 코드 추가
         if (!hasImage) {
-            str += "<div class='rounded-circle' style='overflow: hidden; width: 25px; height: 25px;'>";
+            str += "<div class='rounded-circle' style='overflow: hidden; width: 110px; height: 110px;'>";
             str += "<img src='../resources/images/default-image.png' style='object-fit:cover; width: 100%; height: 100%;'>";
             str += "</div>";
         }
