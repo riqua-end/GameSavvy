@@ -98,41 +98,53 @@ let replyService = (function(){
 		});
 	} //get
 	
-	function displayTime(timeValue) {
-		
-		let today = new Date();
-		
-		let gap = today.getTime() - timeValue;
-		
-		let dateObj = new Date(timeValue);
-		let str = "";
-		
-		if (gap < (1000 * 60 * 60 * 24)) {
-			
-			let hh = dateObj.getHours();
-			let mi = dateObj.getMinutes();
-			let ss = dateObj.getSeconds();
-			
-			return [ (hh > 9 ? '' : '0') + hh, ':', (mi > 9 ? '' : '0') + mi,
-					':', (ss > 9 ? '' : '0') + ss ].join('');
-		} else {
-			
-			let yy = dateObj.getFullYear();
-			let mm = dateObj.getMonth() + 1;
-			let dd = dateObj.getDate();
-			
-			return [ yy, '/', (mm > 9 ? '' : '0') + mm, '/',
-					(dd > 9 ? '' : '0') + dd ].join('');
-		}
-	} //displayTime(timeValue)
-	
+	// 댓글 작성일을 상대적인 시간으로 포맷하는 함수
+    function formatDateToRelativeTime(date) {
+        // 현재 시간을 가져옴
+        let now = new Date();
+        // 댓글 작성일을 JavaScript Date 객체로 변환
+        let postDate = new Date(date);
+        // 현재 시간과 댓글 작성일의 차이를 밀리초 단위로 계산
+        let timeDiff = now.getTime() - postDate.getTime();
+        // 차이를 초 단위로 계산
+        let seconds = Math.floor(timeDiff / 1000);
+
+        // 게시된 지 60초 이내라면 "방금"을 반환
+        if (seconds < 60) {
+            return "방금";
+        }
+        // 게시된 지 1시간 이내라면 분 단위로 표시
+        else if (seconds < 3600) {
+        	let minutes = Math.floor(seconds / 60);
+            return minutes + "분 전";
+        }
+        // 게시된 지 24시간 이내라면 시간 단위로 표시
+        else if (seconds < 86400) {
+        	let hours = Math.floor(seconds / 3600);
+            return hours + "시간 전";
+        }
+        // 24시간이 지나면 "어제"를 반환
+        else {
+        	let days = Math.floor(seconds / 86400);
+            if (days === 1) {
+                return "어제";
+            } else {
+                // 년, 월, 일을 가져와서 "년-월-일" 형식으로 반환
+                let year = postDate.getFullYear();
+                let month = String(postDate.getMonth() + 1).padStart(2, '0');
+                let day = String(postDate.getDate()).padStart(2, '0');
+                return year + '-' + month + '-' + day;
+            }
+        }
+    }
+
 	return {
 		add : add,
 		getList : getList,
 		remove : remove,
 		update : update,
 		get : get,
-		displayTime : displayTime
+		formatDateToRelativeTime : formatDateToRelativeTime
 	};
 	
 })();

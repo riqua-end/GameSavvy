@@ -472,7 +472,7 @@ $(document).ready(function(){
             str += "<strong class='text-info' data-replyer='" + reply.replyer + "'>" +
                 "<i class='fab fa-waze' style='color: #3b71ce;'></i> " +
                 reply.replyer + "</strong>";
-            str += "<small class='float-right text-muted'>" + replyService.displayTime(reply.replyDate) + "</small>";
+            str += "<small class='float-right text-muted'>" + replyService.formatDateToRelativeTime(reply.replyDate) + "</small>";
             str += "<p>" + reply.reply + "</p>";
 
             // 댓글 작성자와 현재 로그인한 사용자가 같을 경우 수정, 삭제 버튼 표시
