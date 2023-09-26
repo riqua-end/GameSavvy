@@ -118,8 +118,13 @@
 									</td>
 									<!-- 프로필 이미지 표시 -->
 									
-									<td class="user-profile" data-userid="<c:out value="${board.userid}" />">
-									    <c:out value="${board.userid}" />
+									<td>
+									    <div class="row" >
+									    	<div class="col-md-9" id="user-profile" data-userid="<c:out value="${board.userid}" />"></div>
+									    	<div class="col-md-3">
+									    		<c:out value="${board.userid}" />
+									   		</div>
+									    </div>
 									</td>
 									
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
@@ -218,7 +223,7 @@
 
 <script>
 (function(){
-    let userIdElements = document.querySelectorAll(".user-profile"); // 모든 게시글의 작성자 아이디 요소 선택
+    let userIdElements = document.querySelectorAll("#user-profile"); // 모든 게시글의 작성자 아이디 요소 선택
 
     userIdElements.forEach(function(element) {
         let userid = element.getAttribute("data-userid"); // 작성자 아이디 가져오기
@@ -233,18 +238,18 @@
 
                     let originPath = obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName; // 원본파일 경로
                     originPath = originPath.replace(new RegExp(/\\/g), "/"); // \\를 /로 대체
-
-                    str += "<div class='rounded-circle' style='overflow: hidden; width: 50px; height: 50px;'>";
+					                   
+                    str += "<div class='rounded-circle' style='overflow: hidden; width: 25px; height: 25px;'>";
                     str += "<img src='../upload/displayimg?fileName="+fileCallPath+"' style='object-fit:cover; width: 100%; height: 100%;'>";
                     str += "</div>";
-
+          
                     hasImage = true; // 이미지가 하나 이상 있는 경우 true로 설정
                 }
             });
 
             // 이미지가 없을 경우 기본 이미지를 표시하는 코드 추가
             if (!hasImage) {
-                str += "<div class='rounded-circle' style='overflow: hidden; width: 50px; height: 50px;'>";
+                str += "<div class='rounded-circle' style='overflow: hidden; width: 25px; height: 25px;'>";
                 str += "<img src='../resources/images/default-image.png' style='object-fit:cover; width: 100%; height: 100%;'>";
                 str += "</div>";
             }
