@@ -21,6 +21,8 @@ public class Criteria {
 	// 추가된 검색 조건
 	private int gs_type;
 	
+	private String sort;
+	
 	public Criteria() { // controller list에 cri값이 전달 안될시 초기값
 		this(1,10);
 	}
@@ -46,7 +48,8 @@ public class Criteria {
 				.queryParam("amount", this.getAmount())
 				.queryParam("type", this.getType())
 				.queryParam("keyword", this.getKeyword())
-				.queryParam("gs_type", this.getGs_type());
+				.queryParam("gs_type", this.getGs_type())
+				.queryParam("sort", this.getSort());
 		
 		return builder.toUriString();
 		

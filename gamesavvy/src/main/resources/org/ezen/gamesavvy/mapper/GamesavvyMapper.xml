@@ -5,6 +5,24 @@
   
 <mapper namespace="org.ezen.gamesavvy.mapper.GamesavvyMapper">
 	
+	<sql id="sort">
+		<if test="sort == null">
+			ORDER BY BNO DESC
+		</if>
+		<if test="sort == 'bno'">
+			ORDER BY BNO DESC
+		</if>
+		<if test="sort == 'replyCnt'">
+			ORDER BY REPLYCNT DESC
+		</if>
+		<if test="sort == 'cnt'">
+			ORDER BY CNT DESC
+		</if>
+		<if test="sort == 'recommendCount'">
+			ORDER BY RECOMMEND_COUNT DESC
+		</if>
+	</sql>
+	
 	<!-- 공통으로 사용되는 sql태그, 사용전에 정의, 사용은 include태그의 refid로 사용 -->
   	<sql id="criteria">
   		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
@@ -46,17 +64,20 @@
 	<select id="getListWithPaging" resultType="org.ezen.gamesavvy.domain.GamesavvyVO">
 		 
 		<![CDATA[
-		 SELECT bno, title, content, userid, regdate, updatedate, replyCnt, cnt, gs_type
+		 SELECT bno, title, content, userid, regdate, updatedate, recommend_count, replyCnt, cnt, gs_type
 		 FROM
 		 (
 		     SELECT /*+INDEX_DESC(gs_board pk_gs_board)*/ 
-		     ROWNUM rn, bno, title, content, userid, regdate, updatedate, replyCnt, cnt, gs_type
+		     ROWNUM rn, bno, title, content, userid, regdate, updatedate, recommend_count, replyCnt, cnt, gs_type
 		     FROM gs_board 
 		     WHERE 1=1
 		 ]]>
 		 <include refid="criteria"></include>
 		 <![CDATA[	 
 		     AND gs_type = #{gs_type}
+		 ]]>
+		 <include refid="sort"></include>
+		 <![CDATA[
 		 )
 		 WHERE ROWNUM <= #{pageNum} * #{amount}
 		   AND rn > (#{pageNum} - 1) * #{amount}

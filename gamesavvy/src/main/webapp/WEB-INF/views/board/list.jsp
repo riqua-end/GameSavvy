@@ -73,6 +73,10 @@
 						</sec:authorize>
 					</c:when>
 				</c:choose>
+				<button type="button" onclick="location.href='/board/list?gs_type=${cri.gs_type}&type=${cri.type}&keyword=${cri.keyword}&sort=bno'" class="btn btn-info">최신순</button>
+				<button type="button" onclick="location.href='/board/list?gs_type=${cri.gs_type}&type=${cri.type}&keyword=${cri.keyword}&sort=cnt'" class="btn btn-info">조회순</button>
+				<button type="button" onclick="location.href='/board/list?gs_type=${cri.gs_type}&type=${cri.type}&keyword=${cri.keyword}&sort=replyCnt'" class="btn btn-info">댓글순</button>
+				<button type="button" onclick="location.href='/board/list?gs_type=${cri.gs_type}&type=${cri.type}&keyword=${cri.keyword}&sort=recommendCount'" class="btn btn-info">추천순</button>
 				<div class="table-responsive-md mt-4">
 					<table id="boardTable" class="table table-hover text-center">
 						<thead class="table-dark">

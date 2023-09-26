@@ -46,7 +46,7 @@ public class GamesavvyController {
 	private ProfileService profileService;
 	
 	@GetMapping("/list")
-	public void list(Criteria cri, Model model) {
+	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
 		
 		log.info("cri: " + cri);
 		List<GamesavvyVO> list = service.getList(cri);
