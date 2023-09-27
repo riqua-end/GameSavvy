@@ -57,6 +57,12 @@ public class GamesavvyController {
 	        List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
 	        board.setProfileImages(profileImages);
 	    }
+	    // 각 게시글에 있는 이미지출력
+	    for (GamesavvyVO board : list) {
+	        Long bno = board.getBno();
+	        List<GsAttachVO> listImages = service.getAttachList(bno);
+	        board.setAttachList(listImages);
+	    }
 
 	    model.addAttribute("list", list);
 		

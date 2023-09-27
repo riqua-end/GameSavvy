@@ -70,6 +70,7 @@
 				<div class="row">
 					<div class="col-md-2">
 						<div class="boxUserProfile">
+							<!-- 프로필 이미지 -->
 							<div class="uploadResult">
 								
 							</div>
@@ -78,7 +79,8 @@
 					<div class="col-md-4">
 						<p class="userUser">
 							<strong class="strongUser"><sec:authentication property="principal.member.username"/></strong>
-						님 어서오세요.</p>
+							님 어서오세요.</p>
+						<a class="btn" href="../note/note">쪽지함</a>
 						<a class="btnBtn" href="../member/modify">회원정보수정</a>
 					</div> <!-- col-md-4 -->
 					<div class="col-md-3">
