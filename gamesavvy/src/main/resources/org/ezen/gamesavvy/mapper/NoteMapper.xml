@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.ezen.gamesavvy.mapper.NoteMapper">
+	
+	<select id="getListPaging" resultType="org.ezen.gamesavvy.domain.NoteVO">
+		<![CDATA[
+			select rno, title, content, userid, regdate
+			from
+			(
+				SELECT /*+INDEX_DESC(gs_note pk_gs_note)*/
+				ROWNUM rn, rno, title, content, userid, regdate
+				from gs_note
+				WHERE ROWNUM <= #{pageNum} * #{amount}
+				AND userid = #{userid}
+			)
+			WHERE rn > (#{pageNum} -1) * #{amount} 
+		]]>
+	</select>
+	
+</mapper>
