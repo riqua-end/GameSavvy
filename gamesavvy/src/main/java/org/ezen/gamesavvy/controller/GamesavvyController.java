@@ -143,6 +143,8 @@ public class GamesavvyController {
 	        return "redirect:list?gs_type=4";
 	    } else if (gs_type == 5) {
 		    return "redirect:list?gs_type=5";
+	    } else if (gs_type == 6) {
+	    	return "redirect:list?gs_type=6";
 	    } else {
 	        // 다른 경우에는 기본 리스트 페이지로 이동
 	        return "redirect:/list";
