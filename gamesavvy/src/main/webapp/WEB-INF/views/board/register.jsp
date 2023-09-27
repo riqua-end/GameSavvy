@@ -16,6 +16,9 @@
 <!-- MS -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,IE=EmulateIE9"/>
+<!-- 텍스트 에디터 -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+
 
 <style>
 .card img {
@@ -54,7 +57,7 @@
 					</div>
 					<div class="form-group">
 						<label for="content">내용:</label>
-						<textarea class="form-control" id="content" placeholder="Enter Content"	name="content" rows="10" required></textarea>		
+						<textarea class="form-control summernote" id="content" placeholder="Enter Content"	name="content" rows="10" required></textarea>		
 					</div>
 					 <!-- security적용후 사용자 아이디로 지정 -->
 					<div class="form-group">
@@ -95,6 +98,50 @@
 	</div> <!-- row -->
 </div> <!-- maincontent -->
 <%@include file="../include/footer.jsp" %>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+<script>
+$(function(){
+    $('.summernote').summernote({
+        height: 300,
+        fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
+        fontNamesIgnoreCheck : [ '맑은고딕' ],
+        focus: true,
+        disableResizeEditor: true,
+        callbacks: {
+            onImageUpload: function(files) {
+                // 다중 이미지 업로드 로직을 여기에 추가
+                for (var i = 0; i < files.length; i++) {
+                    uploadImage(files[i]);
+                }
+            }
+        }
+    });
+});
+
+function uploadImage(file) {
+    var formData = new FormData();
+    formData.append('uploadFile', file); // 파일 업로드를 위한 키를 지정
+
+    $.ajax({
+        url: '/upload/uploadAjaxAction', // 이미지 업로드를 처리할 Spring 컨트롤러 URL
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            // 이미지 업로드가 성공하면 이미지를 에디터에 추가
+            for (var i = 0; i < data.length; i++) {
+                let fileCallPath = encodeURIComponent(data[i].uploadPath + '/' + data[i].uuid + '_' + data[i].fileName);
+                var imageUrl = '/upload/display?fileName=' + fileCallPath;
+                $('.summernote').summernote('insertImage', imageUrl);
+            }
+        }
+    });
+}
+
+</script>
 
 
 <script>
