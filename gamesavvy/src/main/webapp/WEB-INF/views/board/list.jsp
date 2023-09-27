@@ -72,6 +72,12 @@
 							</div>
 						</sec:authorize>
 					</c:when>
+					<c:when test="${pageMaker.cri.gs_type == 6}">
+						<h1 class="h3 mb-2 text-center">추천게시판</h1>
+							<div> <!-- 등록 버튼 -->
+								<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>
+							</div>
+					</c:when>
 				</c:choose>
 				<button type="button" onclick="location.href='/board/list?gs_type=${cri.gs_type}&type=${cri.type}&keyword=${cri.keyword}&sort=bno'" class="btn btn-info">최신순</button>
 				<button type="button" onclick="location.href='/board/list?gs_type=${cri.gs_type}&type=${cri.type}&keyword=${cri.keyword}&sort=cnt'" class="btn btn-info">조회순</button>
@@ -175,6 +181,7 @@
 					        <option value="2" <c:if test="${pageMaker.cri.gs_type == 2}">selected</c:if>>공략게시판</option>
 					        <option value="3" <c:if test="${pageMaker.cri.gs_type == 3}">selected</c:if>>정보게시판</option>
 					        <option value="4" <c:if test="${pageMaker.cri.gs_type == 4}">selected</c:if>>리뷰게시판</option>
+					        <option value="6" <c:if test="${pageMaker.cri.gs_type == 6}">selected</c:if>>추천게시판</option>
 					    </select>
 					
 					    <input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>

@@ -48,6 +48,7 @@
 					        <sec:authorize access="hasRole('ROLE_ADMIN')">
 					        <option value="5">공지사항</option>
 					        </sec:authorize>
+					        <option value="6">추천게시판</option>
 					    </select>
 					</div>
 					<div class="form-group">
