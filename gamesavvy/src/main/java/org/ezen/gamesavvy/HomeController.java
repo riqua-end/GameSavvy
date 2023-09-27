@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.ezen.gamesavvy.domain.GamesavvyVO;
+import org.ezen.gamesavvy.domain.GsAttachVO;
 import org.ezen.gamesavvy.domain.MemberProfileDTO;
 import org.ezen.gamesavvy.service.GamesavvyService;
 import org.ezen.gamesavvy.service.ProfileService;
@@ -64,6 +65,7 @@ public class HomeController {
 		List<GamesavvyVO> board2 = gameservice.getTop5ByType(2); // 공략게시판
 		List<GamesavvyVO> board3 = gameservice.getTop5ByType(3); // 정보게시판
 		List<GamesavvyVO> board4 = gameservice.getTop5ByType(4); // 리뷰게시판
+		List<GamesavvyVO> board6 = gameservice.getTop5ByType(6); // 추천게시판
 		
 		// 각 사용자에게 프로필 이미지를 가져와 연결합니다
 	    for (GamesavvyVO board : board1) {
@@ -71,11 +73,19 @@ public class HomeController {
 	        List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
 	        board.setProfileImages(profileImages);
 	    }
+	    
+	    // 각 게시글의 이미지를 가져와 연결
+	    for (GamesavvyVO board : board6) {
+	    	Long bno = board.getBno();
+	    	List<GsAttachVO> recommendImages = gameservice.getAttachList(bno);
+	    	board.setAttachList(recommendImages);
+	    }
 		
 		model.addAttribute("board1", board1);
 		model.addAttribute("board2", board2);
 		model.addAttribute("board3", board3);
 		model.addAttribute("board4", board4);
+		model.addAttribute("board6", board6);
 		
 	    // 각 게시물의 추천 수를 가져와서 모델에 추가
 	    // 현재 페이지의 게시물 목록에서 각 게시물의 번호(bno)를 추출하여 리스트로 저장
@@ -107,6 +117,18 @@ public class HomeController {
 	    List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
 	    
 	    return new ResponseEntity<>(profileImages, HttpStatus.OK);
+	}
+	
+	//홈 화면에서 첨부 파일 처리
+	@GetMapping(value = "/home/getAttachList", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<GsAttachVO>> getAttachList(Long bno) {
+		
+		log.info("getAttachList : " + bno);
+		
+		List<GsAttachVO> attachList = gameservice.getAttachList(bno);
+		
+		return new ResponseEntity<>(attachList, HttpStatus.OK);
 	}
 	
 }
