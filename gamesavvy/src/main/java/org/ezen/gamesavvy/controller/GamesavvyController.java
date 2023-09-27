@@ -270,8 +270,6 @@ public class GamesavvyController {
 	}
 	
 	
-	
-	
 // =============================================================== //	
 	//추천
 	@PostMapping("/like")

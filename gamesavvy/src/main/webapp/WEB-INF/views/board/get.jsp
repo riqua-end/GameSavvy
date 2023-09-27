@@ -61,6 +61,12 @@
     margin-left: 10px; /* 버튼 사이 여백 조절 */
 }
 
+/* summernote로 이미지 업로드 했을 경우 */
+.summer p img {
+	height: 100% !important;
+    width: 100%;
+}
+
 </style>
 <!-- Slick Carousel 스타일 및 스크립트 추가 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
@@ -98,7 +104,7 @@
 			    <div class="p-1 card-img-top card-img-container" style="position: relative;" id="cardRow_<c:out value="${board.bno}" />">
 			    	<!-- 여기에 이미지 추가됨 -->
 			    </div>
-			    <div class="p-1">${board.content}</div>
+			    <div class="p-1 summer">${board.content}</div>
 			</div>
 
 			<!-- 시큐리티적용 로그인아이디와 게시글 작성기 동일시만 버튼 보임 -->
