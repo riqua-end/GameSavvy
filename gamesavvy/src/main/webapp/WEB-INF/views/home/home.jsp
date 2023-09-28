@@ -70,32 +70,32 @@
         <!-- 케러셀 content(내용물)의 스라이드 쇼,내용물은 carousel-inner콘테이너에 수용 -->
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive" style="width: 100%; height: 600px;">
 			    	<iframe alt="img1" class="embed-responsive-item" src="https://www.youtube.com/embed/C3fW-LIoDLc"></iframe>
 				</div>
             </div>
             <div class="carousel-item">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive" style="width: 100%; height: 600px;">
 			    	<iframe alt="img2" class="embed-responsive-item" src="https://www.youtube.com/embed/LGcECozNXEw"></iframe>
 				</div>
             </div>
             <div class="carousel-item">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive" style="width: 100%; height: 600px;">
 			    	<iframe alt="img3" class="embed-responsive-item" src="https://www.youtube.com/embed/__w615A5lC4"></iframe>
 				</div>
             </div>
             <div class="carousel-item">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive" style="width: 100%; height: 600px;">
 			    	<iframe alt="img4" class="embed-responsive-item" src="https://www.youtube.com/embed/SyP3V2sacQ0"></iframe>
 				</div>	
             </div>
             <div class="carousel-item">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive" style="width: 100%; height: 600px;">
 			    	<iframe alt="img5" class="embed-responsive-item" src="https://www.youtube.com/embed/C7KTI94LzI8"></iframe>
 				</div>	
             </div>
             <div class="carousel-item">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive" style="width: 100%; height: 600px;">
 			    	<iframe alt="img5" class="embed-responsive-item" src="https://www.youtube.com/embed/5KdE0p2joJw"></iframe>
 				</div>
             </div>
