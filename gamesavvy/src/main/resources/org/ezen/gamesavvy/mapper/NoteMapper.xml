@@ -7,14 +7,14 @@
 	
 	<select id="getListPaging" resultType="org.ezen.gamesavvy.domain.NoteVO">
 		<![CDATA[
-			select rno, title, content, userid, regdate
+			select rno, title, content, userid, regdate, userid_type
 			from
 			(
 				SELECT /*+INDEX_DESC(gs_note pk_gs_note)*/
-				ROWNUM rn, rno, title, content, userid, regdate
+				ROWNUM rn, rno, title, content, userid, regdate, userid_type
 				from gs_note
 				WHERE ROWNUM <= #{pageNum} * #{amount}
-				AND userid = #{userid}
+				AND userid_type = #{userid_type}
 			)
 			WHERE rn > (#{pageNum} -1) * #{amount} 
 		]]>

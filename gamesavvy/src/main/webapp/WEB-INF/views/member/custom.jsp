@@ -80,7 +80,7 @@
 						<p class="userUser">
 							<strong class="strongUser"><sec:authentication property="principal.member.username"/></strong>
 							님 어서오세요.</p>
-						<a class="btn" href="../note/note">쪽지함</a>
+						<a class="btn" id='inbox' href="../note/note?userid_type=${userid}">쪽지함</a>
 						<a class="btnBtn" href="../member/modify">회원정보수정</a>
 					</div> <!-- col-md-4 -->
 					<div class="col-md-3">

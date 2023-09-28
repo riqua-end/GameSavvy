@@ -143,7 +143,7 @@ public class MemberController {
         log.info("replyTotal" + replyTotal);
         
         model.addAttribute("pageMaker", new PageDTO(cri, total));
-        
+        model.addAttribute("userid", userid);
     }
     
     @GetMapping("/getProfileImages")
