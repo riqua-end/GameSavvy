@@ -1,6 +1,7 @@
 package org.ezen.gamesavvy.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,5 +13,9 @@ public class NoteVO {
 	private String content;
 	private String userid;
 	private Date regdate;
+	
+	private String userid_type;
+	
+	private List<MemberProfileDTO> profileImages;
 	
 }

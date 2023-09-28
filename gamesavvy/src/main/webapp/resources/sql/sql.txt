@@ -178,4 +178,5 @@ rno number(10,0) not null primary key,
 title varchar2(200) not null,
 content varchar2(2000) not null,
 userid varchar2(50) not null,
+userid_type varchar2(50) not null,
 regdate date default sysdate);

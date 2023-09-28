@@ -14,7 +14,7 @@ public class CriNote {
 	private int pageNum;  //페이지 번호
 	private int amount;  //한 페이지의 게시글 갯수
 	
-	private String userid;
+	private String userid_type;
 	
 	public CriNote() {
 		this(1,10);
@@ -30,7 +30,7 @@ public class CriNote {
 				.fromPath("")
 				.queryParam("pageNum", this.pageNum)
 				.queryParam("amount", this.amount)
-				.queryParam("userid", this.getUserid());
+				.queryParam("userid_type", this.getUserid_type());
 		
 		return builder.toUriString();
 		

@@ -23,6 +23,74 @@
     background-color: #FFAAAA; /* 연한 빨강색 배경 */
 }
 
+#searchForm {
+    display: flex;
+    margin: 0 -30px 12px;
+    width: 500px;
+    height: 50px;
+    border: 3px solid #bf0404;
+    border-radius: 14px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.search {
+    text-align: center; /* 텍스트 정렬을 가운데로 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+    width: 100%; /* 폭을 전체 너비로 확장 */
+    max-width: 400px; /* 검색 양식의 최대 폭 설정 (조정 가능) */
+}
+
+
+
+#search_input {
+    padding: 0 10px;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    border: 0;
+    border-radius: 12px 0 0 12px;
+    outline: 0;
+}
+
+.option-board {
+    padding: 0 10px;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    border: 0;
+    border-radius: 12px 0 0 12px;
+    outline: 0;
+}
+
+.option-type {
+    padding: 0 10px;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    border: 0;
+    border-radius: 12px 0 0 12px;
+    outline: 0;
+}
+
+#search {
+    width: 60px;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    background-repeat: no-repeat;
+    background-size: 27px;
+    background-position: center;
+    border: 0;
+    border-radius: 0 12px 12px 0;
+}
+
+#headmenu-search-btn {
+    width: 80px;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    background-repeat: no-repeat;
+    background-size: 35px;
+    background-position: center;
+    border: 0;
+    border-radius: 0 12px 12px 0;
+}
 </style>
 
 <!-- RWD -->
@@ -42,30 +110,185 @@
 				<c:choose >
 					<c:when test="${pageMaker.cri.gs_type == 1}">
 						<h1 class="h3 mb-2 text-center">자유게시판</h1>
+						<div class="search">
+							<form id='searchForm' action="list" method='get'>
+							<select name='type' class="option-board">
+					        	<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+					        	<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
+					    	</select>
+							<!-- gs_type 추가 -->
+			    			<select name='gs_type' class="option-type">
+			        			<option value="1">자유게시판</option>
+			        			<option value="2">공략게시판</option>
+			        			<option value="3">정보게시판</option>
+			        			<option value="4">리뷰게시판</option>
+			        			<option value="6">추천게시판</option>
+			   				</select>
+							<input type='text' name='keyword' id="search_input" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+					    	<input type='hidden' name='pageNum' id="search_input" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+					    	<input type='hidden' name='amount' id="search_input" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					    	<input type='hidden' name='gs_type' id="search_input" value='<c:out value="${pageMaker.cri.gs_type }"/>'>
+								<button id="search" class="header-btn search-btn-submit" value="검색">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                					</svg>
+								</button>
+								<button type="button" data-oper='clear' id="headmenu-search-btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+  									<path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+									</svg>
+								</button>
+							</form>
+						</div>
 							<div> <!-- 등록 버튼 -->
 								<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>
 							</div>
 					</c:when>
 					<c:when test="${pageMaker.cri.gs_type == 2}">
 						<h1 class="h3 mb-2 text-center">공략게시판</h1>
+						<div class="search">
+							<form id='searchForm' action="list" method='get'>
+							<select name='type' class="option-board">
+					        	<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+					        	<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
+					    	</select>
+							<!-- gs_type 추가 -->
+			    			<select name='gs_type' class="option-type">
+			        			<option value="1">자유게시판</option>
+			        			<option value="2">공략게시판</option>
+			        			<option value="3">정보게시판</option>
+			        			<option value="4">리뷰게시판</option>
+			        			<option value="6">추천게시판</option>
+			   				</select>
+							<input type='text' name='keyword' id="search_input" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+					    	<input type='hidden' name='pageNum' id="search_input" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+					    	<input type='hidden' name='amount' id="search_input" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					    	<input type='hidden' name='gs_type' id="search_input" value='<c:out value="${pageMaker.cri.gs_type }"/>'>
+								<button id="search" class="header-btn search-btn-submit" value="검색">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                					</svg>
+								</button>
+								<button type="button" data-oper='clear' id="headmenu-search-btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+  									<path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+									</svg>
+								</button>
+							</form>
+						</div>
 							<div> <!-- 등록 버튼 -->
 								<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>
 							</div>
 					</c:when>
 					<c:when test="${pageMaker.cri.gs_type == 3}">
 						<h1 class="h3 mb-2 text-center">정보게시판</h1>
+						<div class="search">
+							<form id='searchForm' action="list" method='get'>
+							<select name='type' class="option-board">
+					        	<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+					        	<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
+					    	</select>
+							<!-- gs_type 추가 -->
+			    			<select name='gs_type' class="option-type">
+			        			<option value="1">자유게시판</option>
+			        			<option value="2">공략게시판</option>
+			        			<option value="3">정보게시판</option>
+			        			<option value="4">리뷰게시판</option>
+			        			<option value="6">추천게시판</option>
+			   				</select>
+							<input type='text' name='keyword' id="search_input" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+					    	<input type='hidden' name='pageNum' id="search_input" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+					    	<input type='hidden' name='amount' id="search_input" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					    	<input type='hidden' name='gs_type' id="search_input" value='<c:out value="${pageMaker.cri.gs_type }"/>'>
+								<button id="search" class="header-btn search-btn-submit" value="검색">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                					</svg>
+								</button>
+								<button type="button" data-oper='clear' id="headmenu-search-btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+  									<path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+									</svg>
+								</button>
+							</form>
+						</div>
 							<div> <!-- 등록 버튼 -->
 								<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>
 							</div>
 					</c:when>
 					<c:when test="${pageMaker.cri.gs_type == 4}">
 						<h1 class="h3 mb-2 text-center">리뷰게시판</h1>
+						<div class="search">
+							<form id='searchForm' action="list" method='get'>
+							<select name='type' class="option-board">
+					        	<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+					        	<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
+					    	</select>
+							<!-- gs_type 추가 -->
+			    			<select name='gs_type' class="option-type">
+			        			<option value="1">자유게시판</option>
+			        			<option value="2">공략게시판</option>
+			        			<option value="3">정보게시판</option>
+			        			<option value="4">리뷰게시판</option>
+			        			<option value="6">추천게시판</option>
+			   				</select>
+							<input type='text' name='keyword' id="search_input" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+					    	<input type='hidden' name='pageNum' id="search_input" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+					    	<input type='hidden' name='amount' id="search_input" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					    	<input type='hidden' name='gs_type' id="search_input" value='<c:out value="${pageMaker.cri.gs_type }"/>'>
+								<button id="search" class="header-btn search-btn-submit" value="검색">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                					</svg>
+								</button>
+								<button type="button" data-oper='clear' id="headmenu-search-btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+  									<path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+									</svg>
+								</button>
+							</form>
+						</div>
 							<div> <!-- 등록 버튼 -->
 								<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>
 							</div>
 					</c:when>
 					<c:when test="${pageMaker.cri.gs_type == 5}">
 						<h1 class="h3 mb-2 text-center">공지사항</h1>
+						<div class="search">
+							<form id='searchForm' action="list" method='get'>
+							<select name='type' class="option-board">
+					        	<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+					        	<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
+					    	</select>
+							<!-- gs_type 추가 -->
+			    			<select name='gs_type' class="option-type">
+			        			<option value="1">자유게시판</option>
+			        			<option value="2">공략게시판</option>
+			        			<option value="3">정보게시판</option>
+			        			<option value="4">리뷰게시판</option>
+			        			<option value="6">추천게시판</option>
+			   				</select>
+							<input type='text' name='keyword' id="search_input" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+					    	<input type='hidden' name='pageNum' id="search_input" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+					    	<input type='hidden' name='amount' id="search_input" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					    	<input type='hidden' name='gs_type' id="search_input" value='<c:out value="${pageMaker.cri.gs_type }"/>'>
+								<button id="search" class="header-btn search-btn-submit" value="검색">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                					</svg>
+								</button>
+								<button type="button" data-oper='clear' id="headmenu-search-btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+  									<path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+									</svg>
+								</button>
+							</form>
+						</div>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<div> <!-- 등록 버튼 -->
 								<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>
@@ -74,6 +297,37 @@
 					</c:when>
 					<c:when test="${pageMaker.cri.gs_type == 6}">
 						<h1 class="h3 mb-2 text-center">추천게시판</h1>
+						<div class="search">
+							<form id='searchForm' action="list" method='get'>
+							<select name='type' class="option-board">
+					        	<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
+					        	<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
+					    	</select>
+							<!-- gs_type 추가 -->
+			    			<select name='gs_type' class="option-type">
+			        			<option value="1">자유게시판</option>
+			        			<option value="2">공략게시판</option>
+			        			<option value="3">정보게시판</option>
+			        			<option value="4">리뷰게시판</option>
+			        			<option value="6">추천게시판</option>
+			   				</select>
+							<input type='text' name='keyword' id="search_input" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+					    	<input type='hidden' name='pageNum' id="search_input" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+					    	<input type='hidden' name='amount' id="search_input" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					    	<input type='hidden' name='gs_type' id="search_input" value='<c:out value="${pageMaker.cri.gs_type }"/>'>
+								<button id="search" class="header-btn search-btn-submit" value="검색">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    				<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                					</svg>
+								</button>
+								<button type="button" data-oper='clear' id="headmenu-search-btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+  									<path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+									</svg>
+								</button>
+							</form>
+						</div>
 							<div> <!-- 등록 버튼 -->
 								<button type="button" class="float-right mb-3" id="regBtn">게시물 등록</button>
 							</div>
@@ -96,16 +350,27 @@
 								<tr class="lightred">
 									<td class="bno"></td>
 									<td>
-										<a class='move' id="title_hover"style="font-weight:bold;color: #000000;text-decoration: none;" href='<c:out value="${notice.bno}"/>'>
-											<strong>[공지]<c:out value="${notice.title}" /></strong>&nbsp;&nbsp;
-											<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"/></svg>
-											<span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-light">
-												<c:out value="${notice.replycnt}"/>
-											</span>
-										</a>
-										<small><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></small>
-										<c:out value="${notice.cnt }"/>
-										<c:out value="${recommendCountsForNotices[notice.bno]}"/>
+										<div class="row">
+											<div class="col-md-10">
+											<a class='move' id="title_hover"style="font-weight:bold;color: #000000;text-decoration: none;" href='<c:out value="${notice.bno}"/>'>
+												<strong>[공지]<c:out value="${notice.title}" /></strong>&nbsp;&nbsp;
+												<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"/></svg>
+												<span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-light">
+													<c:out value="${notice.replycnt}"/>
+												</span>
+											</a>
+											</div>
+										<!-- 게시글 작성일 엘리먼트에 시간 정보를 표시 HH:mm:ss 추가 -->
+									    	<div class="col-md-2">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+												<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+												<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+											</svg>
+											<c:out value="${notice.cnt }"/>
+											&nbsp;&nbsp;
+											<i class="fas fa-thumbs-up"></i>&nbsp;&nbsp;<c:out value="${recommendCountsForNotices[notice.bno]}"/>
+											</div>
+										</div>
 									</td>
 								</tr>
 							</c:forEach>
@@ -181,37 +446,6 @@
 					</li>
 				</c:if>		
 			</ul>
-			
-			<!-- 검색 처리 -->
-			<div class="row">
-				<div class="col-lg-12">
-					<form id='searchForm' action="list" method='get'>
-					    <select name='type'>
-					        <option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>----</option>
-					        <option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected':''}"/>>제목 or 내용 or 작성자</option>
-					    </select>
-					
-					    <!-- gs_type 추가 -->
-					    <select name='gs_type'>
-					        <option value="1" <c:if test="${pageMaker.cri.gs_type == 1}">selected</c:if>>자유게시판</option>
-					        <option value="2" <c:if test="${pageMaker.cri.gs_type == 2}">selected</c:if>>공략게시판</option>
-					        <option value="3" <c:if test="${pageMaker.cri.gs_type == 3}">selected</c:if>>정보게시판</option>
-					        <option value="4" <c:if test="${pageMaker.cri.gs_type == 4}">selected</c:if>>리뷰게시판</option>
-					        <option value="6" <c:if test="${pageMaker.cri.gs_type == 6}">selected</c:if>>추천게시판</option>
-					    </select>
-					
-					    <input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
-					    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
-					    <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
-					    <input type='hidden' name='gs_type' value='<c:out value="${pageMaker.cri.gs_type }"/>'>
-					
-					    <button id="search" class='btn btn-outline-primary btn-sm'>Search</button>
-					    <button data-oper='clear' class="btn btn-outline-info btn-clear btn-sm" type="button">Clear</button>
-					</form>
-
-				</div>
-			</div>
-			
 			
 			<!-- 페이지 번호 클릭시 콘트롤라로 (public void list(Criteria cri, Model model)) 로 요청하는 form, 나중에 검색 데이터도 여기서 같이 처리  -->
 			<form id='actionForm' action="list" method='get'>
@@ -355,7 +589,7 @@
             let hasImage = false; // 이미지 여부를 확인하는 변수
             
             $(arr).each(function(i, obj){
-                if(obj.fileType === true) {
+                if(obj.fileType === true && !hasImage) {
                     let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName); // 섬네일
                     let originPath = obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName; // 원본파일 경로
                     originPath = originPath.replace(new RegExp(/\\/g), "/"); // \\를 /로 대체

@@ -33,24 +33,12 @@
 <body>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container d-flex justify-content-between">
+    <div class="container d-flex justify-content-center">
         <div>
-            <a class="navbar-brand" href="../home/home">
-                <img src="../resources/images/logo.png" alt="logo" class="Logo-img" style="width: 120px;">
+            <a class="navbar-brand" href="../home/home" >
+                <img src="../resources/images/logo.png" alt="logo" class="Logo-img" style="width: 300px;">
             </a>
         </div>
-
-        <div class="search" style="margin-right:160px;">
-			<form id="headmenu" name="headmenu" method="GET" onsubmit="return false;">
-				<input type="search" class="text" name="sw" id="search_input" autocomplete="off" placeholder="검색어를 입력해 주세요">
-				<button id="headmenu-search-btn" type="submit" class="header-btn search-btn-submit" value="검색">
-					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-search"
-	                     viewBox="0 0 16 16">
-	                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-	                </svg>
-				</button>
-			</form>
-		</div>
     </div>
 </nav>
 
