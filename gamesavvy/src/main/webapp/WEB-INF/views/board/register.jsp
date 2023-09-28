@@ -74,7 +74,7 @@
 			
 			<!-- 첨부파일 등록 처리 -->
 			<div class="attach mt-4">
-				<h5 class="text-center wordArtEffect text-success mb-5">이미지 업로드</h5>
+				<h5 class="text-center wordArtEffect text-success mb-5">썸네일 이미지 업로드</h5>
 				<!-- upload처리 -->
 				<div class="row">
 					<div class="form-group uploadDiv col-md-12">

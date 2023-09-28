@@ -57,7 +57,7 @@ public class GamesavvyController {
 	        List<MemberProfileDTO> profileImages = profileService.getAttachList(userid);
 	        board.setProfileImages(profileImages);
 	    }
-	    // 각 게시글에 있는 이미지출력
+	    // 각 게시글에 있는 이미지출력 (ajax를 통한 일반 업로드 방식)
 	    for (GamesavvyVO board : list) {
 	        Long bno = board.getBno();
 	        List<GsAttachVO> listImages = service.getAttachList(bno);

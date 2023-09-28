@@ -35,5 +35,5 @@ public class GamesavvyVO {
 	
 	
 	private List<MemberProfileDTO> profileImages;
-
+	
 }
