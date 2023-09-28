@@ -28,23 +28,27 @@ small {
 </head>
 <body>
 
-<footer class="py-5 mt-auto">
-	<div class="footer container">
-		<hr></hr>
-		<div class="row">
-			<div class="col-md-5">
-				<small>(주)플레이엑스피  대표:윤석재  사업자등록번호: 406-86-00726</small>
-				<p><small>© PlayXP Inc. All Rights Reserved.</small></p>
-			</div>
-			<div class="col-md-7">
-				<a href="#"><small>이용약관</small></a>
-	  			<a href="#"><small>개인정보취급방침</small></a>
-	  			<a href="#"><small>책임의한계와법적고지</small></a>
-	  			<a href="#"><small>블럭자명단</small></a>
-	  			<a href="#"><small>신고</small></a>
-			</div>
-		</div>
-	</div>
+<footer class="py-2 mt-auto">
+    <div class="footer container">
+        <hr></hr>
+        <div class="row">
+            <div class="col-md-5 col-12"> <!-- col-12 추가 -->
+                <img src="../resources/images/logo.png" style="width:35%;" />
+                <small>Team Gamesavvy 팀원:김광진 정원석  사업자등록번호: 123-45-12345</small>
+                <p><small>© Gamesavvy Inc. All Rights Reserved.</small></p>
+            </div>
+            <div class="col-md-7 col-12"> <!-- col-12 추가 -->
+                <div class="d-flex justify-content-center justify-content-md-end align-items-center"> <!-- 내용 가운데 정렬 -->
+                    <a href="#"><small>이용약관</small></a>
+                    <a href="#"><small>개인정보취급방침</small></a>
+                    <a href="#"><small>책임의한계와법적고지</small></a>
+                    <a href="#"><small>블럭자명단</small></a>
+                    <a href="#"><small>신고</small></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
+
 </body>
 </html>

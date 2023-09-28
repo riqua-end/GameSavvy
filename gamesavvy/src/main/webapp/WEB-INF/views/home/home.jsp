@@ -70,34 +70,34 @@
         <!-- 케러셀 content(내용물)의 스라이드 쇼,내용물은 carousel-inner콘테이너에 수용 -->
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="mx-auto d-block"
-                     src="../resources/images/main1.png"
-                     alt="img1" width="1900" height="600">
+                <div class="embed-responsive embed-responsive-16by9">
+			    	<iframe alt="img1" class="embed-responsive-item" src="https://www.youtube.com/embed/C3fW-LIoDLc"></iframe>
+				</div>
             </div>
             <div class="carousel-item">
-                <img class="mx-auto d-block"
-                     src="../resources/images/main2.png"
-                     alt="img2" width="1800" height="600">
+                <div class="embed-responsive embed-responsive-16by9">
+			    	<iframe alt="img2" class="embed-responsive-item" src="https://www.youtube.com/embed/LGcECozNXEw"></iframe>
+				</div>
             </div>
             <div class="carousel-item">
-                <img class="mx-auto d-block"
-                     src="../resources/images/main3.png"
-                     alt="img3" width="1800" height="600">
+                <div class="embed-responsive embed-responsive-16by9">
+			    	<iframe alt="img3" class="embed-responsive-item" src="https://www.youtube.com/embed/__w615A5lC4"></iframe>
+				</div>
             </div>
             <div class="carousel-item">
-                <img class="mx-auto d-block"
-                     src="../resources/images/main4.png"
-                     alt="img4" width="1800" height="600">
+                <div class="embed-responsive embed-responsive-16by9">
+			    	<iframe alt="img4" class="embed-responsive-item" src="https://www.youtube.com/embed/SyP3V2sacQ0"></iframe>
+				</div>	
             </div>
             <div class="carousel-item">
-                <img class="mx-auto d-block"
-                     src="../resources/images/main5.png"
-                     alt="img5" width="1800" height="600">
+                <div class="embed-responsive embed-responsive-16by9">
+			    	<iframe alt="img5" class="embed-responsive-item" src="https://www.youtube.com/embed/C7KTI94LzI8"></iframe>
+				</div>	
             </div>
             <div class="carousel-item">
-                <img class="mx-auto d-block"
-                     src="../resources/images/main6.png"
-                     alt="img6" width="1800" height="600">
+                <div class="embed-responsive embed-responsive-16by9">
+			    	<iframe alt="img5" class="embed-responsive-item" src="https://www.youtube.com/embed/5KdE0p2joJw"></iframe>
+				</div>
             </div>
             <div class="carousel-item">
             	<video height="500" alt="img7" loop="" muted="" autoplay="" playsinline="" poster="https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/3997104af95560502d558b26/page_bg_koreana.jpg?t=1695662269" class="fullscreen-bg__video">
@@ -119,11 +119,19 @@
 <div class="container mt-4 mb-4" id="maincontent">
 	<div class="row">
 		<div class="col-md-9">
-			<div class="main-image">
-				<a target="_blank" href="https://store.steampowered.com/?l=koreana">
-					<img src="../resources/images/steam.jpg" alt="main" class="Logo-img" style="width: 827px;">
-				</a>
+			<table id="boardTable" class="table table-hover text-center">
+					<thead class="table-dark">
+						<tr>
+							<th>
+								<h2><strong>Steam Game 이달의 소식</strong></h2>
+							</th>
+						</tr>
+					</thead>
+			</table>
+			<div class="embed-responsive embed-responsive-16by9">
+			    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/uqd1a0xJuoQ"></iframe>
 			</div>
+			<hr></hr>
 			<a target="_blank" href="http://www.sidizgaming.com/">
 				<img src="../resources/images/fff.PNG" alt="logo" class="Logo-img" style="width: 827px;">
 			</a>

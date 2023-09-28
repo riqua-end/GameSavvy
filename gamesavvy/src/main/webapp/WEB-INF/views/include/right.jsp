@@ -45,6 +45,10 @@
     	<div class="sidenav">
        		<a href="../home/home">홈</a>
         	<a href="../board/list?gs_type=1">자유게시판</a>
+        	<a href="../board/list?gs_type=2">공략게시판</a>
+        	<a href="../board/list?gs_type=3">정보게시판</a>
+        	<a href="../board/list?gs_type=4">리뷰게시판</a>
+        	<a href="../board/list?gs_type=6">추천게시판</a>
     	</div>
 	</div>
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -54,10 +58,58 @@
 		<div class="sidenav">
 			<a href="../admin/adminMember">회원관리</a>
 			<a href="../admin/adminList">게시판관리</a>
-			<a href="#">공지게시판</a>
+			<a href="../board/list?gs_type=5">공지게시판</a>
 		</div>
 	</div>
 	</sec:authorize>
+	
+	<!-- 배너 -->
+	<table id="boardTable" class="table table-hover text-center">
+			<thead class="table-dark">
+				<tr>
+					<th>
+						<h2><strong>Steam 이달의 게임</strong></h2>
+					</th>
+				</tr>
+			</thead>
+	</table>
+	<div id="carouselExample" class="carousel slide" data-ride="carousel">
+	    <div class="carousel-inner">
+	        <div class="carousel-item active">
+	            <a href="https://store.steampowered.com/app/2195250/EA_SPORTS_FC_24/" class="img_area" target="_blank">
+	                <img src="https://cdn.akamai.steamstatic.com/steam/apps/2195250/header.jpg?t=1695138449" class="d-block w-100" alt="...">
+	            </a>
+	        </div>
+	        <div class="carousel-item">
+	            <a href="https://store.steampowered.com/app/1627720/Lies_of_P/" class="img_area" target="_blank">
+	                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1627720/header.jpg?t=1695272170" class="d-block w-100" alt="...">
+	            </a>
+	        </div>
+	        <div class="carousel-item">
+	            <a href="https://store.steampowered.com/app/730/CounterStrike_2/" class="img_area" target="_blank">
+	                <img src="https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg?t=1695853301" class="d-block w-100" alt="...">
+	            </a>
+	        </div>
+	        <div class="carousel-item">
+	            <a href="https://store.steampowered.com/app/1260320/Party_Animals/" class="img_area" target="_blank">
+	                <img src="https://cdn.akamai.steamstatic.com/steam/apps/1260320/header.jpg?t=1695243290" class="d-block w-100" alt="...">
+	            </a>
+	        </div>
+	        <div class="carousel-item">
+	            <a href="https://store.steampowered.com/app/570/Dota_2/" class="img_area" target="_blank">
+	                <img src="https://cdn.akamai.steamstatic.com/steam/apps/570/header.jpg?t=1682639497" class="d-block w-100" alt="...">
+	            </a>
+	        </div>
+	    </div>
+	    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+	        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	        <span class="sr-only">Previous</span>
+	    </a>
+	    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+	        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	        <span class="sr-only">Next</span>
+	    </a>
+	</div>
 </div> <!-- col-md-3 -->
 
 </body>

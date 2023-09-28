@@ -381,7 +381,7 @@
 											<c:out value="${board.bno}" />
 										</div>
 									</td>
-									<td><!-- 게시판 이미지. -->
+									<td><!-- 게시판 썸네일 이미지. -->
 										<div class="row">
 										<div class="col-md-1">
 										<div id="bno" data-bno="<c:out value="${board.bno}"/>"></div>&nbsp;&nbsp;
